@@ -23,7 +23,15 @@ Route::get('/', function () {
 });
 
 Route::get('/home', function(){
-    return view('home');
+    return redirect('/');
+})->middleware('auth');
+
+Route::get('/user/register-transport-permit', function(){
+    return view('user.register-transport-permit');
+})->middleware('auth');
+
+Route::get('/user/view-existing-transport-permit', function(){
+    return view('user.view-transport-permit');
 })->middleware('auth');
 
 Route::get('/login', [UserController::class, 'ShowLogin'])->name('login');
