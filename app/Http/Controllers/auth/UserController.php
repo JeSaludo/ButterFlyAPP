@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 
@@ -66,9 +67,12 @@ class UserController extends Controller
             'password' => Hash::make($password),
         ]);
 
-
+        event(new Registered($user));
         Auth::login($user);
-        return redirect('/home');
+        
+
+        
+        return redirect('/email/verify');
     }
 
     public function logout(Request $request){
