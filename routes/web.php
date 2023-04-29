@@ -19,44 +19,21 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/home', function(){
     return redirect('/');
-})->middleware('auth');
+});
 
-Route::get('/user/register-transport-permit', function(){
-    return view('user.register-transport-permit');
-})->middleware('auth');
 
-Route::get('/user/view-existing-transport-permit', function(){
-    return view('user.view-transport-permit');
-})->middleware('auth');
 
+Route::get('/verify-otp',[UserController::class, 'ShowOTP']);
 Route::get('/login', [UserController::class, 'ShowLogin'])->name('login');
 Route::get('/register', [UserController::class, 'ShowRegister'])->name('register');
 
-Route::post('/register/store', [UserController::class, 'CreateAccount']);
+Route::post('register/process', [UserController::class, 'CreateAccount']);
 Route::post('/login/authenticate', [UserController::class, 'Authenticate']);
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-//Verify Email Section
-
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
-
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill(); 
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
-
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
- 
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
-
-////
 

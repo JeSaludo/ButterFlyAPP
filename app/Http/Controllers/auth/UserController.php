@@ -67,12 +67,12 @@ class UserController extends Controller
             'password' => Hash::make($password),
         ]);
 
-        event(new Registered($user));
-        Auth::login($user);
+        //event(new Registered($user));
+        //Auth::login($user);
         
 
         
-        return redirect('/email/verify');
+        return redirect('/verify-otp');
     }
 
     public function logout(Request $request){
@@ -84,6 +84,10 @@ class UserController extends Controller
         $request->session()->regenerateToken();
     
         return redirect('/');
+    }
+
+    public function ShowOTP(){
+        return view('auth.very-otp');
     }
     
 }
