@@ -4,6 +4,10 @@
         <div class=" mx-6 my-4 bg-custom-dark-800 border-none rounded-xl">
             <div class="flex justify-between flex-col-reverse md:flex-row p-2">
                 <div class="w-full p-12">
+                    @auth
+                    <p class="text-4xl mb-4 font-roboto font-semibold text-gray-400">Welcome, {{Auth::user()->first_name}}! </p>
+                    @endauth
+                   
                    <h3 class="text-justify text-sm  xl:text-xl md:text-left lg:text-lg md:text-sm sm:text-xl   text-custom-dark-600 font-roboto font-light">LOCAL TRANSPORT PERMIT FOR WILDLIFE</h3>
                    <h1 class="text-justify mt-2 text-3xl xl:text-6xl md:text-left lg:text-4xl md:text-2xl  sm:text-2xl  font-roboto font-semibold text-custom-white">Obtain Your <span class="text-custom-light-blue">Wildlife Transport Permits</span> with 
                     Ease - Apply Online Now

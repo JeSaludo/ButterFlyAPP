@@ -6,7 +6,7 @@
             OFSPTS
         </span>
 
-        <span class="text-3xl cursor-pointer mx-2 md:hidden block"><ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
+        <span class="text-3xl text-white cursor-pointer mx-2 md:hidden block"><ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
         </span>
         </div>
        <ul class="md:flex md:items-center md:z-auto md:static absolute bg-custom-dark-1000 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
@@ -22,15 +22,29 @@
             <a href="about" class="text-md  text-white hover:text-custom-dark-600">ABOUT</a>
         </li>
 
+        
+       
         <div class="md:flex lg:ml-52">
             @if (Route::has('login'))
-            <li class="ml-4 my-6 md:my-0 ">
-                <a href="{{ route('login') }}" class="text-md text-white hover:text-custom-dark-600">Log in</a>
-            </li>
-            @if (Route::has('register'))
-            <li class="mx-4 my-6 md:my-0">
-                <a href="{{ route('register') }}" class="text-md text-white hover:text-custom-dark-600" >Register</a>
-            </li>
+            @auth
+                <li class="ml-4 my-6 md:my-0 flex border-blue-200 bottom-2">
+                    <a href="/profile" class="text-md  text-white hover:text-custom-dark-600">PROFILE</a>
+
+                </li>
+                
+                <li class="ml-4 my-6 md:my-0 ">
+                    <a href="/logout" class="text-md text-white hover:text-custom-dark-600">LOGOUT</a>
+                </li>
+                @else
+                <li class="ml-4 my-6 md:my-0 ">
+                    <a href="{{ route('login') }}" class="text-md text-white hover:text-custom-dark-600">Log in</a>
+                </li>
+                @if (Route::has('register'))
+                <li class="mx-4 my-6 md:my-0">
+                    <a href="{{ route('register') }}" class="text-md text-white hover:text-custom-dark-600" >Register</a>
+                </li>
+            @endauth
+            
             @endif
         @endif
         </div>

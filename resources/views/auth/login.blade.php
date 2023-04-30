@@ -18,7 +18,7 @@
                     @enderror
                 <label class="my-2 block text-sm text-custom-white-p" for="password">Password:
                     <input class="w-11/12 block mt-2 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                    type="password" name="businessName" id="password" placeholder="Enter Password"></label>
+                    type="password" name="password" id="password" placeholder="Enter Password"></label>
                     @error('password')
                     <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                     @enderror

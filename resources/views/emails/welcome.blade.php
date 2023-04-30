@@ -7,10 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Thanks for registering with us!</h1>
-
-    <p>{{$get_user_name}}</p>
+    <h1>Thanks for creating an account with us!</h1>
+    <p>Here are your Account details below:</p>
+    <p>username: {{$get_user_name}}</p>
+    <p>password: {{$get_user_password}}</p>
+    <p>Here are your OTP code:</p>
     <p>{{$valid_token}}</p>
+
     
 </body>
 </html>

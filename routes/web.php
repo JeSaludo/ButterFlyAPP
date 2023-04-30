@@ -18,17 +18,16 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', function(){
-    return redirect('/');
-});
 
 
 
-Route::get('/verify-otp',[UserController::class, 'ShowOTP']);
+
+
 Route::get('/login', [UserController::class, 'ShowLogin'])->name('login');
 Route::get('/register', [UserController::class, 'ShowRegister'])->name('register');
 
@@ -36,4 +35,6 @@ Route::post('register/process', [UserController::class, 'CreateAccount']);
 Route::post('/login/authenticate', [UserController::class, 'Authenticate']);
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
+Route::get('/verify-account',[UserController::class, 'VerifyAccount']);
+Route::post('/verify-otp', [UserController::class, 'UserActivation'])->name('verifyOTP');
 

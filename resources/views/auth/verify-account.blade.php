@@ -8,12 +8,12 @@
             <h1 class="text-center xl:text-left text-custom-dark-600 text-4xl font-lora font-bold">VERIFY <span class="text-white">EMAIL </span></h1>
             <p class="text-center xl:text-left text-custom-dark-500" >Lorem ipsum dolor sit amet, consectetur..</p>
         
-            <form class="mt-5" action="/login/authenticate" method="post"> 
+            <form class="mt-5" action="/verify-otp" method="post"> 
                 @csrf
-                <label class="my-2 block text-sm text-custom-white-p" for="password">OTP Code:
+                <label class="my-2 block text-sm text-custom-white-p" for="token">OTP Code:
                     <input class="w-11/12 block mt-2 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                    type="password" name="businessName" id="password" placeholder="Enter 6 Digit Code"></label>
-                    @error('password')
+                    type="number" name="token" id="token" placeholder="Enter 6 Digit Code"></label>
+                    @error('token')
                     <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                     @enderror
                

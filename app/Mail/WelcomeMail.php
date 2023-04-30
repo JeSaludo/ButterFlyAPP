@@ -16,16 +16,17 @@ class WelcomeMail extends Mailable
     public $get_user_mail;
     public $valid_token;
     public $get_user_name;
-
+    public $get_user_password;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($get_user_mail,$valid_token, $get_user_name)
+    public function __construct($get_user_mail,$valid_token, $get_user_name, $get_user_password)
     {
         $this->get_user_mail = $get_user_mail;
         $this->valid_token = $valid_token;
         $this->get_user_name = $get_user_name;
+        $this->get_user_password = $get_user_password;
     }
 
     /**
