@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Butterfly;
 use App\Models\Permit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PermitController extends Controller
 {
@@ -37,7 +38,7 @@ class PermitController extends Controller
     public function RegisterApplication(Request $request){
         
 
-       
+       //Auth::user()->butterflies();
     }
 
 }
