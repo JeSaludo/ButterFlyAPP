@@ -4,6 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeMail;
+use App\Models\Permit;
 use App\Models\User;
 use App\Models\Verifytoken;
 use Illuminate\Http\Request;
@@ -17,6 +18,23 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 
 {
+
+    public function index(){
+        if (auth()->user()) {
+            $get_user = User::where('email', auth()->user()->email)->first();
+        
+            if($get_user->is_activated == 1){
+                return view('home');
+            }
+            else{
+                return redirect('/verify-account');
+            }
+        }
+        else{
+            return view('home');
+        }
+       
+    }
     public function ShowLogin(){
         return view('auth.login');
     }
@@ -31,12 +49,14 @@ class UserController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
- 
+
+       
+        
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
- 
             return redirect()->intended('/');
         }
+       
  
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
@@ -54,6 +74,13 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',  
 
         ]);
+        $permit = Permit::where('permit_no', $request->wildlifePermit)->first();
+        
+        if($permit === null){
+            return back()->withErrors([
+                'wildlifePermit' => 'The provided credentials do not match our records.',
+            ])->onlyInput('wildliefPermit');
+        }
 
         $password = Str::random(11);
 
@@ -80,7 +107,7 @@ class UserController extends Controller
         $get_user_name = substr($request->firstName,0,1) . $request->lastName;
         Mail::to($request->email)->send(new WelcomeMail($get_user_email, $validateToken, $get_user_name, $password));
         
-        //event(new Registered($user));      
+        
         return redirect('/verify-account');
 
         
@@ -95,7 +122,7 @@ class UserController extends Controller
     
         $request->session()->regenerateToken();
     
-
+        
         return redirect('/');
     }
 
@@ -116,7 +143,7 @@ class UserController extends Controller
             $user->save();
             $getting_token = Verifytoken::where('token', $get_token->token)->first();
             $getting_token->delete();
-         
+            
             Auth::login($user);
             return redirect('/')->with('activated', 'Your account has been activated sucessfully');
 

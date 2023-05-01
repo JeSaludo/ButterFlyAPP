@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\auth\UserController;
-
+use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -19,9 +19,7 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/',[UserController::class, 'index']);
 
 
 
@@ -35,6 +33,19 @@ Route::post('register/process', [UserController::class, 'CreateAccount']);
 Route::post('/login/authenticate', [UserController::class, 'Authenticate']);
 Route::get('/logout', [UserController::class, 'logout'])->middleware('auth');
 
-Route::get('/verify-account',[UserController::class, 'VerifyAccount']);
-Route::post('/verify-otp', [UserController::class, 'UserActivation'])->name('verifyOTP');
+Route::get('/verify-account',[UserController::class, 'VerifyAccount'])->name('verifyAccount');
+Route::post('/verify-otp', [UserController::class, 'UserActivation'])->name('otp.verify');
+Route::get('/user/apply-permit', function(){
+    return 'APPLY PERMIT HERE';
+})->middleware('auth');
 
+//SEEDING Wild life Permit
+
+Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
+Route::get('/admin/create-permit', function(){
+    return view('admin.add-wildlife-permit');
+})->middleware("auth");
+
+Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit'])->middleware('auth', 'verified');
+//ADD PERMIT
+Route::post('/permit/apply-permit-process', [PermitController::class, 'CreatePermit']);

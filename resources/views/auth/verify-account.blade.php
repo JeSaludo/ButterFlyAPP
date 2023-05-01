@@ -1,4 +1,4 @@
-@include("layout.header")
+@include("layout.header", ['title' => "Verify Account"])
 @include("layout.nav")
 
 
@@ -36,11 +36,10 @@
 
 
 
-
+@include("layout.body-footer")
 @include("layout.footer")
 
 
 
 
 
-@include("layout.footer")

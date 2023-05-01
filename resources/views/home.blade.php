@@ -1,4 +1,4 @@
-@include("layout.header")
+@include("layout.header", ['title' => "Home"])
 @include('layout.nav')
    
         <div class=" mx-6 my-4 bg-custom-dark-800 border-none rounded-xl">
@@ -15,8 +15,8 @@
                     <p class="text-justify md-text-center m-2 lg:text-xl md:text-md sm:text-sm  text-custom-white-p">Welcome to our online platform for wildlife transport permitting and transactions. Apply for permits, track your applications, and manage your a easily and securely on our website. Streamline your wildlife transport permitting process today.</p>
                     
                     <div class="flex w-full justify-between gap-5 mt-5 text-center">
-                        <a href="#" class="font-poppins text-xl text-white bg-custom-blue w-6/12 py-4 border-none rounded-xl">Apply Now</a>
-                        <a href="#" class="font-poppins text-xl text-white bg-transparent w-6/12 py-4  border-white border-2 rounded-xl">Learn More</a>
+                        <a href="/permit/apply" class="font-poppins text-xl text-white bg-custom-blue w-6/12 py-4 border-none rounded-xl">Apply Now</a>
+                        <a href="/learn-more" class="font-poppins text-xl text-white bg-transparent w-6/12 py-4  border-white border-2 rounded-xl">Learn More</a>
                     </div>
                 </div>
 
@@ -40,5 +40,5 @@
 
         </div>
    
-
+@include("layout.body-end")
 @include("layout.footer")
