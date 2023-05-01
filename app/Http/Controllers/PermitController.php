@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Butterfly;
 use App\Models\Permit;
 use Illuminate\Http\Request;
 
@@ -33,8 +34,10 @@ class PermitController extends Controller
         return view('user.apply-permit');
     }
 
-    public function CreatePermit(){
+    public function RegisterApplication(Request $request){
         
+
+       
     }
 
 }

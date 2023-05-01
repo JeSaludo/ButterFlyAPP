@@ -44,9 +44,33 @@
          @enderror
       </div>
 
+     
+      <div class="w-6/12 mx-auto">
+         <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportDate">Date of Transport:</label>
+         <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+         type="date" name="transportDate" id="transportDate">
+         @error('transportDate')
+         <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+         @enderror
+      </div>
+
       <p class="text-left mx-auto w-6/12 text-custom-dark-500 font-semibold mt-6">~Butterfly Details~</p>
-         
-  
+     
+      <div class="grid grid-flow-col gap-2 w-6/12 mx-auto mb-4">
+         <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name0">
+         <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity0">
+      </div>
+      <div class="text-white flex justify-between w-6/12 mx-auto">
+         <h2>Add Butterfly</h2>
+         <a href="#" class="add text-whitebg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md p-2 py-0">&plus;</a>
+      </div>
+
+      <div class="inp-group w-6/12 mx-auto">
+        
+      </div>
+
+      <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Login</button>
+            
    </form>
 
     
@@ -58,7 +82,7 @@
 
 @include("layout.body-footer")
 
-   <script>
-      
-   </script>
+   
+   <script src="{{ asset('js/customize-form.js') }}"></script>
+ 
 @include("layout.footer")
