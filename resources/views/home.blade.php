@@ -40,5 +40,5 @@
 
         </div>
    
-@include("layout.body-end")
+@include("layout.body-footer")
 @include("layout.footer")

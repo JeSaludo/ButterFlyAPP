@@ -46,6 +46,6 @@ Route::get('/admin/create-permit', function(){
     return view('admin.add-wildlife-permit');
 })->middleware("auth");
 
-Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit'])->middleware('auth', 'verified');
+Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit']);
 //ADD PERMIT
 Route::post('/permit/apply-permit-process', [PermitController::class, 'CreatePermit']);

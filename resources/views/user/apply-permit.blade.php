@@ -56,7 +56,7 @@
 
 
 
-@include("layout.body-end")
+@include("layout.body-footer")
 
    <script>
       
