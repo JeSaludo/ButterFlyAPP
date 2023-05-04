@@ -37,8 +37,60 @@ class PermitController extends Controller
 
     public function RegisterApplication(Request $request){
         
+        $data = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'transportAddress' => 'required',
+            'transportDate' => 'required',
+            'butterfly_name[]' => 'required',
 
-       //Auth::user()->butterflies();
+        ]);
+
+        
+
+
+
+        $butterflies = [];
+        $names = $request->input('butterfly_name');
+        $quantities = $request->input('butterfly_quantity');
+        foreach ($names as $index => $name) {
+            $quantity = $quantities[$index];
+            $butterflies[] = [
+                'name' => $name,
+                'quantity' => $quantity,
+            ];
+        }
+
+        foreach($butterflies as $butterfly){
+            $butterflyDB = new Butterfly();
+            $butterflyDB->user_id = Auth::user()->id;
+            $butterflyDB->butterfly_name = $butterfly['name'];
+            $butterflyDB->quantity = $butterfly['quantity'];
+            $butterflyDB->save();
+        }
+        
+       
+       //$butterflies = new Butterfly();
+
+        //$butterflies->user_id = Auth::user()->id;
+
+
+        //$butterflies->butterfly_name = "Monarch";
+       // $butterflies->quantity = 22;
+       // $butterflies->save();
+        
+       //logic to this sheet
+        //}
+
+    // Redirect the user to a success page
+   // return redirect()->route('butterflies.index')->with('success', 'Butterflies saved successfully.');
+
+        
+
+                
+        //save
+       
+     
     }
 
 }
