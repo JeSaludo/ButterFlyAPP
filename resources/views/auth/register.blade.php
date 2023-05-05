@@ -6,7 +6,7 @@
     <div class="flex flex-col-reverse xl:flex-row ">
         <div class="mx-auto w-10/12 p-2 xl:px-14  py-2">
             <h1 class="text-center xl:text-left text-custom-dark-600 text-4xl font-lora font-bold">CREATE <span class="text-white">AN ACCOUNT</span></h1>
-            <p class="text-center xl:text-left text-custom-dark-500" >Lorem ipsum dolor sit amet, consectetur..</p>
+            <p class="text-center xl:text-left text-custom-dark-500" >Get started by creating your profile</p>
         
             <form class="mt-5 " action="/register/process" method="post">
                 @csrf

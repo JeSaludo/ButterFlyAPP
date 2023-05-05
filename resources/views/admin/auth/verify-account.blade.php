@@ -6,7 +6,7 @@
     <div class="flex flex-col-reverse xl:flex-row">
         <div class="mx-auto w-10/12 p-2 xl:px-14  py-40">
             <h1 class="text-center xl:text-left text-custom-dark-600 text-4xl font-lora font-bold">VERIFY <span class="text-white">EMAIL </span></h1>
-            <p class="text-center xl:text-left text-custom-dark-500" >Verify your email address to activate your account</p>
+            <p class="text-center xl:text-left text-custom-dark-500" >Lorem ipsum dolor sit amet, consectetur..</p>
         
             <form class="mt-5" action="/verify-otp" method="post"> 
                 @csrf

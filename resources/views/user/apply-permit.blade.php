@@ -25,7 +25,14 @@
          <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
          @enderror
       </div>
-
+      <div class="w-6/12 mx-auto">
+         <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Mode Of Transport:</label>
+         <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+         type="text" name="modeOfTransport" id="modeOfTransport" placeholder="Enter Mode of Transport">
+         @error('modeOfTransport')
+         <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+         @enderror
+      </div>
       <div class="w-6/12 mx-auto">
          <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportAddress">Transport to Address:</label>
          <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
@@ -39,17 +46,17 @@
          <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportDate">Date of Transport:</label>
          <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
          type="date" name="transportDate" id="transportDate">
-         @error('transportAddress')
+         @error('transportDate')
          <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
          @enderror
       </div>
 
      
       <div class="w-6/12 mx-auto">
-         <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportDate">Date of Transport:</label>
+         <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Purpose:</label>
          <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-         type="date" name="transportDate" id="transportDate">
-         @error('transportDate')
+         type="text" name="purpose" id="purpose" placeholder="Enter purpose of transport">
+         @error('purpose')
          <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
          @enderror
       </div>
