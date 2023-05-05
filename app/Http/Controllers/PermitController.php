@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ApplicationForm;
 use App\Models\Butterfly;
 use App\Models\Permit;
 use Illuminate\Http\Request;
@@ -42,13 +43,19 @@ class PermitController extends Controller
             'address' => 'required',
             'transportAddress' => 'required',
             'transportDate' => 'required',
-            'butterfly_name[]' => 'required',
-
+            
+            'modeOfTransport' => 'required',
+            'purpose' => 'required',
         ]);
 
-        
-
-
+        $applicationForm =  new ApplicationForm();
+        $applicationForm->user_id = Auth::user()->id;
+        $applicationForm->name = $request->name;
+        $applicationForm->address = $request->address;
+        $applicationForm->transport_address = $request->transportAddress;
+        $applicationForm->transport_date = $request->transportDate;
+        $applicationForm->mode_of_transport = $request->modeOfTransport;
+        $applicationForm->save();
 
         $butterflies = [];
         $names = $request->input('butterfly_name');
@@ -70,25 +77,7 @@ class PermitController extends Controller
         }
         
        
-       //$butterflies = new Butterfly();
-
-        //$butterflies->user_id = Auth::user()->id;
-
-
-        //$butterflies->butterfly_name = "Monarch";
-       // $butterflies->quantity = 22;
-       // $butterflies->save();
-        
-       //logic to this sheet
-        //}
-
-    // Redirect the user to a success page
-   // return redirect()->route('butterflies.index')->with('success', 'Butterflies saved successfully.');
-
-        
-
-                
-        //save
+       return redirect('/');
        
      
     }

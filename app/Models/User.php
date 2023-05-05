@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'validated',
         'password',
+        'role',
     ];
 
     /**
@@ -53,4 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function butterflies(){
         return $this->hasMany(Butterfly::class);
     }
+
+    public function applicationform(){
+        return $this->hasMany(ApplicationForm::class);
+    }
+
+   
 }
