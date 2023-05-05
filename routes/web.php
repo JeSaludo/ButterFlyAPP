@@ -22,18 +22,11 @@ use Illuminate\Http\Request;
 
     Route::get('/',[UserController::class, 'index']);
 
-
-
-
-
-
     Route::get('/login', [UserController::class, 'ShowLogin'])->name('login');
     Route::get('/register', [UserController::class, 'ShowRegister'])->name('register');
 
     Route::post('register/process', [UserController::class, 'CreateAccount']);
     Route::post('/login/authenticate', [UserController::class, 'Authenticate']);
-
-
 
     Route::get('/verify-account',[UserController::class, 'VerifyAccount'])->name('verifyAccount');
     Route::post('/verify-otp', [UserController::class, 'UserActivation'])->name('otp.verify');

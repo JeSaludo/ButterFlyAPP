@@ -42,11 +42,16 @@ class UserController extends Controller
     public function ShowRegister(){
         return view('auth.register');
     }
-
+    public function username()
+    {
+        $field = filter_var(request()->input('email_or_username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        request()->merge([$field => request()->input('email_or_username')]);
+        return $field;
+    }
     public function Authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            $this->username() => ['required', 'string'],
             'password' => ['required'],
         ]);
 
@@ -59,8 +64,8 @@ class UserController extends Controller
        
  
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+            'email_or_username' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email_or_username');
     }
     public function CreateAccount(Request $request){
         $data = $request->validate([
@@ -79,7 +84,7 @@ class UserController extends Controller
         if($permit === null){
             return back()->withErrors([
                 'wildlifePermit' => 'The provided credentials do not match our records.',
-            ])->onlyInput('wildliefPermit');
+            ])->onlyInput('wildlifePermit');
         }
 
         $password = Str::random(11);
@@ -87,7 +92,7 @@ class UserController extends Controller
         $user = User::Create([
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
-            'username' => substr($request->username,0,1) . $request->lastName ,
+            'username' => substr($request->firstName,0,1) . $request->lastName ,
             'wildlife_permit' => $request->wildlifePermit,
             'business_name' => $request->businessName,
             'owner_name' => $request->ownerName,
