@@ -28,10 +28,16 @@ class AdminController extends Controller
     }
 
     public function ShowDashboard(){
-        return view("admin.dashboard");
+        $users = User::all();
+        return view("admin.dashboard",compact('users') );
+    }
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
-
+    
     public function Authenticate(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -84,4 +90,6 @@ class AdminController extends Controller
         
         return redirect('/admin/login');
     }
+
+   
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminCRUDController;
 use App\Http\Controllers\auth\AdminController;
 use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\PermitController;
@@ -44,7 +45,8 @@ use Illuminate\Http\Request;
     
     
     Route::middleware(['admin.auth'])->group(function () {
-        Route::get('admin/dashboard', [AdminController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
+        Route::get('admin/dashboard', function(){return redirect('admin/dashboard/users');});
+        Route::get('admin/dashboard/users', [AdminController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
         Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
         Route::get('/admin/create-permit', function(){
         return view('admin.add-wildlife-permit');
@@ -55,9 +57,15 @@ use Illuminate\Http\Request;
         Route::get('/admin/logout', [AdminController::class, 'logout']);
     });
     
-   
-   
+
+    Route::get('/admin/dashboard/users/create', [AdminCRUDController::class, 'create'])->name('admin.users.create');
+    Route::post('/admin/dashboard/users/store', [AdminCRUDController::class, 'store'])->name('admin.users.store');
+    Route::get('/admin/dashboard/users/{user}/edit', [AdminCRUDController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/admin/dashboard/users/{user}', [AdminCRUDController::class, 'update'])->name('admin.users.update');
     
+    Route::delete('/admin/users/{user}', [AdminCRUDController::class,'destroy'])->name('admin.users.destroy');
+
+        
         
   
         

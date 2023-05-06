@@ -23,6 +23,9 @@ module.exports = {
        'custom-blue' : "#5D52EA",
        'custom-light-blue' : "#A4C2FD",
        'custom-white-p' : "#D6D6D6",
+       'custom-light-tint-blue' : "#D5DFE8",
+       'custom-admin-dark' : "#1A1C1E",
+       'custom-admin-dark-100' : "#303030",
       },
       borderRadius: {
         '80p' : '80px',
