@@ -18,10 +18,16 @@ return new class extends Migration
             $table->string('address');
   
             $table->string('transport_address');
+            $table->string('purpose');
             $table->date('transport_date');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
             $table->timestamps();
+            
+            $table->foreign('user_id')
+            ->references('id')
+            ->on('users')
+            ->onDelete('cascade');
+            
+        
         });
     }
 

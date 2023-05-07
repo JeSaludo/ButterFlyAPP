@@ -27,9 +27,14 @@ class AdminController extends Controller
         return view('admin.auth.register');
     }
 
-    public function ShowDashboard(){
+    public function ShowDashboardUsers(){
         $users = User::all();
-        return view("admin.dashboard",compact('users') );
+        return view("admin.dashboard-users",compact('users') );
+    }
+
+    public function ShowDashboardApp(){
+        $users = User::all();
+        return view("admin.dashboard-app-form",compact('users') );
     }
     public function index()
     {

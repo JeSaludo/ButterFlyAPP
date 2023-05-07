@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('butterflies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->string('butterfly_name');
-            $table->integer('quantity');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('application_forms_id');
+            $table->string('name');
+            $table->integer('quantity');           
             $table->timestamps();
+
+            $table->foreign('application_forms_id')->references('id')->on('application_forms')->onDelete('cascade');
         });
     }
 

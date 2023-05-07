@@ -2,8 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Mail\WelcomeMail;
+use App\Models\Permit;
 use App\Models\User;
+use App\Models\Butterfly;
+use App\Models\Verifytoken;
+use App\Models\ApplicationForm;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Mail;
 
 class AdminCRUDController extends Controller
 {
@@ -25,6 +37,42 @@ class AdminCRUDController extends Controller
             'email' => 'required|email|unique:users,email',  
 
         ]);
+        $permit = Permit::where('permit_no', $request->wildlifePermit)->first();
+        
+        if($permit === null){
+            return back()->withErrors([
+                'wildlifePermit' => 'The provided credentials do not match our records.',
+            ])->onlyInput('wildlifePermit');
+        }
+
+        $password = Str::random(11);
+
+        $user = User::Create([
+            'first_name' => $request->firstName,
+            'last_name' => $request->lastName,
+            'username' => substr($request->firstName,0,1) . $request->lastName ,
+            'wildlife_permit' => $request->wildlifePermit,
+            'business_name' => $request->businessName,
+            'owner_name' => $request->ownerName,
+            'address' => $request->address,
+            'contact' => $request->contact,
+            'email' => $request->email,
+            'password' => Hash::make($password),
+        ]);
+
+        $validateToken = rand(10,100..'2022');
+
+        $get_token = new Verifytoken();
+        $get_token->token =  $validateToken;
+        $get_token->email = $request->email;
+        $get_token->save();
+        $get_user_email  = $request->email;
+        $get_user_name = substr($request->firstName,0,1) . $request->lastName;
+        Mail::to($request->email)->send(new WelcomeMail($get_user_email, $validateToken, $get_user_name, $password));
+        
+        
+
+        return redirect('/admin/dashboard/users');
     }
     public function edit($id)
     {
@@ -39,14 +87,16 @@ class AdminCRUDController extends Controller
         $data = $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
+            'username' => 'required',
             'wildlifePermit' => 'required',
             'businessName' => 'required',
             'ownerName' => 'required',
             'address' => 'required',
             'contact' => 'required|min:11',
             'email' => 'required|email|unique:users,email,' . $user->id,
+           
         ]);
-
+        
         $user->update($data);
 
         return redirect('admin/dashboard/users')->with('success', 'User updated successfully');
@@ -63,5 +113,16 @@ class AdminCRUDController extends Controller
             return redirect('admin/dashboard/users')->with('error', 'User not found.');
         }
     }
-
+    public function showApplicationForm()
+    {
+       // $applicationForms = ApplicationForm::all();
+       // $butterflies = Butterfly::all();
+        //return view('admin.dashboard-app-form', ['applicationForms' => $applicationForms]);
+        //$applicationForm = ApplicationForm::with('butterflies');
+        $usersWithPermit = User::whereHas('applicationForms')->with('applicationForms', 'applicationForms.butterflies')
+        ->get();
+        
+       return view('admin.dashboard-app-form', compact('usersWithPermit'));
+    
+    }
 }

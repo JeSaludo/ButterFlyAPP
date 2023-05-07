@@ -10,10 +10,10 @@ class Butterfly extends Model
     use HasFactory;
 
     protected $fillable = [
-      'butterfly_name', 'quantity'  
+      'butterfly_name', 'quantity'
     ];
 
-    public function user(){
-        return $this->belongsTo(User::class);
+    public function applicationForm(){
+        return $this->belongsTo(ApplicationForm::class, 'application_forms_id');
     }
 }

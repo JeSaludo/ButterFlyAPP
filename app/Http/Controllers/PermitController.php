@@ -23,7 +23,7 @@ class PermitController extends Controller
             'permit_no' => $request->permitNo
         ]);
 
-        return redirect('/');
+        return redirect('/admin/dashboard');
     }
 
 
@@ -42,8 +42,7 @@ class PermitController extends Controller
             'name' => 'required',
             'address' => 'required',
             'transportAddress' => 'required',
-            'transportDate' => 'required',
-            
+            'transportDate' => 'required',            
             'modeOfTransport' => 'required',
             'purpose' => 'required',
         ]);
@@ -53,8 +52,10 @@ class PermitController extends Controller
         $applicationForm->name = $request->name;
         $applicationForm->address = $request->address;
         $applicationForm->transport_address = $request->transportAddress;
+        $applicationForm->purpose = $request->purpose;
         $applicationForm->transport_date = $request->transportDate;
         $applicationForm->mode_of_transport = $request->modeOfTransport;
+      
         $applicationForm->save();
 
         $butterflies = [];
@@ -70,14 +71,14 @@ class PermitController extends Controller
 
         foreach($butterflies as $butterfly){
             $butterflyDB = new Butterfly();
-            $butterflyDB->user_id = Auth::user()->id;
-            $butterflyDB->butterfly_name = $butterfly['name'];
+            $butterflyDB->application_forms_id = $applicationForm->id;
+            $butterflyDB->name = $butterfly['name'];
             $butterflyDB->quantity = $butterfly['quantity'];
             $butterflyDB->save();
         }
         
        
-       return redirect('/');
+       return redirect('/');//add msg with successfull
        
      
     }
