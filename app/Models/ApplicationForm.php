@@ -18,6 +18,6 @@ class ApplicationForm extends Model
     }
 
     protected $fillable = [
-        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport',
+        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status',
       ];
 }

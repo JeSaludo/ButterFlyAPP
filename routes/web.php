@@ -62,13 +62,17 @@ use Illuminate\Http\Request;
         
         Route::delete('/admin/users/{user}', [AdminCRUDController::class,'destroy'])->name('admin.users.destroy');
     
-       // Route::get('admin/dashboard/applications', [AdminController::class, 'ShowDashboardApp'])->middleware('admin.auth');
-        Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'showApplicationForm'])->name('application-form');
+       Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'showApplicationForm'])->name('application-form');
     });
         
     Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    
     Route::post('/admin/register/process', [AdminController::class, 'CreateAccount']);
     
-    Route::get('/admin/application-form/{id}/edit', [ApplicationFormController::class, 'edit'])->name('application-form.edit');
-    Route::get('/admin/application-form/{id}', [ApplicationFormController::class, 'show'])->name('application-form.show');
-    Route::delete('/admin/application-form/{id}', 'ApplicationFormController@destroy')->name('application-form.destroy');
+    Route::get('/admin/application-forms/{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
+
+    Route::delete('/admin/application/{form}', [AdminCRUDController::class,'deleteApplication'])->name('delete-application');
+    Route::post('/admin/application/{form}/approve', [AdminCRUDController::class,'approveApplication'])->name('approve-application');
+    Route::post('/admin/application/{form}/deny', [AdminCRUDController::class,'denyApplication'])->name('deny-application');
+
+    Route::get('/admin/application/{id}/edit', [AdminCRUDController::class, 'editApplication'])->name('edit-application');
+    Route::put('/admin/application/{id}', [AdminCRUDController::class, 'updateApplication'])->name('update-application');   

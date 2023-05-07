@@ -28,27 +28,36 @@
                                   <td class="px-6 py-4">{{ $form->created_at }}</td>
                                   
                                   <td class="px-6 py-4">
-                                      <a href="" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Pending</a>
+                                      <a href="" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{ $form->status}}</a>
                                   </td>
                                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="" class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="" class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="" method="POST" style="display: inline-block;">
+                                    <a href="{{ route('application-forms.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                    <a href="{{ route('edit-application', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <form action="{{ Route('delete-application', $form->id)}}" method="POST" style="display: inline-block;">
                                       @csrf
                                       @method('DELETE')
                                       <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                                    </form>
-                                    
+                                    </form>                                    
                                 </td>
-                              </tr>
+
+                                <td>
+                                    <div class="flex">
+                                        <form action="{{route('approve-application', $form->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="mr-2 bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-4 rounded">Approve</button>
+                                        </form>
+                                        <form action="{{route('deny-application', $form->id)}}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Denied</button>
+                                        </form>
+                                    </td>
+                                </tr>
                           @endforeach
                       @endforeach
                   </tbody>
               </table>
 
-                  <div class="py-4">
-                    <a href="{{ route('admin.users.create')}}" class="px-4 py-1 bg-black text-white rounded-sm ml-4">ADD</a>
-                  </div>
+                
                  
               </div>
           </div>

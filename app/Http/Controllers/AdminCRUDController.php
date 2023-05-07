@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NotifyApprove;
 use App\Mail\WelcomeMail;
 use App\Models\Permit;
 use App\Models\User;
@@ -115,14 +116,102 @@ class AdminCRUDController extends Controller
     }
     public function showApplicationForm()
     {
-       // $applicationForms = ApplicationForm::all();
-       // $butterflies = Butterfly::all();
-        //return view('admin.dashboard-app-form', ['applicationForms' => $applicationForms]);
-        //$applicationForm = ApplicationForm::with('butterflies');
-        $usersWithPermit = User::whereHas('applicationForms')->with('applicationForms', 'applicationForms.butterflies')
+      $usersWithPermit = User::whereHas('applicationForms')->with('applicationForms', 'applicationForms.butterflies')
         ->get();
         
        return view('admin.dashboard-app-form', compact('usersWithPermit'));
     
     }
+    //
+
+    public function deleteApplication(ApplicationForm $form)
+    {
+        $form->delete();
+    
+        return redirect()->route('application-form')->with('success', 'Application deleted successfully.');
+    }
+    
+    public function approveApplication(ApplicationForm $form)
+    {
+        $form->status = 'approved';
+        $form->save();
+
+        
+        $user = User::findOrFail($form->user_id);
+        
+        
+        
+        Mail::to($user->email)->send(new NotifyApprove());
+
+        return redirect()->route('application-form')->with('success', 'Application approved successfully.');
+    }
+    
+    public function denyApplication(ApplicationForm $form)
+    {
+        $form->status = 'denied';
+        $form->save();
+    
+        return redirect()->route('application-form')->with('success', 'Application denied successfully.');
+    }
+
+    public function viewApplication($id){
+
+        $form = ApplicationForm::with('butterflies')->findOrFail($id);
+      
+        return view('admin.users.view-application', compact('form'));
+    
+    }
+
+    public function editApplication($id)
+    {
+        $form = ApplicationForm::findOrFail($id);
+        $butterflies = Butterfly::all();
+    
+        return view('admin.users.edit-application', compact('form', 'butterflies'));
+    }
+    
+    public function updateApplication(Request $request,$id){
+        $data = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'transportAddress' => 'required',
+            'transportDate' => 'required',            
+            'modeOfTransport' => 'required',
+            'purpose' => 'required',
+            'status' => 'required'
+        ]);
+      
+        $form = ApplicationForm::findOrFail($id);
+        
+        $form->name = $request->name;
+        $form->address = $request->address;
+        $form->transport_address = $request->transportAddress;
+        $form->purpose = $request->purpose;
+        $form->transport_date = $request->transportDate;
+        $form->mode_of_transport = $request->modeOfTransport;
+        $form->status = $request->status;
+        $form->save();
+
+        $butterflies = [];
+        $names = $request->input('butterfly_name');
+        $quantities = $request->input('butterfly_quantity');
+        foreach ($names as $index => $name) {
+            $quantity = $quantities[$index];
+            $butterflies[] = [
+                'name' => $name,
+                'quantity' => $quantity,
+            ];
+        }
+      
+        $butterflyDB = Butterfly::where('application_forms_id', $id)->get();
+        foreach ($butterflyDB as $index => $butterfly) {
+            $butterfly->name = $butterflies[$index]['name'];
+            $butterfly->quantity = $butterflies[$index]['quantity'];
+            $butterfly->save();
+        }
+
+        return redirect()->route('application-form');
+        
+    }
+
 }
