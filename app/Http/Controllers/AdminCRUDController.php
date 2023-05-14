@@ -95,9 +95,9 @@ class AdminCRUDController extends Controller
             'address' => 'required',
             'contact' => 'required|min:11',
             'email' => 'required|email|unique:users,email,' . $user->id,
-           
+            'status' => 'required|in:0,1',
         ]);
-        
+        $user->role = $request->status;
         $user->update($data);
 
         return redirect('admin/dashboard/users')->with('success', 'User updated successfully');
@@ -126,8 +126,7 @@ class AdminCRUDController extends Controller
 
     public function deleteApplication(ApplicationForm $form)
     {
-        $form->delete();
-    
+        $form->delete();    
         return redirect()->route('application-form')->with('success', 'Application deleted successfully.');
     }
     

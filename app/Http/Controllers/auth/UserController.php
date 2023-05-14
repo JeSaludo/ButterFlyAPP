@@ -58,6 +58,13 @@ class UserController extends Controller
        
         
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $deactivatedRoleId = 1;
+            if ($user->role === $deactivatedRoleId) {
+                Auth::logout();
+                return redirect()->route('login')->withErrors([
+                    'email_or_username' => 'Your account is deactivated.']);
+            }
             $request->session()->regenerate();
             return redirect()->intended('/');
         }

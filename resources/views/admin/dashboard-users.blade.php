@@ -29,12 +29,17 @@
                                   Not Verified
                                 @endif
                                 </td>
-                              <td class="px-6 py-4 whitespace-nowrap">                                  
-                                    @if($user->is_activated == "1")
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activate</span>
-                                  @else
-                                  <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-700">Deactive</span>
-                                  @endif
+                              <td class="px-6 py-4 whitespace-nowrap">   
+                                    @if($user->role == 0)
+                                      @if($user->is_activated == "1")
+                                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Activate</span>
+                                      @else
+                                      <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-700">Deactive</span>
+                                      @endif  
+                                    @else
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-200 text-red-700">Deactive</span>
+                                   @endif                                
+                                  
                                
                               </td>
                               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

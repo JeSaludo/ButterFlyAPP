@@ -76,3 +76,6 @@ use Illuminate\Http\Request;
 
     Route::get('/admin/application/{id}/edit', [AdminCRUDController::class, 'editApplication'])->name('edit-application');
     Route::put('/admin/application/{id}', [AdminCRUDController::class, 'updateApplication'])->name('update-application');   
+
+
+    
