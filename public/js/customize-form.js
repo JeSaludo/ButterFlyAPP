@@ -24,8 +24,8 @@ function addInput(){
     amount.name = "butterfly_quantity[]"// + counter
 
     const btn=document.createElement("a");
-    btn.className = "delete text-white bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md mt-2";
-    btn.innerHTML = "&times";
+    btn.className = "delete text-white border-custom-dark-500 border-2 p-1.5 rounded-md mt-2 cursor-pointer";
+    btn.innerHTML = "DELETE";
 
     btn.addEventListener("click", removeInput);
 

@@ -101,7 +101,7 @@
             
             <div class="flex justify-between gap-5 mt-5  text-center w-full md:w-9/12  mx-auto md:mx-0">
                 <a href="/permit/apply" class="font-poppins text-xs xl:text-xl text-white bg-custom-blue  w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply For Permit</a>
-                <a href="/learn-more" class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4  border-white border-2 rounded-xl">Learn More</a>
+                <a href="#learn-more" class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4  border-white border-2 rounded-xl">Learn More</a>
             </div>
         </div>
     </div>
@@ -137,7 +137,9 @@
 
 
             </div>
+        </section>
 
+        <section id="learn-more">
             <h1 class="text-4xl w-7/12 md:w-3/12 text-center mx-auto font-raleway font-bold"><span class="text-custom-blue">How To Apply In </span>Our Website</h1>
 
             <div class="grid grid-row xl:grid-cols-3 gap-4 my-36">

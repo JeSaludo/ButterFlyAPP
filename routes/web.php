@@ -80,7 +80,7 @@ use Illuminate\Http\Request;
 
     
     Route::get('/test/web', function(){
-        return view('recreate.register-application');
+        return view('recreate.apply-permit');
     });
         
 
