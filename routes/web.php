@@ -3,6 +3,8 @@
 use App\Http\Controllers\AdminCRUDController;
 use App\Http\Controllers\ApplicationFormController;
 use App\Http\Controllers\auth\AdminController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\PermitController;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +24,7 @@ use Illuminate\Http\Request;
 */
 
 
-    Route::get('/',[UserController::class, 'index']);
+    Route::get('/',[UserController::class, 'index'])->name('home');
 
     Route::get('/login', [UserController::class, 'ShowLogin'])->name('login');
     Route::get('/register', [UserController::class, 'ShowRegister'])->name('register');
@@ -59,7 +61,13 @@ use Illuminate\Http\Request;
         Route::post('/admin/dashboard/users/store', [AdminCRUDController::class, 'store'])->name('admin.users.store');
         Route::get('/admin/dashboard/users/{user}/edit', [AdminCRUDController::class, 'edit'])->name('admin.users.edit');
         Route::put('/admin/dashboard/users/{user}', [AdminCRUDController::class, 'update'])->name('admin.users.update');
-        
+        Route::delete('/admin/application/{form}', [AdminCRUDController::class,'deleteApplication'])->name('delete-application');
+        Route::post('/admin/application/{form}/approve', [AdminCRUDController::class,'approveApplication'])->name('approve-application');
+        Route::post('/admin/application/{form}/deny', [AdminCRUDController::class,'denyApplication'])->name('deny-application');
+
+        Route::get('/admin/application/{id}/edit', [AdminCRUDController::class, 'editApplication'])->name('edit-application');
+        Route::put('/admin/application/{id}', [AdminCRUDController::class, 'updateApplication'])->name('update-application');   
+
         Route::delete('/admin/users/{user}', [AdminCRUDController::class,'destroy'])->name('admin.users.destroy');
     
        Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'showApplicationForm'])->name('application-form');
@@ -70,12 +78,14 @@ use Illuminate\Http\Request;
     
     Route::get('/admin/application-forms/{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
 
-    Route::delete('/admin/application/{form}', [AdminCRUDController::class,'deleteApplication'])->name('delete-application');
-    Route::post('/admin/application/{form}/approve', [AdminCRUDController::class,'approveApplication'])->name('approve-application');
-    Route::post('/admin/application/{form}/deny', [AdminCRUDController::class,'denyApplication'])->name('deny-application');
-
-    Route::get('/admin/application/{id}/edit', [AdminCRUDController::class, 'editApplication'])->name('edit-application');
-    Route::put('/admin/application/{id}', [AdminCRUDController::class, 'updateApplication'])->name('update-application');   
-
-
     
+    Route::get('/test/web', function(){
+        return view('recreate.register-application');
+    });
+        
+
+
+Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
+Route::post('password/reset/reset', [ResetPasswordController::class,'reset'])->name('password.update');

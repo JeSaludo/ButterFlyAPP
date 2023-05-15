@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('username')->nullable();
-            $table->string('wildlife_permit');
+            $table->string('wfp_permit')->nullable();
+            $table->string('wcp_permit')->nullable();
             $table->string('business_name');
             $table->string('owner_name');
             $table->string('address');     

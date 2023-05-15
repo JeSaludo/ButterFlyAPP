@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
+
 
 class UserController extends Controller
 
@@ -74,56 +76,88 @@ class UserController extends Controller
             'email_or_username' => 'The provided credentials do not match our records.',
         ])->onlyInput('email_or_username');
     }
+
+ 
     public function CreateAccount(Request $request){
         $data = $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'wildlifePermit' => 'required',
             'businessName' => 'required',
             'ownerName' => 'required',
             'address' => 'required',
-            'contact' => 'required|min:11',            
-            'email' => 'required|email|unique:users,email',  
-
+            'contact' => 'required|min:11',
+            'email' => 'required|email|unique:users,email',
+            'wfpPermit' => 'nullable',
+            'wcpPermit' => 'nullable',
         ]);
-        $permit = Permit::where('permit_no', $request->wildlifePermit)->first();
+    
+    
         
-        if($permit === null){
+    
+        $wfpPermit = $request->input('wfp_permit');
+        $wcpPermit = $request->input('wcp_permit');
+    
+        if (empty($wfpPermit) && empty($wcpPermit)) {
             return back()->withErrors([
-                'wildlifePermit' => 'The provided credentials do not match our records.',
-            ])->onlyInput('wildlifePermit');
+                'permits' => 'At least one permit is required.',
+            ])->withInput();
         }
-
+    
+        if (!empty($wfpPermit)) {
+            $permit = Permit::where('permit_type', 'wfp')
+                ->where('permit_no', $wfpPermit)
+                ->where('expiration_date', '>=', now())
+                ->first();
+    
+            if (!$permit) {
+                return back()->withErrors([
+                    'wfp_permit' => 'Invalid or expired WFP permit.',
+                ])->withInput();
+            }
+        }
+    
+        if (!empty($wcpPermit)) {
+            $permit = Permit::where('permit_type', 'wcp')
+                ->where('permit_no', $wcpPermit)
+                ->where('owner_name', $request->input('ownerName'))
+                ->where('expiration_date', '>=', now())
+                ->first();
+    
+            if (!$permit) {
+                return back()->withErrors([
+                    'wcp_permit' => 'Invalid or expired WCP permit.',
+                ])->withInput();
+            }
+        }
         $password = Str::random(11);
-
-        $user = User::Create([
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'username' => substr($request->firstName,0,1) . $request->lastName ,
-            'wildlife_permit' => $request->wildlifePermit,
-            'business_name' => $request->businessName,
-            'owner_name' => $request->ownerName,
-            'address' => $request->address,
-            'contact' => $request->contact,
-            'email' => $request->email,
+    
+        $user = User::create([
+            'first_name' => $request->input('firstName'),
+            'last_name' => $request->input('lastName'),
+            'username' => substr($request->input('firstName'), 0, 1) . $request->input('lastName'),
+            'wfp_permit' => $wfpPermit,
+            'wcp_permit' => $wcpPermit,
+            'business_name' => $request->input('businessName'),
+            'owner_name' => $request->input('ownerName'),
+            'address' => $request->input('address'),
+            'contact' => $request->input('contact'),
+            'email' => $request->input('email'),
             'password' => Hash::make($password),
         ]);
-
-        $validateToken = rand(10,100..'2022');
-
-        $get_token = new Verifytoken();
-        $get_token->token =  $validateToken;
-        $get_token->email = $request->email;
-        $get_token->save();
-        $get_user_email  = $request->email;
-        $get_user_name = substr($request->firstName,0,1) . $request->lastName;
-        Mail::to($request->email)->send(new WelcomeMail($get_user_email, $validateToken, $get_user_name, $password));
-        
-        
-        return redirect('/verify-account');
-
-        
-        
+    
+        $validateToken = rand(10, 100) . '2022';
+    
+        $verifyToken = new Verifytoken();
+        $verifyToken->token = $validateToken;
+        $verifyToken->email = $request->input('email');
+        $verifyToken->save();
+    
+        $userEmail = $request->input('email');
+        $userName = substr($request->input('firstName'), 0, 1) . $request->input('lastName');
+        Mail::to($userEmail)->send(new WelcomeMail($userEmail, $validateToken, $userName, $password));
+    
+        return redirect('/verify-account')->with('email', $request->email);
+     
     }
 
     public function logout(Request $request){

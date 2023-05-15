@@ -69,7 +69,7 @@
       </div>
       <div class="text-white flex justify-between w-6/12 mx-auto">
          <h2>Add Butterfly</h2>
-         <a href="#" class="add text-whitebg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md p-2 py-0">&plus;</a>
+         <a href="#" class="add text-white bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md  py-0">&plus;</a>
       </div>
 
       <div class="inp-group w-6/12 mx-auto">
@@ -93,3 +93,4 @@
    <script src="{{ asset('js/customize-form.js') }}"></script>
  
 @include("layout.footer")
+

@@ -11,7 +11,8 @@
                       <thead>
                           <tr>
                               <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wildlife Permit</th>
+                              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wildlife Collector Permit</th>
+                              <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wildlife Farm Permit</th>
                               <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email Verified </th>
                               <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                               <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
@@ -21,7 +22,16 @@
                           @foreach($users as $user)
                           <tr>
                               <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $user->username}}</td>
-                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->wildlife_permit}}</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->wcp_permit}}
+                                 @if (!$user->wcp_permit) 
+                                  NULL 
+                                
+                                
+                              @endif</td>
+                              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->wfp_permit}} 
+                                @if (!$user->wfp_permit) 
+                                NULL
+                                @endif</td>
                               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 @if($user->email_verified_at)
                                   {{$user->email_verified_at}}

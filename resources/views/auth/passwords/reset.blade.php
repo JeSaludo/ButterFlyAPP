@@ -43,39 +43,46 @@
             @endif
             </div>            
         </nav>
-
         <div class="bg-custom-bg-light-dark w-7/12  mx-auto  ">
             
             <div class="flex flex-col-reverse lg:flex-row justify-between">           
             <div class="w-full  lg:w-3/6 mb-10 ">
-                <form action="/login/authenticate" method="POST">
+                <form action="{{ route('password.update') }}" method="POST">
+                  
                     @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
                     <div class="px-2 md:px-4 xl:pl-12 mt-4 mx-2 ">
                         <div class="lg:pt-16 mx-auto w-12/12 text-center">
-                            <h1 class="text-center md:text-left  text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">LOGIN <span class="text-white">TO ACCOUNT</span></h1>
-                            <p class="text-center md:text-left text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Sign in to continue accessing the platform</p>
+                            <h1 class="text-center md:text-left  text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">RESET <span class="text-white">PASSWORD</span></h1>
+                            <p class="text-center md:text-left text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Enter your email address and create a new password to reset your account's password.</p>
+                            
                         </div>
-                        
-                        <div class="mt-8">
-                   
-                        <label class="my-2 block text-sm text-custom-white-p" for="email_or_username">Email or Username:
-                            <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                            type="text" name="email_or_username" id="email_or_username" placeholder="Enter Email Address or Username"></label>
-                            @error('email_or_username')
-                            <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                            @enderror
-                        <label class="my-2 block text-sm text-custom-white-p" for="password">Password:
-                            <input class="w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                            type="password" name="password" id="password" placeholder="Enter Password"></label>
-                            @error('password')
-                            <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                            @enderror
+                        <div class="mt-4">
+                            
+                            <label class="my-2 block text-sm text-custom-white-p" for="email">Email Address:
+                                <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="email" id="email" placeholder="Enter Email Address or Username"></label>
+                                @error('email')
+                                <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+                                @enderror  
+
+                            <label class="my-2 block text-sm text-custom-white-p" for="password">Password:
+                                <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="password" id="password" placeholder="Enter Password"></label>
+                                @error('password')
+                                <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+                                @enderror 
+
+                            <label class="my-2 block text-sm text-custom-white-p" for="password_confirmation">Confirm Password:
+                                <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password"></label>
+                                @error('password_confirmation')
+                                <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+                                @enderror 
                        
-                        <button type="submit" class="font-poppins text-xl text-white bg-custom-blue mt-4 w-11/12 py-2 border-none rounded-md">Login</button>
+                            <button type="submit" class="font-poppins text-xl text-white bg-custom-blue mt-4 w-11/12 py-2 border-none rounded-md">Reset Password</button>
                         
-                        <div class="text-right mr-6 mt-2">
-                            <a href="{{ route('password.request') }}" class=" text-white font-light right">Forgot Password?</a>
-                        </div>
+                     
                          </div>
                         
                         </form>
@@ -90,8 +97,7 @@
             </div>
         
         </div>
-
-
+       
 
     </div>
 
