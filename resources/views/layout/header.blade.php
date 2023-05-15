@@ -10,5 +10,5 @@
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@400;500;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
 </head>
-
-    
+<body class="bg-custom-dark-900">
+    <div class="min-h-screen">

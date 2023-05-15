@@ -54,9 +54,46 @@
                                 </tr>
                           @endforeach
                       @endforeach
+                     
                   </tbody>
               </table>
-
+              <div class="p-4">
+                <nav class="flex items-center justify-between">
+                    <div class="flex-1 flex justify-between">
+                        <!-- Previous Page Link -->
+                        @if ($usersWithPermit->onFirstPage())
+                            <span class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                {!! __('pagination.previous') !!}
+                            </span>
+                        @else
+                            <a href="{{ $users->previousPageUrl() }}" class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                {!! __('pagination.previous') !!}
+                            </a>
+                        @endif
+                            <!-- Pagination Information -->
+                      <div class="text-sm text-gray-500">
+                        <span>{!! __('Showing') !!}</span>
+                        <span class="font-medium">{{ $usersWithPermit->firstItem() }}</span>
+                        <span>{!! __('to') !!}</span>
+                        <span class="font-medium">{{ $usersWithPermit->lastItem() }}</span>
+                        <span>{!! __('of') !!}</span>
+                        <span class="font-medium">{{ $usersWithPermit->total() }}</span>
+                        <span>{!! __('results') !!}</span>
+                    </div>
+                        <!-- Next Page Link -->
+                        @if ($usersWithPermit->hasMorePages())
+                            <a href="{{ $users->nextPageUrl() }}" class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                {!! __('pagination.next') !!}
+                            </a>
+                        @else
+                            <span class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                {!! __('pagination.next') !!}
+                            </span>
+                        @endif
+                    </div>
+            
+                    
+                </nav>
                 
                  
               </div>

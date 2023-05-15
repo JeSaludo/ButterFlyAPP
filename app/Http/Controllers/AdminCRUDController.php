@@ -26,26 +26,54 @@ class AdminCRUDController extends Controller
         return view('admin.users.create');
     }
     public function store(Request $request){
-
+       
         $data = $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'wildlifePermit' => 'required',
+           
             'businessName' => 'required',
             'ownerName' => 'required',
             'address' => 'required',
             'contact' => 'required|min:11',            
             'email' => 'required|email|unique:users,email',  
-
+            'wfpPermit' => 'nullable',
+            'wcpPermit' => 'nullable',
         ]);
-        $permit = Permit::where('permit_no', $request->wildlifePermit)->first();
-        
-        if($permit === null){
+        $wfpPermit = $request->input('wfp_permit');
+        $wcpPermit = $request->input('wcp_permit');
+    
+        if (empty($wfpPermit) && empty($wcpPermit)) {
             return back()->withErrors([
-                'wildlifePermit' => 'The provided credentials do not match our records.',
-            ])->onlyInput('wildlifePermit');
+                'permits' => 'At least one permit is required.',
+            ])->withInput();
         }
-
+    
+        if (!empty($wfpPermit)) {
+            $permit = Permit::where('permit_type', 'wfp')
+                ->where('permit_no', $wfpPermit)
+                ->where('expiration_date', '>=', now())
+                ->first();
+    
+            if (!$permit) {
+                return back()->withErrors([
+                    'wfp_permit' => 'Invalid or expired WFP permit.',
+                ])->withInput();
+            }
+        }
+    
+        if (!empty($wcpPermit)) {
+            $permit = Permit::where('permit_type', 'wcp')
+                ->where('permit_no', $wcpPermit)
+                ->where('owner_name', $request->input('ownerName'))
+                ->where('expiration_date', '>=', now())
+                ->first();
+    
+            if (!$permit) {
+                return back()->withErrors([
+                    'wcp_permit' => 'Invalid or expired WCP permit.',
+                ])->withInput();
+            }
+        }
         $password = Str::random(11);
 
         $user = User::Create([
@@ -59,6 +87,7 @@ class AdminCRUDController extends Controller
             'contact' => $request->contact,
             'email' => $request->email,
             'password' => Hash::make($password),
+            
         ]);
 
         $validateToken = rand(10,100..'2022');
@@ -84,19 +113,23 @@ class AdminCRUDController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
+      
         $data = $request->validate([
             'firstName' => 'required',
             'lastName' => 'required',
-            'username' => 'required',
-            'wildlifePermit' => 'required',
+            'username' => 'required',            
             'businessName' => 'required',
             'ownerName' => 'required',
             'address' => 'required',
             'contact' => 'required|min:11',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'status' => 'required|in:0,1',
+            'wfp_permit' => 'nullable',
+            'wcp_permit' => 'nullable',
+            
         ]);
+        
+        
         $user->role = $request->status;
         $user->update($data);
 
@@ -116,8 +149,13 @@ class AdminCRUDController extends Controller
     }
     public function showApplicationForm()
     {
-      $usersWithPermit = User::whereHas('applicationForms')->with('applicationForms', 'applicationForms.butterflies')
-        ->get();
+        $usersWithPermit = User::whereHas('applicationForms', function ($query) {
+            $query->where('is_draft', false);
+        })
+        ->with(['applicationForms' => function ($query) {
+            $query->where('is_draft', false);
+        }, 'applicationForms.butterflies'])
+        ->paginate(10); // Specify the number of items per page
         
        return view('admin.dashboard-app-form', compact('usersWithPermit'));
     

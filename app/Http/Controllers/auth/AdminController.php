@@ -28,19 +28,19 @@ class AdminController extends Controller
     }
 
     public function ShowDashboardUsers(){
-        $users = User::all();
-        return view("admin.dashboard-users",compact('users') );
+        $users = User::paginate(10);
+        return view('admin.dashboard-users', compact('users'));
     }
 
-    public function ShowDashboardApp(){
-        $users = User::all();
-        return view("admin.dashboard-app-form",compact('users') );
-    }
-    public function index()
-    {
-        $users = User::all();
-        return view('admin.users.index', compact('users'));
-    }
+    //public function ShowDashboardApp(){
+    //    $users = User::all();
+//return view("admin.dashboard-app-form",compact('users') );
+//}
+    //public function index()
+  //  {
+   //     $users = User::all();
+   //     return view('admin.users.index', compact('users'));
+   // }
 
     
     public function Authenticate(Request $request): RedirectResponse

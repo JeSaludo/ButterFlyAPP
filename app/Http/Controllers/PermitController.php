@@ -55,7 +55,7 @@ class PermitController extends Controller
         $applicationForm->purpose = $request->purpose;
         $applicationForm->transport_date = $request->transportDate;
         $applicationForm->mode_of_transport = $request->modeOfTransport;
-      
+        $applicationForm->is_draft = false;
         $applicationForm->save();
 
         $butterflies = [];
@@ -82,5 +82,53 @@ class PermitController extends Controller
        
      
     }
+
+    public function DraftApplication(Request $request){
+        
+        $data = $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+            'transportAddress' => 'required',
+            'transportDate' => 'required',            
+            'modeOfTransport' => 'required',
+            'purpose' => 'required',
+        ]);
+
+        $applicationForm =  new ApplicationForm();
+        $applicationForm->user_id = Auth::user()->id;
+        $applicationForm->name = $request->name;
+        $applicationForm->address = $request->address;
+        $applicationForm->transport_address = $request->transportAddress;
+        $applicationForm->purpose = $request->purpose;
+        $applicationForm->transport_date = $request->transportDate;
+        $applicationForm->mode_of_transport = $request->modeOfTransport;
+        $applicationForm->is_draft = true;
+        $applicationForm->save();
+
+        $butterflies = [];
+        $names = $request->input('butterfly_name');
+        $quantities = $request->input('butterfly_quantity');
+        foreach ($names as $index => $name) {
+            $quantity = $quantities[$index];
+            $butterflies[] = [
+                'name' => $name,
+                'quantity' => $quantity,
+            ];
+        }
+
+        foreach($butterflies as $butterfly){
+            $butterflyDB = new Butterfly();
+            $butterflyDB->application_forms_id = $applicationForm->id;
+            $butterflyDB->name = $butterfly['name'];
+            $butterflyDB->quantity = $butterfly['quantity'];
+            $butterflyDB->save();
+        }
+        
+       
+       return redirect('/');//add msg with successfull
+       
+     
+    }
+
 
 }

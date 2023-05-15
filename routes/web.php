@@ -39,7 +39,8 @@ use Illuminate\Http\Request;
         Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit']);
         Route::post('/permit/apply-permit-process', [PermitController::class, 'RegisterApplication']);        
         Route::get('/logout', [UserController::class, 'logout']);
-        
+        Route::post('/permit/draft/save', [PermitController::class, 'DraftApplication'])->name('draft.save');
+
         
     });
 
