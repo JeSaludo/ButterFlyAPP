@@ -55,76 +55,104 @@
                 
                 <div class="w-8/12 mx-auto">
 
-                        <div class="grid grid-flow-col gap-5">
+                        <div class="grid grid-flow-row md:grid-flow-col md:gap-5">
                             <div>
-                                <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="firstName">First Name:
-                                <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="firstName" id="firstName" placeholder="Enter First Name"></label>
-                                @error('firstName')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
+                                <div>
+                                    <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="firstName">First Name:
+                                    <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                    type="text" name="firstName" id="firstName" placeholder="Enter First Name"></label>
+                                    @error('firstName')
+                                    <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="lastName">Last Name:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="lastName" id="lastName" placeholder="Enter Last Name"></label>
+                                        @error('lastName')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                                <div >
+                                    <label class="my-2 block text-sm text-custom-white-p" for="email">Email Address:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="email" name="email" id="email" placeholder="Enter Email Address"></label>
+                                        @error('email')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                                
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="businessName">Business Name:
+                                    <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                    type="text" name="businessName" id="businessName" placeholder="Enter Business Name"></label>
+                                    @error('businessName')
+                                    <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="address">Address:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="address" id="address" placeholder="Enter Address"></label>
+                                        @error('address')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                               
 
                              </div>
 
                              <div>
-                                <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="lastName">Last Name:
-                                    <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                    type="text" name="lastName" id="lastName" placeholder="Enter last Name"></label>
-                                    @error('lastName')
-                                    <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                    @enderror
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="lastName">WFP No:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="wfp_permit" id="wfp_permit" placeholder="Enter Wildlife Farm Permit"></label>
+                                        @error('wfp_permit')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                                
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="wcp_permit">WCP No:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="wcp_permit" id="wcp_permit" placeholder="Enter Wildlife Collector Permit"></label>
+                                        @error('wcp_permit')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="ownerName">Owner Name:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="ownerName" id="ownerName" placeholder="Enter Owner Name"></label>
+                                        @error('ownerName')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="contact">Contact Number:
+                                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                        type="text" name="contact" id="contact" placeholder="Enter Contact Number"></label>
+                                        @error('contact')
+                                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                        @enderror
+                                </div>
+                               
                              </div>
                         </div>  
 
-                        <label class="my-2 block text-sm text-custom-white-p" for="lastName">WFP No:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="wfp_permit" id="wfp_permit" placeholder="Enter Wildlife Farm Permit"></label>
-                        @error('wfp_permit')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
+                        
 
-                        <label class="my-2 block text-sm text-custom-white-p" for="wcp_permit">WCP No:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="wcp_permit" id="wcp_permit" placeholder="Enter Wildlife Collector Permit"></label>
-                        @error('wcp_permit')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
-
-                        <label class="my-2 block text-sm text-custom-white-p" for="businessName">Business Name:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="businessName" id="businessName" placeholder="Enter Business Name"></label>
-                        @error('businessName')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
-                            
-                        <label class="my-2 block text-sm text-custom-white-p" for="ownerName">Owner Name:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="ownerName" id="ownerName" placeholder="Enter Owner Name"></label>
-                        @error('ownerName')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
-
-                        <label class="my-2 block text-sm text-custom-white-p" for="address">Address:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="address" id="address" placeholder="Enter Address"></label>
-                        @error('address')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
-                       
-
-                        <label class="my-2 block text-sm text-custom-white-p" for="contact">Contact Number:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="text" name="contact" id="contact" placeholder="Enter Contact Number"></label>
-                        @error('contact')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
-
-                        <label class="my-2 block text-sm text-custom-white-p" for="email">Email Address:
-                        <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                        type="email" name="email" id="email" placeholder="Enter Email Address"></label>
-                        @error('email')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
                         <button type="submit" class="mb-5 font-poppins text-xl text-white bg-custom-blue mt-5 w-full py-2 border-none rounded-md">Create an Account</button>
             
                     </div> 

@@ -27,6 +27,7 @@ module.exports = {
        'custom-light-tint-blue' : "#D5DFE8",
        'custom-admin-dark' : "#1A1C1E",
        'custom-admin-dark-100' : "#303030",
+       'custom-admin-bg' : "#EFF1F3",
 
        'custom-bg-dark' : "#1A1A1C",
        'custom-bg-light-dark' : "#252525",
@@ -36,16 +37,19 @@ module.exports = {
        'custom-red': "#FF6477",
        'custom-pink': "#FC77AE",
        'custom-violet': "#6E6ADE",
+       'custom-dark-blue' : "#264364",
       },
       borderRadius: {
         '80p' : '80px',
+        '20' : '20px',
       },
 
       spacing: {
         '486' : '486px',
         '1440' : '1440px',
-        '799' : '640px',
+        '799' : '680px',
         '258' : '258px',
+        '300' : '300px',
       },
       zIndex: {
         'n1': '-10',

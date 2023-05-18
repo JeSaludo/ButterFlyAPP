@@ -9,7 +9,7 @@
     <span class="py-4 text-3xl text-white cursor-pointer mx-2 mb-2 md:hidden block"><ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
     </span>
    
-   <ul class="md:flex bg-custom-dark-900 md:bg-transparent  md:items-center md:z-auto md:static absolute  z-100 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+   <ul class="md:flex bg-custom-dark-900 md:bg-transparent  md:items-center md:z-auto md:static absolute  z-30 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
     
 
 
@@ -21,11 +21,15 @@
             </li>
 
             <li class="ml-4 my-6 md:my-0 ">
-                <a href="#features" class="text-md  text-white hover:text-custom-dark-600">FEATURES</a>
+                <a href="/#features" class="text-md  text-white hover:text-custom-dark-600">FEATURES</a>
             </li>
 
             <li class="ml-4 my-6 md:my-0 ">
-                <a href="" class="text-md  text-white hover:text-custom-dark-600">MY APPLICATION</a>
+                <a href="{{route('myapplications.submit.show')}}" class="text-md  text-white hover:text-custom-dark-600">MY APPLICATION</a>
+            </li>
+
+            <li class="ml-4 my-6 md:my-0 ">
+                <a href="{{route('myapplications.draft.show')}}" class="text-md  text-white hover:text-custom-dark-600">MY DRAFT</a>
             </li>
     </div>
     <div class="md:flex  py-4">

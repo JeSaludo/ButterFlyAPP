@@ -17,19 +17,20 @@
 
         <div class="bg-custom-bg-light-dark w-7/12  mx-auto  ">
             <div class="mx-auto pt-8 ">
-                <h1 class="text-center text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">REGISTER <span class="text-white">AN APPLICATION</span></h1>
+                <h1 class="text-center text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">UPDATE <span class="text-white">DRAFT  APPLICATION</span></h1>
                 <p class="text-center text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Lorem ipsum dolor sit amet, consectetur..</p>
                 
-                <form action="/permit/apply-permit-process" method="post">
+                <form action="{{ route('user.update-application', $form->id) }}" method="post">
                     @csrf
+                    @method('PUT')
                     <div class="grid grid-flow-col">
                         
                         <div class="w-full px-10 pb-10">
                             <p class="text-white mt-6">PERSONAL INFORMATION</p>
                             <div>
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="name">Full Name:</label>
-                                <input class="w-full block mt-2 text-custom-white-p placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="name" id="name" placeholder="Enter Full Name">
+                                <input class="w-full block mt-2 placeholder:text-custom-dark-500 bg-transparent text-custom-white-p border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="name" id="name" placeholder="Enter Full Name" value="{{$form->name}}">
                                 @error('name')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -38,7 +39,7 @@
                             <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="address">Address:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="address" id="address" placeholder="Enter Address">
+                                type="text" name="address" id="address" placeholder="Enter Address" value="{{$form->address}}">
                                 @error('address')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -46,7 +47,7 @@
                              <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Mode Of Transport:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="modeOfTransport" id="modeOfTransport" placeholder="Enter Mode of Transport">
+                                type="text" name="modeOfTransport" id="modeOfTransport" placeholder="Enter Mode of Transport" value="{{$form->mode_of_transport}}">
                                 @error('modeOfTransport')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -54,7 +55,7 @@
                              <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportAddress">Transport to Address:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="transportAddress" id="name" placeholder="Enter Transport to Address">
+                                type="text" name="transportAddress" id="name" placeholder="Enter Transport to Address" value="{{$form->transport_address}}">
                                 @error('transportAddress')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -63,7 +64,7 @@
                              <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="transportDate">Date of Transport:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="date" name="transportDate" id="transportDate">
+                                type="date" name="transportDate" id="transportDate" value="{{$form->transport_date}}">
                                 @error('transportDate')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -73,31 +74,33 @@
                              <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Purpose:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="purpose" id="purpose" placeholder="Enter purpose of transport">
+                                type="text" name="purpose" id="purpose" placeholder="Enter purpose of transport" value="{{$form->purpose}}"> 
                                 @error('purpose')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
                              </div>
 
                              <div class="flex justify-between gap-2">
-                                <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Apply</button>
-                                <button type="submit" formaction="{{ route('draft.save') }}" class="w-6/12 mx-auto font-poppins text-xl text-white bg-transparent border-custom-dark-500 border-2 mt-4  py-2  rounded-md">Draft</button>
-            
+                                <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
+                               
                              </div>
                         </div>
 
                         <div class="w-full px-10">
-                            <p class="text-white mt-6 mb-4">BUTTERFLY INFORMATION</p>
-                            <div class="grid grid-flow-col gap-2">
-                                <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]">
-                                <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity[]">
-                                <a href="#" class="add text-white bg-custom-blue p-1.5 rounded-md mt-2 cursor-pointer "> Add Field</a>
-                               
+                            <p class="text-white mt-6 ">BUTTERFLY INFORMATION</p>
+                            <div class="grid grid-flow-col">
+                                <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Name:</label>
+                                <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Quantity:</label>
+                        
                             </div>
-                            <div class="inp-group">
-        
-                            </div>
-
+                            @foreach ($form->butterflies as $butterfly)
+                                
+                                <div class="grid grid-flow-col gap-2">
+                                    
+                                    <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]" value="{{ $butterfly->name }}">
+                                    <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity[]" value="{{ $butterfly->quantity }}">
+                                </div>
+                            @endforeach
                             <div class="grid grid-flow-col">
                                 @error('butterfly_name[]')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
@@ -106,9 +109,6 @@
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
                             </div>
-                          
-                          
-                           
                         </div>
                        
                     </div>

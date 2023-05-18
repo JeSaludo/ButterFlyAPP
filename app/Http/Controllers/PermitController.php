@@ -45,6 +45,8 @@ class PermitController extends Controller
             'transportDate' => 'required',            
             'modeOfTransport' => 'required',
             'purpose' => 'required',
+            'butterfly_name.*' => 'required',
+            'butterfly_quantity.*' => 'required',
         ]);
 
         $applicationForm =  new ApplicationForm();
@@ -92,6 +94,8 @@ class PermitController extends Controller
             'transportDate' => 'required',            
             'modeOfTransport' => 'required',
             'purpose' => 'required',
+            'butterfly_name.*' => 'required',
+            'butterfly_quantity.*' => 'required',
         ]);
 
         $applicationForm =  new ApplicationForm();

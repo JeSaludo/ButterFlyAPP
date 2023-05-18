@@ -34,13 +34,13 @@ class AdminController extends Controller
 
     //public function ShowDashboardApp(){
     //    $users = User::all();
-//return view("admin.dashboard-app-form",compact('users') );
-//}
+    //return view("admin.dashboard-app-form",compact('users') );
+    //}
     //public function index()
-  //  {
-   //     $users = User::all();
-   //     return view('admin.users.index', compact('users'));
-   // }
+    //  {
+    //     $users = User::all();
+    //     return view('admin.users.index', compact('users'));
+    // }
 
     
     public function Authenticate(Request $request): RedirectResponse
@@ -61,7 +61,7 @@ class AdminController extends Controller
 
     public function CreateAccount(Request $request){
         $data = $request->validate([
-            'username' => 'required',             
+            'username' => 'required|unique:admins,username',             
             'email' => 'required|email|unique:admins,email',  
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required|min:8'

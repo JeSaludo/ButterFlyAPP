@@ -1,93 +1,185 @@
-@include('admin.layout.header')
+<!DOCTYPE html>
+<html lang="en">
 
-<body class="bg-custom-light-tint-blue"> 
-@include('admin.layout.dashboard-nav')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Dashboard | WildLife</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@400;500;700&family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,300&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet"> @vite('resources/css/app.css')
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    @vite('resources/css/app.css')
+  
+</head>
 
-        <div class="md:ml-64">
-          <div class="m-4 p-4 bg-white ">
-                <form action="{{ route('update-application', $form->id) }}" method="POST">
-                  @csrf
-                  @method('PUT')
-                  <div class="mt-5">
-                    <label class="block" for="name">Name: </label>
-                    <input class="" type="text" name="name" id="name" value="{{ $form->name}}">
-                    @error('name')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                    @enderror
-                 </div>
-               
-                  <div class="mt-5">
-                    <label class="block" for="address">Address: </label>
-                    <input class="" type="text" name="address" id="address" value="{{ $form->address}}">
-                    @error('address')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
-                  <div class="mt-5">
-                    <label class="block" for="transportAddress">Transport Address: </label>
-                    <input class="" type="text" name="transportAddress" id="transportAddress" value="{{ $form->transport_address}}">
-                    @error('transportAddress')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
-                  <div class="mt-5">
-                    <label class="block" for="transportDate">Date of Tranport: </label>
-                    <input class="" type="date" name="transportDate" id="transportDate" value="{{ $form->transport_date}}">
-                    @error('transportDate')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
-                  <div class="mt-5">
-                    <label class="block" for="purpose">Purpose: </label>
-                    <input class="" type="text" name="purpose" id="transportAddress" value="{{ $form->purpose}}">
-                    @error('purpose')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
+<body class="bg-custom-light-tint-blue">
+    @include('admin.layout.dashboard-nav', ["title" => "Update Application"])
 
-                  <div class="mt-5">
-                    <label class="block" for="purpose">Status: </label>
-                    <input class="" type="text" name="status" id="status" value="{{ $form->status}}">
-                    @error('status')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
-                  <div class="mt-5">
-                    <label class="block" for="modeOfTransport">Mode Of Transport: </label>
-                    <input class="" type="text" name="modeOfTransport" id="modeOfTransport" value="{{ $form->mode_of_transport}}">
-                    @error('modeOfTransport')
-                    <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                   @enderror
-                  </div>
-                 
-                  <p>BUtterfly Details</p>
-              
-                       
-                         
-                   
-                  @foreach ($form->butterflies as $butterfly)
-                  
-                        <div class="flex justify-between w-6/12">    
-                          <label for="butter_name[]" class="">Buttername: </label>
-                                          
-                           <input class="" type="text" name="butterfly_name[]" id="butterfly_name" value="{{ $butterfly->name}}">
-                           <label for="butter_quantity[]">Quantity: </label>                 
-                          <input class="" type="number" name="butterfly_quantity[]" id="butterfly_quantity" value="{{ $butterfly->quantity}}">
+    <div class="md:ml-64">
+        <form action="{{ route('update-application', $form->id) }}" method="POST">
+            @csrf
+            @method('PUT')
+            <div>
+                <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
+                    <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">APPLICATION FORM DETAILS
+                    </h1>
+
+                    <div class="grid grid-flow-row md:grid-flow-col gap-4 px-10 pb-4">
+                        <div class="w-full">
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="name">Applicant Name:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="name" id="name" placeholder="Enter Applicant Name"
+                                        value="{{$form->name}}"></label>
+                                @error('name')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="name">Address:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="address" id="address" placeholder="Enter Address"
+                                        value="{{$form->address}}"></label>
+                                @error('address')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="modeOfTransport">Address:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="modeOfTransport" id="modeOfTransport"
+                                        placeholder="Enter Mode of Transport"
+                                        value="{{$form->mode_of_transport}}"></label>
+                                @error('modeOfTransport')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="my-2 block  text-md font-robot font-medium" for="modeOfTransport">Purpose:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="purpose" id="purpose" placeholder="Enter Purpose"
+                                        value="{{$form->purpose}}"></label>
+                                @error('purpose')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+
                         </div>
-                
-                  @endforeach
-            
-                  <button class="mt-5 bg-black p-2 rounded-md text-white" type="submit">Save Application Form</button>
-                </form>
+
+                        <div>
+
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="modeOfTransport">Date of
+                                    Transport:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="date" name="transportDate" id="transportDate"
+                                        placeholder="Enter Date of Transport" value="{{$form->transport_date}}"></label>
+                                @error('transportDate')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="transportAddress">Address
+                                    of Transport:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="transportAddress" id="transportAddress"
+                                        placeholder="Enter Address of Transport"
+                                        value="{{$form->transport_address}}"></label>
+                                @error('transportAddress')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+                            <div class="mt-2">
+                              <label class="my-2 block text-md font-robot font-medium" for="status">Status:</label>
+                              <select name="status" id="status" class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md">
+                                  <option value="pending" @if ($form->status == 'pending') selected @endif>pending</option>
+                                  <option value="approved" @if ($form->status == 'approved') selected @endif>approved</option>
+                                  <option value="rejected" @if ($form->status == 'rejected') selected @endif>rejected</option>
+                              </select>
+                              @error('status')
+                              <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                              @enderror
+                          </div>
+
+
+                        </div>
+                    </div>
+
+                    <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">BUTTERFLY DETAILS</h1>
+                    <div class="grid grid-cols-2  px-10">
+                        <p class="my-2 block text-md font-robot font-medium">Butterfly Name:</p>
+                        <p class="my-2 block text-md font-robot font-medium">Quantity</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 px-10 pb-4 ">
+                        @foreach ($form->butterflies as $butterfly)
+                        <div class="w-full">
+                            <div class="mt-2">
+                                <input
+                                    class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                    type="text" name="butterfly_name[]" id="butterfly_name[]"
+                                    placeholder="Enter Butterfly Name" value="{{$butterfly->name}}">
+                                @error('butterfly_name[]')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
+
+                        </div>
+                        <div>
+
+                            <div class="mt-2">
+                                <input
+                                    class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                    type="number" name="butterfly_quantity[]" id="butterfly_quantity[]"
+                                    placeholder="Enter Quantity" value="{{$butterfly->quantity}}">
+                                @error('butterfly_quantity[]')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <div class=" px-10 py-2 flex  gap-2">
+                        <button type="submit"
+                            class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Update
+                            Application</button>
+
+                    </div>
+                </div>
+
 
             </div>
-        </div>
-@include('admin.layout.body-footer')
 
-@include('admin.layout.footer')
-   
+
+    
+    
+          </div>
+
+
+    
+        </form>
+       
+    </div>
+
+    @include('admin.layout.script')
+
+</body>
+
+</html>

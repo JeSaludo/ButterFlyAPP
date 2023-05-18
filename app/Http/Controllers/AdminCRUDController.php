@@ -21,6 +21,37 @@ use Illuminate\Support\Facades\Mail;
 class AdminCRUDController extends Controller
 {
   
+    public function ShowDashboard()
+    {
+        date_default_timezone_set('Asia/Manila'); 
+        $hour = date('H');
+        $greeting = '';
+    
+        if ($hour >= 5 && $hour < 12) {
+            $greeting = 'Good morning';
+        } elseif ($hour >= 12 && $hour < 18) {
+            $greeting = 'Good afternoon';
+        } else {
+            $greeting = 'Good evening';
+        } 
+       $users = User::paginate(10);    
+       $userCount = $users->count();
+       $activeUserCount = $users->where('role', 0)->count(); 
+       $inactiveUserCount = $users->where('role', 1)->count();
+       $verifiedUserCount = User::whereNotNull('email_verified_at')->count();
+       $nonverifiedUserCount = User::whereNull('email_verified_at')->count();
+       $usersWithPermit = User::whereHas('applicationForms', function ($query) {
+        $query->where('is_draft', false);
+        })
+        ->with(['applicationForms' => function ($query) {
+            $query->where('is_draft', false);
+        }, 'applicationForms.butterflies'])
+        ->paginate(10);
+       
+       return view('admin.recreate.admin-dashboard', compact('greeting','users','userCount','activeUserCount', 'inactiveUserCount','nonverifiedUserCount','verifiedUserCount', 'usersWithPermit'));
+    }
+
+
 
     public function create(){
         return view('admin.users.create');
@@ -133,7 +164,7 @@ class AdminCRUDController extends Controller
         $user->role = $request->status;
         $user->update($data);
 
-        return redirect('admin/dashboard/users')->with('success', 'User updated successfully');
+        return redirect('admin/dashboard')->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
@@ -142,53 +173,36 @@ class AdminCRUDController extends Controller
     
         if ($user) {
             $user->delete();
-            return redirect('admin/dashboard/users')->with('success', 'User deleted successfully.');
+            return redirect('admin/dashboard#UserAccount')->with('success', 'User deleted successfully.');
         } else {
-            return redirect('admin/dashboard/users')->with('error', 'User not found.');
+            return redirect('admin/dashboard#UserAccount')->with('error', 'User not found.');
         }
     }
-    public function showApplicationForm()
-    {
-        $usersWithPermit = User::whereHas('applicationForms', function ($query) {
-            $query->where('is_draft', false);
-        })
-        ->with(['applicationForms' => function ($query) {
-            $query->where('is_draft', false);
-        }, 'applicationForms.butterflies'])
-        ->paginate(10); // Specify the number of items per page
-        
-       return view('admin.dashboard-app-form', compact('usersWithPermit'));
-    
-    }
-    //
+
 
     public function deleteApplication(ApplicationForm $form)
     {
         $form->delete();    
-        return redirect()->route('application-form')->with('success', 'Application deleted successfully.');
+        return redirect('/admin/dashboard/#Applications')->with('success', 'Application deleted successfully.');
     }
     
     public function approveApplication(ApplicationForm $form)
     {
         $form->status = 'approved';
         $form->save();
-
         
-        $user = User::findOrFail($form->user_id);
-        
-        
-        
+        $user = User::findOrFail($form->user_id);     
         Mail::to($user->email)->send(new NotifyApprove());
 
-        return redirect()->route('application-form')->with('success', 'Application approved successfully.');
+        return redirect('admin/dashboard#Applications')->with('success', 'Application approved successfully.');
     }
     
     public function denyApplication(ApplicationForm $form)
     {
-        $form->status = 'denied';
+        $form->status = 'rejected';
         $form->save();
     
-        return redirect()->route('application-form')->with('success', 'Application denied successfully.');
+        return redirect('admin/dashboard#Applications')->with('success', 'Application denied successfully.');
     }
 
     public function viewApplication($id){
@@ -207,7 +221,7 @@ class AdminCRUDController extends Controller
         return view('admin.users.edit-application', compact('form', 'butterflies'));
     }
     
-    public function updateApplication(Request $request,$id){
+    public function updateApplication(Request $request, $id){
         $data = $request->validate([
             'name' => 'required',
             'address' => 'required',
@@ -247,7 +261,7 @@ class AdminCRUDController extends Controller
             $butterfly->save();
         }
 
-        return redirect()->route('application-form');
+        return redirect('/admin/dashboard/#Applications');
         
     }
 

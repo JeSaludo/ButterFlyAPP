@@ -87,8 +87,8 @@ class UserController extends Controller
             'address' => 'required',
             'contact' => 'required|min:11',
             'email' => 'required|email|unique:users,email',
-            'wfpPermit' => 'nullable',
-            'wcpPermit' => 'nullable',
+            'wfp_permit' => 'nullable',
+            'wcp_permit' => 'nullable',
         ]);
     
     
@@ -198,4 +198,8 @@ class UserController extends Controller
             return redirect('/verify-account')->with('incorrect', 'Your OTP is invalid please check your email once');
         }
     }
+
+   
+    
+
 }
