@@ -41,7 +41,7 @@ use Illuminate\Http\Request;
         Route::post('/permit/apply-permit-process', [PermitController::class, 'RegisterApplication']);        
         Route::get('/logout', [UserController::class, 'logout']);
         Route::post('/permit/draft/save', [PermitController::class, 'DraftApplication'])->name('draft.save');
-
+       
         Route::get('/myapplication/show-submit', [UserCRUDController::class, 'ShowSubmitApplicationForm'])->name('myapplications.submit.show');
         Route::get('/myapplication/show-draft', [UserCRUDController::class, 'ShowDraftApplicationForm'])->name('myapplications.draft.show');
         
@@ -51,6 +51,12 @@ use Illuminate\Http\Request;
         Route::put('/myapplication/{id}', [UserCRUDController::class, 'updateApplication'])->name('user.update-application');   
         Route::get('/myapplication-forms/{id}', [UserCRUDController::class,'viewApplication'])->name('user.application-forms.show');
 
+
+        Route::get('/profile/users/{user}/edit', [UserCRUDController::class, 'edit'])->name('users.edit');
+        Route::put('/profile/users/{user}', [UserCRUDController::class, 'update'])->name('users.update');
+       
+
+
         });
 
     Route::get('/admin/login', [AdminController::class, 'ShowLogin'])->name('admin.login');
@@ -59,12 +65,9 @@ use Illuminate\Http\Request;
     
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('admin/dashboard', [AdminCRUDController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
-        Route::get('/admin/deactivate-users-with-expired-wcp-permits', [UserController::class, 'deactivateUsersWithExpiredWCPPermits'])
-    ->name('admin.deactivateUsersWithExpiredWCPPermits');
-    Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
-        Route::get('/admin/create-permit', function(){
-        return view('admin.add-wildlife-permit');
-        });
+        
+        Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
+        Route::get('/admin/create-permit', [PermitController::class, 'CreatePermit']);
         Route::get('/admin/logout', [AdminController::class, 'logout']);
         
 
@@ -90,10 +93,7 @@ use Illuminate\Http\Request;
     
     Route::get('/admin/application-forms/{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
 
-    
-    Route::get('/test/web', function(){
-        return view('recreate.apply-permit');
-    });
+   
         
 
 
@@ -101,3 +101,7 @@ Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])-
 Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
 Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
 Route::post('password/reset/reset', [ResetPasswordController::class,'reset'])->name('password.update');
+
+Route::get('admin/dashboard/add-butterfly', function(){
+    return view('admin.add-butterfly');
+});

@@ -70,18 +70,18 @@
 
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Status:</p>
-                                        @if ($form->status=="rejected")
+                                        @if ($form->status=="Returned")
                                         <p
                                             class="text-custom-dark-400 w-20 text-center rounded-md bg-red-300 text-red-700  font-poppins">
-                                            Rejected</p>
-                                        @elseif ($form->status=="approved")
+                                            Returned</p>
+                                        @elseif ($form->status=="Accepted")
                                         <p
                                             class="text-custom-dark-400 w-20 text-center rounded-md bg-green-300 text-green-700  font-poppins">
-                                            Aproved</p>
-                                        @elseif($form->status=="pending")
+                                            Accepted</p>
+                                        @elseif($form->status=="On Process")
                                         <p
                                             class="text-custom-dark-400 w-28 px-2 text-center rounded-md bg-orange-300 text-orange-700  font-poppins">
-                                            Pending</p>
+                                            On Process</p>
                                         @endif
 
 

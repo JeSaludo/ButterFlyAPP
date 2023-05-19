@@ -1,4 +1,4 @@
-<aside id="sidenav" class="opacity-0 md:opacity-100 fixed w-64 h-full  left-0 bg-custom-dark-900 overflow-hidden  transition-all ease-in duration-500">
+<aside id="sidenav" class="opacity-0 md:opacity-100 fixed w-64 h-full  left-0 bg-custom-dark-900 overflow-hidden  transition-all ease-in duration-500 z-40">
     <div class="mx-auto text-center pt-2 mb-7">
         <span class="font-2xl text-custom-dark-500 py-4 px-2 cursor-pointer font-raleway font-bold text-2xl">
             <img class="h-6 inline " src="{{asset('images/logo.png')}}" alt="" srcset="">
@@ -26,14 +26,14 @@
     </ul>
 </aside>
 
-<nav class="md:ml-64 ">
+<nav class="md:ml-64">
     <div class="flex justify-between">
-        <div class="flex items-center">
-            <span class="text-3xl text-black cursor-pointer  mx-2 my-2 block md:hidden" onclick="Menu(this)">
+        <div class="flex items-center ">
+            <span class="text-3xl text-black cursor-pointer  fixed  z-50 mx-2 my-2 block md:hidden" onclick="Menu(this)">
               <ion-icon name="menu-outline"></ion-icon>
              
             </span>
-            <h1 class="text-2xl md:text-4xl font-poppins font-bold py-2 px-0 md:px-4">{{ $title }}</h1>
+            <h1 class="text-2xl md:text-4xl font-poppins font-medium py-2 px-0 md:px-4">{{ $title }}</h1>
         
           </div>
         

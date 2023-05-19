@@ -153,7 +153,7 @@ class UserController extends Controller
         $verifyToken->save();
     
         $userEmail = $request->input('email');
-        $userName = substr($request->input('firstName'), 0, 1) . $request->input('lastName');
+        $userName = "ltpmdq_" . substr($request->input('firstName'), 0, 1) . $request->input('lastName');
         Mail::to($userEmail)->send(new WelcomeMail($userEmail, $validateToken, $userName, $password));
     
         return redirect('/verify-account')->with('email', $request->email);
@@ -199,7 +199,35 @@ class UserController extends Controller
         }
     }
 
-   
+   public function ShowProfile(){
+        return view('user.profile');
+   }
+
+   public function UpdateProfile(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+      
+        $data = $request->validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'username' => 'required',            
+            'businessName' => 'required',
+            'ownerName' => 'required',
+            'address' => 'required',
+            'contact' => 'required|min:11',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'status' => 'required|in:0,1',
+            'wfp_permit' => 'nullable',
+            'wcp_permit' => 'nullable',
+            
+        ]);
+        
+        
+        $user->role = $request->status;
+        $user->update($data);
+
+        return redirect('admin/dashboard')->with('success', 'User updated successfully');
+    }
     
 
 }

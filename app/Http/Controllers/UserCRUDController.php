@@ -14,9 +14,51 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Mail;
-
+use App\Mail\NotifyApprove;
+use App\Mail\WelcomeMail;
 class UserCRUDController extends Controller
-{
+{ 
+    public function edit($id)
+    {
+        $user = User::find($id);       
+        return view('user.profile', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+       
+        $user = User::findOrFail($id);
+      
+        $data = $request->validate([
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'username' => 'required',            
+            'businessName' => 'required',
+            'ownerName' => 'required',
+            'address' => 'required',
+            'contact' => 'required|min:11',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+        $user->first_name = $data['firstName'];
+        $user->last_name = $data['lastName'];
+        $user->username = $data['username'];
+        $user->business_name = $data['businessName'];
+        $user->owner_name = $data['ownerName'];
+        $user->address = $data['address'];
+        $user->contact = $data['contact'];
+        $user->email = $data['email'];
+       
+        $user->save();
+        
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }
+    
+      
+        return redirect('/')->with('success', 'User updated successfully');
+    }
+
     public function ShowSubmitApplicationForm(){
         $currentUserId = auth()->user()->id;
 

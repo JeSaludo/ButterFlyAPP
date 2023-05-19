@@ -17,7 +17,7 @@
             @include('layout.user-nav-dashboard')
         </div>
 
-        <div id="printable" class="md:ml-64">
+        <div id="printable" class=" mx-auto">
             <div>
                 <div class="bg-gray-50 w-7/12 rounded-md mx-auto mt-10 ">
                 <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">APPLICATION FORM DETAILS</h1>
@@ -62,13 +62,20 @@
 
                         <div class="mt-2">
                             <p class="text-lg font-roboto font-semibold ">Status:</p>
-                            @if ($form->status=="denied")
-                                <p class="text-custom-dark-400 w-20 text-center rounded-md bg-red-300 text-red-700  font-poppins">Denied</p>
-                            @elseif ($form->status=="approved")
-                                <p class="text-custom-dark-400 w-20 text-center rounded-md bg-green-300 text-green-700  font-poppins">Aproved</p>
-                            @else
-                                <p class="text-custom-dark-400 w-28 px-2 text-center rounded-md bg-green-300 text-green-700  font-poppins">On Process</p>
+                            <div class="w-24">
+                                @if ($form->status=="Returned")
+                                <p class=" bg-red-100 text-green-700 px-3 py-2 rounded-20 text-center">Returned</p>
+                            @elseif ($form->status=="Accepted")
+                                <p class=" bg-green-100 text-green-700 px-3 py-2 rounded-20 text-center">Accepted</p>
+                            @elseif ($form->status=="Released")
+                                <p class=" bg-green-100 text-green-700 px-3 py-2 rounded-20 text-center">Released</p>
+                            @elseif ($form->status=="Draft")
+                            <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Draft</p>
+                            
+                                @else
+                                <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20">On Process</p>
                             @endif
+                            </div>
                          </div>
                     </div>
                 </div>

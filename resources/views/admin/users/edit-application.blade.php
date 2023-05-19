@@ -17,7 +17,7 @@
 </head>
 
 <body class="bg-custom-light-tint-blue">
-    @include('admin.layout.dashboard-nav', ["title" => "Update Application"])
+    @include('admin.layout.dashboard-nav', ["title" => "Dashboard"])
 
     <div class="md:ml-64">
         <form action="{{ route('update-application', $form->id) }}" method="POST">
@@ -108,10 +108,14 @@
                             <div class="mt-2">
                               <label class="my-2 block text-md font-robot font-medium" for="status">Status:</label>
                               <select name="status" id="status" class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md">
-                                  <option value="pending" @if ($form->status == 'pending') selected @endif>pending</option>
-                                  <option value="approved" @if ($form->status == 'approved') selected @endif>approved</option>
-                                  <option value="rejected" @if ($form->status == 'rejected') selected @endif>rejected</option>
-                              </select>
+                                  <option value="On Process" @if ($form->status == 'On Process') selected @endif>On Process</option>
+                                  <option value="Accepted" @if ($form->status == 'Accepted') selected @endif>Accepted</option>
+                                  <option value="Returned" @if ($form->status == 'Returned') selected @endif>Returned</option>
+                                  <option value="Expired" @if ($form->status == 'Expired') selected @endif>Expired</option>
+                                  <option value="Used" @if ($form->status == 'Used') selected @endif>Used</option>
+                                  <option value="Released" @if ($form->status == 'Released') selected @endif>Released</option>
+                                
+                                </select>
                               @error('status')
                               <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                               @enderror

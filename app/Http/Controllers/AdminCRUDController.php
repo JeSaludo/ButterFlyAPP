@@ -48,7 +48,7 @@ class AdminCRUDController extends Controller
         }, 'applicationForms.butterflies'])
         ->paginate(10);
        
-       return view('admin.recreate.admin-dashboard', compact('greeting','users','userCount','activeUserCount', 'inactiveUserCount','nonverifiedUserCount','verifiedUserCount', 'usersWithPermit'));
+       return view('admin.admin-dashboard', compact('greeting','users','userCount','activeUserCount', 'inactiveUserCount','nonverifiedUserCount','verifiedUserCount', 'usersWithPermit'));
     }
 
 
@@ -143,6 +143,7 @@ class AdminCRUDController extends Controller
 
     public function update(Request $request, $id)
     {
+        
         $user = User::findOrFail($id);
       
         $data = $request->validate([
@@ -159,10 +160,18 @@ class AdminCRUDController extends Controller
             'wcp_permit' => 'nullable',
             
         ]);
+
         
-        
+        $user->first_name = $data['firstName'];
+        $user->last_name = $data['lastName'];
+        $user->username = $data['username'];
+        $user->business_name = $data['businessName'];
+        $user->owner_name = $data['ownerName'];
+        $user->address = $data['address'];
+        $user->contact = $data['contact'];
+        $user->email = $data['email'];
         $user->role = $request->status;
-        $user->update($data);
+        $user->save();
 
         return redirect('admin/dashboard')->with('success', 'User updated successfully');
     }
@@ -188,7 +197,7 @@ class AdminCRUDController extends Controller
     
     public function approveApplication(ApplicationForm $form)
     {
-        $form->status = 'approved';
+        $form->status = 'Accepted';
         $form->save();
         
         $user = User::findOrFail($form->user_id);     
@@ -199,7 +208,7 @@ class AdminCRUDController extends Controller
     
     public function denyApplication(ApplicationForm $form)
     {
-        $form->status = 'rejected';
+        $form->status = 'Returned';
         $form->save();
     
         return redirect('admin/dashboard#Applications')->with('success', 'Application denied successfully.');

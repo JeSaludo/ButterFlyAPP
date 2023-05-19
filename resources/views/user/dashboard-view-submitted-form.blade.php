@@ -42,8 +42,19 @@
                                 <td class="px-6 py-4">{{ $form->created_at }}</td>
                                 
                                 <td class="px-6 py-4">
-                                    <a href="" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{ $form->status}}</a>
-                                </td>
+                                    @if ($form->status=="Returned")
+                                    <p class=" bg-red-100 text-green-700 px-3 py-2 rounded-20 text-center">Returned</p>
+                                @elseif ($form->status=="Accepted")
+                                    <p class=" bg-green-100 text-green-700 px-3 py-2 rounded-20 text-center">Accepted</p>
+                                @elseif ($form->status=="Released")
+                                    <p class=" bg-green-100 text-green-700 px-3 py-2 rounded-20 text-center">Released</p>
+                                @elseif ($form->status=="Draft")
+                                <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Draft</p>
+                                
+                                    @else
+                                    <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20">On Process</p>
+                                @endif
+                            </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                   <a href="{{ route('user.application-forms.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
                                                                    

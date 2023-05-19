@@ -13,14 +13,23 @@ class PermitController extends Controller
     public function AddWildLifePermit(Request $request){
        
         $data = $request->validate([
-            'permitType' => 'required',
-            'permitNo' => 'required',
+            'permitType' => 'required|in:wfp,wcp',
+            'permitNo' => 'required|unique:permits,permit_no',
+            'businessName' => 'required',
+            'ownerName' =>'required',
+            'address' => 'required',
+            'issueDate' => 'required|date',
+            'expirationDate' => 'required|date',
         ]);
-       
-        
-        $permit = Permit::Create([            
+    
+        $permit = Permit::create([
             'permit_type' => $request->permitType,
-            'permit_no' => $request->permitNo
+            'permit_no' => $request->permitNo,
+            'business_name' => $request->businessName,
+            'owner_name' => $request->ownerName,
+            'address' => $request->address,
+            'issue_date' => $request->issueDate,
+            'expiration_date' => $request->expirationDate,
         ]);
 
         return redirect('/admin/dashboard');
@@ -134,5 +143,8 @@ class PermitController extends Controller
      
     }
 
+    public function CreatePermit(){
+        return view('admin.add-wildlife-permit');
+    }
 
 }

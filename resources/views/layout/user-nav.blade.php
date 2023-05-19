@@ -32,7 +32,7 @@
         @if (Route::has('login'))
         @auth             
             <li class="ml-4 ">
-                <a href="/profile" class="text-md  text-white hover:text-custom-dark-600">PROFILE</a>
+                <a href="{{ route('users.edit', auth()->user()->id) }}" class="text-md  text-white hover:text-custom-dark-600">PROFILE</a>
             </li>                    
             <li class="ml-4 my-6 md:my-0 ">
                 <a href="/logout" class="text-md text-white hover:text-custom-dark-600">LOGOUT</a>

@@ -80,7 +80,7 @@
                              </div>
 
                              <div class="flex justify-between gap-2">
-                                <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Apply</button>
+                                <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
                                 <button type="submit" formaction="{{ route('draft.save') }}" class="w-6/12 mx-auto font-poppins text-xl text-white bg-transparent border-custom-dark-500 border-2 mt-4  py-2  rounded-md">Draft</button>
             
                              </div>

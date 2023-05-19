@@ -22,7 +22,7 @@
 
         @include("admin.layout.dashboard-nav", ["title" => "Overview"])
 
-        <section id="overview">
+        <section id="overview " >
 
             <div class="md:ml-64">
 
@@ -43,21 +43,21 @@
                     <div class="w-full h-40 bg-white rounded-md">
                         <h1 class="text-md md:text-xl font-poppins font-medium py-4 px-6">Pending Application</h1>
                         <p class="py-4 px-10 text-5xl font-poppins font-medium">
-                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'pending')->count(); }) }}
+                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'On Process')->count(); }) }}
                         </p>
                     </div>
 
                     <div class="w-full h-40 bg-white rounded-md">
                         <h1 class="text-md md:text-xl font-poppins font-medium py-4 px-6">Approved Application</h1>
                         <p class="py-4 px-10 text-5xl font-poppins font-medium">
-                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'approved')->count(); }) }}
+                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'Accepted')->count(); }) }}
                         </p>
                     </div>
 
                     <div class="w-full h-40 bg-white rounded-md">
-                        <h1 class="text-md md:text-xl font-poppins font-medium py-4 px-6">Reject Application</h1>
+                        <h1 class="text-md md:text-xl font-poppins font-medium py-4 px-6">Returned Application</h1>
                         <p class="py-4 px-10 text-5xl font-poppins font-medium">
-                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'rejected')->count(); }) }}
+                            {{ $usersWithPermit->sum(function($user) { return $user->applicationForms->where('status', 'Returned')->count(); }) }}
                         </p>
                     </div>
                 </div>
@@ -73,6 +73,7 @@
             <div class="md:ml-64 ">
 
                 <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
+                    
                     <p class="my-2 font-poppins font-medium text-2xl mx-5">List of User Accounts</p>
                     <div class="overflow-x-auto">
                         <table class="w-full divide-y divide-gray-200 table-auto">
@@ -150,7 +151,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
@@ -225,7 +226,7 @@
                             </thead>
                             <tbody>
                                 @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms->where('status', 'pending') as $form)
+                                @foreach($user->applicationForms->where('status', 'On Process') as $form)
                                 <tr>
                                     <td class="px-6 py-4">
                                         PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
@@ -235,12 +236,12 @@
 
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                        @if($form->status === "pending")
-                                        <a class="bg-orange-100 text-orange-700 px-5  py-2 rounded-20">Pending</a>
-                                        @elseif ($form->status === "approved")
-                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Approved</a>
+                                        @if($form->status === "On Process")
+                                        <a class="bg-orange-100 text-orange-700 px-5  py-2 rounded-20">On Process</a>
+                                        @elseif ($form->status === "Accepted")
+                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
                                         @else
-                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Rejected</a>
+                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Returned</a>
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -280,7 +281,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
@@ -344,7 +345,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date of Submission</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
@@ -353,7 +354,7 @@
                             </thead>
                             <tbody>
                                 @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms->where('status', 'approved') as $form)
+                                @foreach($user->applicationForms->where('status', 'Accepted') as $form)
                                 <tr>
                                     <td class="px-6 py-4">
                                         PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
@@ -363,13 +364,9 @@
 
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                        @if($form->status === "pending")
-                                        <a class="bg-orange-100 text-orange-700 px-5  py-2 rounded-20">Pending</a>
-                                        @elseif ($form->status === "approved")
-                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Approved</a>
-                                        @else
-                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Rejected</a>
-                                        @endif
+                                        
+                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
+                                       
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('application-forms.show', $form->id)}}"
@@ -383,9 +380,6 @@
                                             <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
                                                 onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                                         </form>
-                                       
-
-
                                     </td>
 
 
@@ -395,7 +389,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
@@ -444,7 +438,7 @@
             <div class="md:ml-64 ">
 
                 <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
-                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Rejected Applications</p>
+                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Returned Applications</p>
                     <div class="overflow-x-auto">
                         <table class="w-full divide-y divide-gray-200 table-auto">
                             <thead class="">
@@ -468,7 +462,7 @@
                             </thead>
                             <tbody>
                                 @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms->where('status', 'rejected') as $form)
+                                @foreach($user->applicationForms->where('status', 'Returned') as $form)
                                 <tr>
                                     <td class="px-6 py-4">
                                         PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
@@ -478,13 +472,9 @@
 
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                        @if($form->status === "pending")
-                                        <a class="bg-orange-100 text-orange-700 px-5  py-2 rounded-20">Pending</a>
-                                        @elseif ($form->status === "approved")
-                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Approved</a>
-                                        @else
-                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Rejected</a>
-                                        @endif
+                                        
+                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Returned</a>
+                                       
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <a href="{{ route('application-forms.show', $form->id)}}"
@@ -510,7 +500,350 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2 ">
+                        <nav class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between">
+                                <!-- Previous Page Link -->
+                                @if ($users->onFirstPage())
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Previous
+                                </span>
+                                @else
+                                <a href="{{ $users->previousPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Previous
+                                </a>
+                                @endif
+
+                                <div class="text-sm text-gray-500 py-2">
+                                    <span>{!! __('Showing') !!}</span>
+                                    <span class="font-medium">{{ $users->firstItem() }}</span>
+                                    <span>{!! __('to') !!}</span>
+                                    <span class="font-medium">{{ $users->lastItem() }}</span>
+                                    <span>{!! __('of') !!}</span>
+                                    <span class="font-medium">{{ $users->total() }}</span>
+                                    <span>{!! __('results') !!}</span>
+                                </div>
+
+                                @if ($users->hasMorePages())
+                                <a href="{{ $users->nextPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Next
+                                </a>
+                                @else
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Next
+                                </span>
+                                @endif
+                            </div>
+
+
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="md:ml-64 ">
+
+                <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
+                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Released Applications</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full divide-y divide-gray-200 table-auto">
+                            <thead class="">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Application ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Applicant Name</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date of Submission</th>
+                                    <th
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($usersWithPermit as $user)
+                                @foreach($user->applicationForms->where('status', 'Expired') as $form)
+                                <tr>
+                                    <td class="px-6 py-4">
+                                        PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
+                                    <td class="px-6 py-4">{{ $form->name }}</td>
+
+                                    <td class="px-6 py-4">{{ $form->created_at }}</td>
+
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                      
+                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Released</a>
+                                        
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('application-forms.show', $form->id)}}"
+                                            class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                       
+                                        <form action="{{ Route('delete-application', $form->id)}}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
+                                                onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                        </form>
+                                        
+                                       
+
+
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mx-auto my-2">
+                        <nav class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between">
+                                <!-- Previous Page Link -->
+                                @if ($users->onFirstPage())
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Previous
+                                </span>
+                                @else
+                                <a href="{{ $users->previousPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Previous
+                                </a>
+                                @endif
+
+                                <div class="text-sm text-gray-500 py-2">
+                                    <span>{!! __('Showing') !!}</span>
+                                    <span class="font-medium">{{ $users->firstItem() }}</span>
+                                    <span>{!! __('to') !!}</span>
+                                    <span class="font-medium">{{ $users->lastItem() }}</span>
+                                    <span>{!! __('of') !!}</span>
+                                    <span class="font-medium">{{ $users->total() }}</span>
+                                    <span>{!! __('results') !!}</span>
+                                </div>
+
+                                @if ($users->hasMorePages())
+                                <a href="{{ $users->nextPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Next
+                                </a>
+                                @else
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Next
+                                </span>
+                                @endif
+                            </div>
+
+
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="md:ml-64 ">
+
+                <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
+                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Expired Permit</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full divide-y divide-gray-200 table-auto">
+                            <thead class="">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Application ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Applicant Name</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date of Submission</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($usersWithPermit as $user)
+                                @foreach($user->applicationForms->where('status', 'Released') as $form)
+                                <tr>
+                                    <td class="px-6 py-4">
+                                        PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
+                                    <td class="px-6 py-4">{{ $form->name }}</td>
+
+                                    <td class="px-6 py-4">{{ $form->created_at }}</td>
+
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                      
+                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Released</a>
+                                        
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('application-forms.show', $form->id)}}"
+                                            class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                       <form action="{{ Route('delete-application', $form->id)}}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
+                                                onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                        </form>
+                                       
+
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mx-auto my-2">
+                        <nav class="flex items-center justify-between">
+                            <div class="flex-1 flex justify-between">
+                                <!-- Previous Page Link -->
+                                @if ($users->onFirstPage())
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Previous
+                                </span>
+                                @else
+                                <a href="{{ $users->previousPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Previous
+                                </a>
+                                @endif
+
+                                <div class="text-sm text-gray-500 py-2">
+                                    <span>{!! __('Showing') !!}</span>
+                                    <span class="font-medium">{{ $users->firstItem() }}</span>
+                                    <span>{!! __('to') !!}</span>
+                                    <span class="font-medium">{{ $users->lastItem() }}</span>
+                                    <span>{!! __('of') !!}</span>
+                                    <span class="font-medium">{{ $users->total() }}</span>
+                                    <span>{!! __('results') !!}</span>
+                                </div>
+
+                                @if ($users->hasMorePages())
+                                <a href="{{ $users->nextPageUrl() }}"
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
+                                    Next
+                                </a>
+                                @else
+                                <span
+                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
+                                    Next
+                                </span>
+                                @endif
+                            </div>
+
+
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="md:ml-64 ">
+
+                <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
+                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Used Permit</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full divide-y divide-gray-200 table-auto">
+                            <thead class="">
+                                <tr>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Application ID</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Applicant Name</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Date of Submission</th>
+                                    <th
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status</th>
+                                    <th
+                                        class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
+                                        Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($usersWithPermit as $user)
+                                @foreach($user->applicationForms->where('status', 'Used') as $form)
+                                <tr>
+                                    <td class="px-6 py-4">
+                                        PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
+                                    <td class="px-6 py-4">{{ $form->name }}</td>
+
+                                    <td class="px-6 py-4">{{ $form->created_at }}</td>
+
+                                    <td
+                                        class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                      
+                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Released</a>
+                                        
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <a href="{{ route('application-forms.show', $form->id)}}"
+                                            class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                        <a href="{{ route('edit-application', $form->id)}}"
+                                            class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        <form action="{{ Route('delete-application', $form->id)}}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
+                                                onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
+                                        </form>
+                                        <form action="{{route('approve-application', $form->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            <button type="submit"
+                                                class="mr-2 bg-green-400 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
+                                                onclick="return confirm('Are you sure you want to approve this application?')"><i class='bx bx-sm bx-check' ></i></button>
+                                        </form>
+                                        <form action="{{route('deny-application', $form->id)}}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            <button type="submit"
+                                                class="bg-red-400 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                                                onclick="return confirm('Are you sure you want to reject this application?')"><i class='bx bx-sm bx-x'></i></button>
+                                        </form>
+
+
+                                    </td>
+
+
+                                </tr>
+                                @endforeach
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mx-auto my-2">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
@@ -629,7 +962,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
@@ -748,7 +1081,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="mx-auto my-2 relative -z-10">
+                    <div class="mx-auto my-2 fixed w-full z-50">
                         <nav class="flex items-center justify-between">
                             <div class="flex-1 flex justify-between">
                                 <!-- Previous Page Link -->
