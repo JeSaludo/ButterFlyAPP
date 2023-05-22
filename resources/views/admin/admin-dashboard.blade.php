@@ -92,7 +92,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Email Verified At</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -217,7 +217,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date of Submission</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
@@ -453,7 +453,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date of Submission</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
@@ -573,7 +573,7 @@
                             </thead>
                             <tbody>
                                 @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms->where('status', 'Expired') as $form)
+                                @foreach($user->applicationForms->where('status', 'Released') as $form)
                                 <tr>
                                     <td class="px-6 py-4">
                                         PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
@@ -675,7 +675,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date of Submission</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
@@ -684,7 +684,7 @@
                             </thead>
                             <tbody>
                                 @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms->where('status', 'Released') as $form)
+                                @foreach($user->applicationForms->where('status', 'Expired') as $form)
                                 <tr>
                                     <td class="px-6 py-4">
                                         PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
@@ -695,7 +695,7 @@
                                     <td
                                         class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
                                       
-                                        <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Released</a>
+                                        <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Expired</a>
                                         
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -912,7 +912,7 @@
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Date of Submission</th>
                                     <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Status</th>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -1009,124 +1009,7 @@
             </div>
         </section>
 
-        <section id="Permits">
-            <div class="md:ml-64 ">
-
-                <div class="bg-white w-11/12 mx-auto my-10 p-2 rounded-20">
-                    <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Permits</p>
-                    <div class="overflow-x-auto">
-                        <table class="w-full divide-y divide-gray-200 table-auto">
-                            <thead class="">
-                                <tr>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Application ID</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Applicant Name</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Date of Transport</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Date of Submission</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Status</th>
-                                    <th
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($usersWithPermit as $user)
-                                @foreach($user->applicationForms as $form)
-                                <tr>
-                                    <td class="px-6 py-4">
-                                        PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
-                                    <td class="px-6 py-4">{{ $form->name }}</td>
-                                    <td class="px-6 py-4">{{ $form->transport_date }}</td>
-                                    <td class="px-6 py-4">{{ $form->created_at }}</td>
-
-                                    <td
-                                        class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                        @if($form->status === "pending")
-                                        <a href=""
-                                            class="bg-orange-100 text-orange-700 px-5  py-2 rounded-20">Pending</a>
-                                        @elseif ($form->status === "approve")
-                                        <a href=""
-                                            class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Approved</a>
-                                        @else
-                                        <a href="" class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Rejected</a>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                        <a href="{{ route('application-forms.show', $form->id)}}"
-                                            class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                        <a href="{{ route('edit-application', $form->id)}}"
-                                            class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
-                                        <form action="{{ Route('delete-application', $form->id)}}" method="POST"
-                                            style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
-                                                onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                                        </form>
-                                    </td>
-
-
-                                </tr>
-                                @endforeach
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mx-auto my-2 fixed w-full z-50">
-                        <nav class="flex items-center justify-between">
-                            <div class="flex-1 flex justify-between">
-                                <!-- Previous Page Link -->
-                                @if ($users->onFirstPage())
-                                <span
-                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
-                                    Previous
-                                </span>
-                                @else
-                                <a href="{{ $users->previousPageUrl() }}"
-                                    class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
-                                    Previous
-                                </a>
-                                @endif
-
-                                <div class="text-sm text-gray-500 py-2">
-                                    <span>{!! __('Showing') !!}</span>
-                                    <span class="font-medium">{{ $users->firstItem() }}</span>
-                                    <span>{!! __('to') !!}</span>
-                                    <span class="font-medium">{{ $users->lastItem() }}</span>
-                                    <span>{!! __('of') !!}</span>
-                                    <span class="font-medium">{{ $users->total() }}</span>
-                                    <span>{!! __('results') !!}</span>
-                                </div>
-
-                                @if ($users->hasMorePages())
-                                <a href="{{ $users->nextPageUrl() }}"
-                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
-                                    Next
-                                </a>
-                                @else
-                                <span
-                                    class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
-                                    Next
-                                </span>
-                                @endif
-                            </div>
-
-
-                        </nav>
-                    </div>
-                </div>
-
-            </div>
-        </section>
+     
 
         <section id="Reports">
             <div class="md:ml-64 ">

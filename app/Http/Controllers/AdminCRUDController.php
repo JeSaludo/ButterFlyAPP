@@ -21,8 +21,7 @@ use Illuminate\Support\Facades\Mail;
 class AdminCRUDController extends Controller
 {
   
-    public function ShowDashboard()
-    {
+    public function ShowUserAccount(){
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
         $greeting = '';
@@ -33,24 +32,99 @@ class AdminCRUDController extends Controller
             $greeting = 'Good afternoon';
         } else {
             $greeting = 'Good evening';
-        } 
-       $users = User::paginate(10);    
-       $userCount = $users->count();
-       $activeUserCount = $users->where('role', 0)->count(); 
-       $inactiveUserCount = $users->where('role', 1)->count();
-       $verifiedUserCount = User::whereNotNull('email_verified_at')->count();
-       $nonverifiedUserCount = User::whereNull('email_verified_at')->count();
-       $usersWithPermit = User::whereHas('applicationForms', function ($query) {
-        $query->where('is_draft', false);
-        })
-        ->with(['applicationForms' => function ($query) {
-            $query->where('is_draft', false);
-        }, 'applicationForms.butterflies'])
-        ->paginate(10);
-       
-       return view('admin.admin-dashboard', compact('greeting','users','userCount','activeUserCount', 'inactiveUserCount','nonverifiedUserCount','verifiedUserCount', 'usersWithPermit'));
+        }
+        $users = User::paginate(10);
+        return view('admin.dashboard.admin-dashboard-user', compact('greeting', 'users'));
     }
 
+    public function ShowApplication(){
+        date_default_timezone_set('Asia/Manila'); 
+        $hour = date('H');
+        $greeting = '';
+    
+        if ($hour >= 5 && $hour < 12) {
+            $greeting = 'Good morning';
+        } elseif ($hour >= 12 && $hour < 18) {
+            $greeting = 'Good afternoon';
+        } else {
+            $greeting = 'Good evening';
+        }
+        $pendingApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'On Process')
+        ->paginate(10);
+
+        $acceptedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Accepted')
+        ->paginate(10);
+
+        $returnedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Returned')
+        ->paginate(10);
+
+        $expiredApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Expired')
+        ->paginate(10);
+
+        $releasedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Released')
+        ->paginate(10);
+
+        $usedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Released')
+        ->paginate(10);
+        
+        return view('admin.dashboard.admin-dashboard-app', compact('greeting', 'pendingApplicationForm', 'acceptedApplicationForm', 'returnedApplicationForm','expiredApplicationForm','releasedApplicationForm', 'usedApplicationForm'));
+    
+    }
+    public function ShowDashboard(){
+        date_default_timezone_set('Asia/Manila'); 
+        $hour = date('H');
+        $greeting = '';
+    
+        if ($hour >= 5 && $hour < 12) {
+            $greeting = 'Good morning';
+        } elseif ($hour >= 12 && $hour < 18) {
+            $greeting = 'Good afternoon';
+        } else {
+            $greeting = 'Good evening';
+        }
+        $users = User::all();
+        $userCount = $users->count();
+       
+        $verifiedUserCount = User::whereNotNull('email_verified_at')->count();
+        $nonverifiedUserCount = User::whereNull('email_verified_at')->count();
+      
+        $applications = ApplicationForm::latest()->take(10)->get();
+
+        $acceptedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Accepted')
+        ->count();
+
+        $returnedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Returned')
+        ->count();
+
+        $pendingApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'On Process')
+        ->count();
+
+        $releasedApplicationForm = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Released')
+        ->count();
+
+        return view('admin.dashboard.admin-dashboard',compact('greeting','userCount','verifiedUserCount','nonverifiedUserCount',
+        'pendingApplicationForm', 'releasedApplicationForm', 'returnedApplicationForm', 'acceptedApplicationForm','applications' ));
+    }
 
 
     public function create(){
@@ -173,7 +247,7 @@ class AdminCRUDController extends Controller
         $user->role = $request->status;
         $user->save();
 
-        return redirect('admin/dashboard')->with('success', 'User updated successfully');
+        return redirect('/admin/dashboard/users')->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
@@ -182,9 +256,9 @@ class AdminCRUDController extends Controller
     
         if ($user) {
             $user->delete();
-            return redirect('admin/dashboard#UserAccount')->with('success', 'User deleted successfully.');
+            return redirect('/admin/dashboard/users')->with('success', 'User deleted successfully.');
         } else {
-            return redirect('admin/dashboard#UserAccount')->with('error', 'User not found.');
+            return redirect('/admin/dashboard/users')->with('error', 'User not found.');
         }
     }
 
@@ -192,7 +266,7 @@ class AdminCRUDController extends Controller
     public function deleteApplication(ApplicationForm $form)
     {
         $form->delete();    
-        return redirect('/admin/dashboard/#Applications')->with('success', 'Application deleted successfully.');
+        return redirect('/admin/dashboard/applications')->with('success', 'Application deleted successfully.');
     }
     
     public function approveApplication(ApplicationForm $form)
@@ -203,7 +277,7 @@ class AdminCRUDController extends Controller
         $user = User::findOrFail($form->user_id);     
         Mail::to($user->email)->send(new NotifyApprove());
 
-        return redirect('admin/dashboard#Applications')->with('success', 'Application approved successfully.');
+        return redirect('/admin/dashboard/applications')->with('success', 'Application approved successfully.');
     }
     
     public function denyApplication(ApplicationForm $form)
@@ -211,7 +285,7 @@ class AdminCRUDController extends Controller
         $form->status = 'Returned';
         $form->save();
     
-        return redirect('admin/dashboard#Applications')->with('success', 'Application denied successfully.');
+        return redirect('/admin/dashboard/applications')->with('success', 'Application denied successfully.');
     }
 
     public function viewApplication($id){
@@ -270,7 +344,7 @@ class AdminCRUDController extends Controller
             $butterfly->save();
         }
 
-        return redirect('/admin/dashboard/#Applications');
+        return redirect('/admin/dashboard/applications');
         
     }
 

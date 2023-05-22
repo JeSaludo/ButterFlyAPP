@@ -66,6 +66,11 @@ use Illuminate\Http\Request;
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('admin/dashboard', [AdminCRUDController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
         
+        Route::get('admin/dashboard/users', [AdminCRUDController::class, 'ShowUserAccount'])->name('admin.dashboard.show-user');
+       
+        Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'ShowApplication'])->name('admin.dashboard.show-app');
+       
+       
         Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
         Route::get('/admin/create-permit', [PermitController::class, 'CreatePermit']);
         Route::get('/admin/logout', [AdminController::class, 'logout']);
@@ -85,6 +90,17 @@ use Illuminate\Http\Request;
 
         Route::delete('/admin/users/{user}', [AdminCRUDController::class,'destroy'])->name('admin.users.destroy');
     
+        //Butterfly Spcies Routing
+        Route::get('admin/butterfly/add', [AdminCRUDController::class, 'addButterflySpecies'])->name('admin.add-butterfly');
+        Route::post('/admin/store-butterfly', [AdminCRUDController::class, 'storeButterflySpecies'])->name('admin.store-butterfly');
+        Route::get('/admin/butterfly/{id}/edit', [AdminCRUDController::class, 'editButterflySpecies'])->name('admin.edit-butterfly');
+        Route::put('admin/butterfly/{id}', [AdminCRUDController::class, 'updateButterflySpecies'])->name('admin.update-butterfly');
+        Route::get('admin/butterfly/view/{id}', [AdminCRUDController::class, 'viewButterflySpecies'])->name('admin.view-butterfly');
+        Route::delete('/admin/butterfly/delete/{id}', [AdminCRUDController::class, 'deleteButterflySpecies'])->name('admin.delete-butterfly');
+
+                
+       
+
 
     });
         
@@ -97,11 +113,11 @@ use Illuminate\Http\Request;
         
 
 
-Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])->name('password.request');
-Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
-Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
-Route::post('password/reset/reset', [ResetPasswordController::class,'reset'])->name('password.update');
+    Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])->name('password.request');
+    Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
+    Route::get('password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
+    Route::post('password/reset/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
-Route::get('admin/dashboard/add-butterfly', function(){
-    return view('admin.add-butterfly');
-});
+
+    Route::get('test/admin/dashboard', );
+    

@@ -20,7 +20,7 @@
     @include('admin.layout.dashboard-nav', ["title" => "Dashboard"])
 
     <div class="md:ml-64">
-        <form action="/admin/store-wildlife-permit" method="post">
+        <form action="{{route('admin.store-butterfly')}}" method="post">
             @csrf
             
             <div>
@@ -128,8 +128,7 @@
        
     </div>
 
-    @include('admin.layout.script')
-
+    @include('admin.layout.admin-script')
 </body>
 
 </html>

@@ -14,7 +14,8 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @vite('resources/css/app.css')
-    
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+
 </head>
 <body> 
     <div class="min-h-screen ">

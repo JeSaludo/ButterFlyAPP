@@ -1,52 +1,98 @@
-<aside id="sidenav" class="opacity-0 md:opacity-100 fixed w-64 h-full  left-0 bg-custom-dark-900 overflow-hidden  transition-all ease-in duration-500 z-40">
-    <div class="mx-auto text-center pt-2 mb-7">
-        <span class="font-2xl text-custom-dark-500 py-4 px-2 cursor-pointer font-raleway font-bold text-2xl">
-            <img class="h-6 inline " src="{{asset('images/logo.png')}}" alt="" srcset="">
-            <span class="text-custom-blue ">WILD</span>LIFE               
-        </span>
-    </div>
+<nav class="sidebar fixed top-0 left-0 h-full w-72 w-20 bg-custom-dark-900 p-2 transition-all duration-300 ease-in z-50">
+        <header class="relative">
+            <div class="flex px-4 py-2 text-3xl font-raleway font-bold text-custom-blue ">
+                <img class="w-8" src="{{asset('images/logo.png')}}" alt="">
+                <span class="text transition-all duration-300 ease-in">WILD<span class="text-white">LIFE</span></span></a>
+            </div>
+          
 
-    <ul class="text-white">
-        <li class="text-left py-3 rounded-md bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/"><span class="pl-6"><img class="h-6 inline" src="{{asset('images/Dashboard-logo (1).png')}}"></span> DASHBOARD</a></li>
+            <i class='toggle hover:cursor-pointer bx bx-chevron-right absolute top-0 -right-4 translate-y-2/4 bg-custom-blue text-white rounded-20 text-xl w-6 h-6 flex item-center justify-center transition-all duration-200 ease-in'  ></i>
+        </header>
 
 
-
-        <p class="mt-5 px-10">MANAGEMENT</p>
-    
-        <li class="mt-2 text-left text-default py-3 rounded-md hover:bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/#UserAccount"><span class="pl-6"><img class="h-5  inline" src="{{asset('images/user-edit-img.png')}}"></span> USER ACCOUNTS</a></li>
-        <li class="mt-2 text-left text-default py-3 rounded-md hover:bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/#Applications"><span class="pl-6"><img class="h-5  inline" src="{{asset('images/icon-1-img.png')}}"></span> APPLICATIONS</a></li>
-        <li class="mt-2 text-left text-default py-3 rounded-md hover:bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/#OrderOfPayment"><span class="pl-6"><img class="h-5  inline" src="{{asset('images/icon-1-img.png')}}"></span> ORDER OF PAYMENTS</a></li>
-        <li class="mt-2 text-left text-default py-3 rounded-md hover:bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/#Permits"><span class="pl-6"><img class="h-5  inline" src="{{asset('images/icon-1-img.png')}}"></span> PERMITS</a></li>
-        <li class="mt-2 text-left text-default py-3 rounded-md hover:bg-custom-dark-700 mx-6 "><a href="/admin/dashboard/#Reports"><span class="pl-6"><img class="h-5  inline" src="{{asset('images/icon-1-img.png')}}"></span> REPORTS</a></li>
-        
-        <p class="mt-5 px-10">OPTIONS</p>
-        
-        <li class="text-left py-3 rounded-md hover:bg-custom-dark-700  mx-6 "><a href=""><span class="pl-6"><img class="h-5  inline" src="{{asset('images/icon-1-img.png')}}"></span> DOCUMENTATION</a></li>
-      
-    </ul>
-</aside>
-
-<nav class="md:ml-64">
-    <div class="flex justify-between">
-        <div class="flex items-center ">
-            <span class="text-3xl text-black cursor-pointer  fixed  z-50 mx-2 my-2 block md:hidden" onclick="Menu(this)">
-              <ion-icon name="menu-outline"></ion-icon>
-             
-            </span>
-            <h1 class="text-2xl md:text-4xl font-poppins font-medium py-2 px-0 md:px-4">{{ $title }}</h1>
-        
-          </div>
-        
-        </span>
-            
+        <div class="">
             <div>
-            <i class='bx bxs-bell' ></i>
-            @auth('admin')
-            <span class="py-2 px-6 text-xl text-gray-800 font-raleway font-bold">
-                {{ Auth::guard('admin')->user()->username}}
-                <i class='bx bxs-down-arrow bx-xs cursor-pointer'></i>
-            </span>
-            @endauth
+                <ul class="">
+                  
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-5 rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="/admin/dashboard" class="flex items-center font-poppins">
+                            <i class='bx bxs-dashboard px-5' ></i>
+                            <span class=" text transition-all duration-200 ease-in ">Dashboard</span>
+                        </a>
+                    </li>
+                    <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Management</p>
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="{{route('admin.dashboard.show-user')}}" class="flex items-center font-poppins text-base">
+                            <i class='bx bxs-user-detail px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">User Accounts</span>
+                        </a>
+                    </li>
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="{{route('admin.dashboard.show-app')}}" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-file px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Applications</span>
+                        </a>
+                    </li>
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-wallet px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Order of Payment</span>
+                        </a>
+                    </li>
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-certification px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Wildlife Permits</span>
+                        </a>
+                    </li>
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-bug px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Butterfly Sp</span>
+                        </a>
+                    </li>
+
+                    <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Create</p>
+                   
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="{{route('admin.users.create')}}" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-user-plus px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Create User</span>
+                        </a>
+                    </li>
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="/admin/create-permit" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-file-blank px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Create Wildlife Permit</span>
+                        </a>
+                    </li>
+                
+
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-plus-circle px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Create Butterfly Sp</span>
+                        </a>
+                    </li>
+                
+                
+
+                    <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Monitoring</p>
+                    
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="" class="flex items-center  font-poppins text-base">
+                            <i class='bx bxs-report px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Reports</span>
+                        </a>
+                    </li>
+                    
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+
+    </nav>

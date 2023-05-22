@@ -13,16 +13,30 @@
         rel="stylesheet"> @vite('resources/css/app.css')
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     @vite('resources/css/app.css')
-
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 
 <body class="bg-custom-admin-bg">
     <div class="min-h-screen">
-        @include('admin.layout.dashboard-nav', ["title" => "View Application"])
+        @include('admin.layout.dashboard-nav')
 
-        <section id="overview">
+        <section class="main home transition-all duration-300 ease-in">
+            <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
+                <div class="px-6">         
+                    <p class="text-auto md:text-3xl  font-poppins font-medium">Application Management</p>                  
+            
+                </div>
+                <div class="py-2 px-2 whitespace-nowrap">
+                    <i class='bx bxs-bell'></i>
+                    @auth('admin')
+                    <span class=" px-2 text-auto md:text-xl text-gray-800 font-raleway font-bold">
+                        {{ Auth::guard('admin')->user()->username}}
+                        <i class='bx bxs-down-arrow bx-xs cursor-pointer'></i>
+                    </span>
+                    @endauth
+                </div>
+            </div>
 
-            <div class="md:ml-64">
                 <div id="printable">
                     <div>
                         <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-10 ">
@@ -132,7 +146,7 @@
 
                     </div>
                 </div>
-            </div>
+         
 
         </section>
 
@@ -143,12 +157,8 @@
 
 
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-
-    <script src="{{asset('js/sidenav.js')}}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  
+   @include('admin.layout.admin-script')
 
 </body>
 

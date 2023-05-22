@@ -17,7 +17,7 @@
 </head>
 
 <body class="bg-custom-light-tint-blue">
-    @include('admin.layout.dashboard-nav', ["title" => "Dashboard"])
+    @include('admin.layout.dashboard-nav')
 
     <div class="md:ml-64">
         <form action="{{ route('update-application', $form->id) }}" method="POST">
@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="modeOfTransport">Address:
+                                <label class="my-2 block text-md font-robot font-medium" for="modeOfTransport">Mode of Transport:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="modeOfTransport" id="modeOfTransport"
@@ -183,7 +183,7 @@
     </div>
 
     @include('admin.layout.script')
-
+    @include('admin.layout.admin-script')
 </body>
 
 </html>
