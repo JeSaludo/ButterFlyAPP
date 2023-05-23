@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Your Application Form has been approved</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium consequatur asperiores, inventore delectus neque dolor temporibus quaerat distinctio doloribus. Illum atque doloremque alias quaerat magni molestiae laudantium veritatis, accusantium nisi.</p>
+    <h1> Your Application Has Been Approved</h1>
+    <p> We have carefully reviewed your application, and we are pleased to inform you that your application has been approved. To proceed with the next steps, kindly visit the Penro Office at your earliest convenience. There, you will receive further instructions and additional information to ensure a smooth onboarding process.</p>
 </body>
 </html>

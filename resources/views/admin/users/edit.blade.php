@@ -16,7 +16,7 @@
    <link rel="stylesheet" href="{{asset('css/style.css')}}">
 </head>
 
-<body class="bg-custom-light-tint-blue">
+<body class="bg-custom-admin-bg min-h-screen">
     @include('admin.layout.dashboard-nav')
 
     <section class="main home transition-all duration-300 ease-in">

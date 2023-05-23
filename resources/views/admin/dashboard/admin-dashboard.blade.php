@@ -169,7 +169,7 @@
         },
       ],
       xaxis: {
-        categories: ['List of Applications'],
+        categories: ['Submitted Application Forms'],
       },
       legend: {
         position: 'top',

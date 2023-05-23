@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Your Application Form has been denied.</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium consequatur asperiores, inventore delectus neque dolor temporibus quaerat distinctio doloribus. Illum atque doloremque alias quaerat magni molestiae laudantium veritatis, accusantium nisi.</p>
+    <h1> Your Application Has Been Denied</h1>
+    <p> After careful consideration, we regret to inform you that your application for the butterfly permit has been denied. We understand your passion for butterfly-related activities and the disappointment this may bring. Please be aware that this decision does not reflect any shortcomings on your part. We receive numerous applications and have limited permits available, which makes the selection process highly competitive.</p>
 </body>
 </html>

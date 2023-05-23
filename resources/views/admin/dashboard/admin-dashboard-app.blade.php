@@ -434,7 +434,7 @@
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
                                     
-                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
+                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Released</a>
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
@@ -547,7 +547,7 @@
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
                                     
-                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
+                                    <a class=" bg-yellow-100 text-yellow-700 px-3 py-2 rounded-20">Used</a>
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
@@ -659,9 +659,7 @@
 
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                    
-                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
-                                   
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Expired</a>                                   
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
                                     <a href="{{ route('application-forms.show', $form->id)}}"

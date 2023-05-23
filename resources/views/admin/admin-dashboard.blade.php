@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="bg-custom-admin-bg">
+<body class="bg-custom-admin-bg min-h-screen">
     <div class="min-h-screen">
 
         @include("admin.layout.dashboard-nav", ["title" => "Overview"])

@@ -35,11 +35,12 @@ use Illuminate\Http\Request;
 
     Route::get('/verify-account',[UserController::class, 'VerifyAccount'])->name('verifyAccount');
     Route::post('/verify-otp', [UserController::class, 'UserActivation'])->name('otp.verify');
+    Route::get('/logout', [UserController::class, 'logout']);
 
     Route::middleware(['auth', 'verified'])->group(function(){
         Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit']);
         Route::post('/permit/apply-permit-process', [PermitController::class, 'RegisterApplication']);        
-        Route::get('/logout', [UserController::class, 'logout']);
+      
         Route::post('/permit/draft/save', [PermitController::class, 'DraftApplication'])->name('draft.save');
        
         Route::get('/myapplication/show-submit', [UserCRUDController::class, 'ShowSubmitApplicationForm'])->name('myapplications.submit.show');
@@ -91,7 +92,7 @@ use Illuminate\Http\Request;
         Route::delete('/admin/users/{user}', [AdminCRUDController::class,'destroy'])->name('admin.users.destroy');
     
         //Butterfly Spcies Routing
-        Route::get('admin/butterfly/add', [AdminCRUDController::class, 'addButterflySpecies'])->name('admin.add-butterfly');
+        Route::get('admin/butterfly/add', [AdminCRUDController::class, 'addButterflySpecies'])->name('admin.add-butterfly.show');
         Route::post('/admin/store-butterfly', [AdminCRUDController::class, 'storeButterflySpecies'])->name('admin.store-butterfly');
         Route::get('/admin/butterfly/{id}/edit', [AdminCRUDController::class, 'editButterflySpecies'])->name('admin.edit-butterfly');
         Route::put('admin/butterfly/{id}', [AdminCRUDController::class, 'updateButterflySpecies'])->name('admin.update-butterfly');
@@ -100,7 +101,7 @@ use Illuminate\Http\Request;
 
                 
        
-
+        Route::get('/admin/dashboard/order-of-payment', [AdminCRUDController::class, 'showOrderOfPayment'])->name('admin.order-of-payment.show');
 
     });
         

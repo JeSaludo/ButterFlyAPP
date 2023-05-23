@@ -347,5 +347,38 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/applications');
         
     }
+    //Order of Payment
+    public function showOrderOfPayment(){
+        return view('admin.dashboard.admin-dashboard-order-payment');
+    }
+
+    //BUtterfly 
+
+    public function addButterflySpecies(){
+        return view('admin.add-butterfly');
+    }
+
+    public function storeButterflySpecies(){
+
+    }
+
+    public function editButterflySpecies(){
+
+    }
+
+    public function updateButterflySpecies(){
+
+    }
+
+    public function viewButterflySpecies(){
+
+    }
+
+    public function deleteButterflySpecies()
+    {
+
+    }
+
+    //
 
 }
