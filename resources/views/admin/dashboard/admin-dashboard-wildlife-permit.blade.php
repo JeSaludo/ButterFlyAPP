@@ -30,7 +30,7 @@
         
         <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
             <div class="px-6">         
-                <p class="text-auto md:text-3xl  font-poppins font-medium">Order of Payment</p>                  
+                <p class="text-auto md:text-3xl  font-poppins font-medium">Application Management</p>                  
                
             </div>
             <div class="py-2 px-2 whitespace-nowrap">
@@ -42,12 +42,12 @@
                 </span>
                 @endauth
             </div>
-
         </div>
 
+   
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Order Of Payments</p>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Pending Applications</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 table-auto">
@@ -55,19 +55,16 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ID</th>
+                                    Permit Type</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Order Number</th>
+                                    Permit Number</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Application ID</th>
+                                    Issue Date</th>
                                 <th
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Payment Amount</th>
-                                    <th
-                                    class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Order Receipt No</th>
+                                    Expiration Date</th>
                                 <th
                                     class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
@@ -78,39 +75,38 @@
                         </thead>
                         <tbody>
                         
-                            @foreach($orderOfPayments as $orderOfPayment)
+                            @foreach($wildlifePermits as $permit)
                             <tr>
                                 <td class="px-6 py-4">
-                                    {{$orderOfPayment->id}}
+                                    @if ($permit->permit_type === "wcp")
+                                        WCP
+                                    @elseif ($permit->permit_type === "wfp")
+                                        WFP
+                                    @endif    
                                 </td>
-                                <td class="px-6 py-4">
-                                    {{$orderOfPayment->order_number}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$orderOfPayment->application_form_id}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$orderOfPayment->payment_amount}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    @if (!$orderOfPayment->or_number)
-                                       NULL
-                                       @else 
-                                         {{$orderOfPayment->or_number}}
-                                       
+                                <td class="px-6 py-4">{{ $permit->permit_no }}</td>
+
+                                <td class="px-6 py-4">{{ $permit->issue_date }}</td>
+                                <td class="px-6 py-4">{{ $permit->expiration_date }}</td>
+                                <td
+                                    class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                    @php
+                                    $expirationDate = strtotime($permit->expiration_date);
+                                    $currentDate = strtotime(date("Y-m-d"));
+                                    @endphp
+                                    
+                                    @if ($expirationDate >= $currentDate)
+                                        <span class="bg-green-100 text-green-700 px-3 py-2 rounded-20">Valid</span>
+                                    @else
+                                        <span class="bg-red-100 text-red-700 px-3 py-2 rounded-20">Expired</span>
                                     @endif
-                                   
+                                    
                                 </td>
-                                <td class="px-6 py-4 text-center" >
-                                    {{$orderOfPayment->status}}
-                                </td>
-                               
-                               
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
                                    
-                                    <a href="{{route('admin.edit-orderofpayment.show' , $orderOfPayment->id)}}"
+                                    <a href="{{ route('admin.edit-wildlife-permit', $permit->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="" method="POST"
+                                    <form action="{{ Route('delete-application', $permit->id)}}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
@@ -133,13 +129,13 @@
                     <nav class="flex items-center justify-between">
                         <div class="flex-1 flex justify-between">
                             <!-- Previous Page Link -->
-                            @if ($orderOfPayments->onFirstPage())
+                            @if ($wildlifePermits->onFirstPage())
                             <span
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
                                 Previous
                             </span>
                             @else
-                            <a href="{{ $orderOfPayments->previousPageUrl() }}"
+                            <a href="{{ $wildlifePermits->previousPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Previous
                             </a>
@@ -147,16 +143,16 @@
 
                             <div class="text-sm text-gray-500 py-2">
                                 <span>{!! __('Showing') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->firstItem() }}</span>
+                                <span class="font-medium">{{ $wildlifePermits->firstItem() }}</span>
                                 <span>{!! __('to') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->lastItem() }}</span>
+                                <span class="font-medium">{{ $wildlifePermits->lastItem() }}</span>
                                 <span>{!! __('of') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->total() }}</span>
+                                <span class="font-medium">{{ $wildlifePermits->total() }}</span>
                                 <span>{!! __('results') !!}</span>
                             </div>
 
-                            @if ($orderOfPayments->hasMorePages())
-                            <a href="{{ $orderOfPayments->nextPageUrl() }}"
+                            @if ($wildlifePermits->hasMorePages())
+                            <a href="{{ $wildlifePermits->nextPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Next
                             </a>
@@ -176,8 +172,8 @@
 
            
         </div>
-
-
+      
+      
     </section>
     
 

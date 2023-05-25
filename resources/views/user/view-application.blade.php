@@ -73,7 +73,7 @@
                             <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Draft</p>
                             
                                 @else
-                                <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20">On Process</p>
+                                <p class=" bg-orange-100 text-orange-700 px-3 w-28 py-2 rounded-20">On Process</p>
                             @endif
                             </div>
                          </div>

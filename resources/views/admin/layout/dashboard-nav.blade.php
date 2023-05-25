@@ -50,7 +50,7 @@
                     </li>
 
                     <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="" class="flex items-center  font-poppins text-base">
+                        <a href="{{route('admin.dashboard.show-wilflife')}}" class="flex items-center  font-poppins text-base">
                             <i class='bx bx-certification px-5' ></i>
                             <span class="text transition-all duration-200 ease-in">Wildlife Permits</span>
                         </a>

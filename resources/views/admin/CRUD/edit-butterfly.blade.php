@@ -22,7 +22,7 @@
     <section class="main home transition-all duration-300 ease-in">
         <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
             <div class="px-6">         
-                <p class="text-auto md:text-3xl  font-poppins font-medium">Add Wildlife Permit</p>                  
+                <p class="text-auto md:text-3xl  font-poppins font-medium">Add Butterfly Species</p>                  
                
             </div>
             <div class="py-2 px-2 whitespace-nowrap">
@@ -35,55 +35,46 @@
                 @endauth
             </div>
         </div>
-        <form action="admin/store-wildlife-permit/store" method="post">
+        <form action="{{route('admin.edit-butterfly')}}" method="post">
             @csrf
             
             <div>
-                <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3  shadow-md">
-                    <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">Create Wild Life Permit
+                <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
+                    <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">Create Butterfly
                     </h1>
                     <div class="grid grid-flow-row md:grid-flow-col gap-4 px-10 pb-4">
                         <div class="w-full">
+                            
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="permitType">Permit Type:</label>
-                                <select id="permitType" name="permitType" class="w-full bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md">
-                                    <option value="wfp" @if(old('permitType') == 'wfp') selected @endif>WFP</option>
-                                    <option value="wcp" @if(old('permitType') == 'wcp') selected @endif>WCP</option>
-                                </select>
-                                @error('permitType')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="permitNo">Permit No.:
+                                <label class="my-2 block text-md font-robot font-medium" for="permitNo">Species Type:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="permitNo" id="permitNo" placeholder="Enter Permit No."
+                                        type="text" name="speciesType" id="speciesType" placeholder="Enter Species Type"
                                         ></label>
-                                @error('permitNo')
+                                @error('speciesType')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
                            
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="businessName">Business Name:
+                                <label class="my-2 block text-md font-robot font-medium" for="className">Class Name:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="businessName" id="businessName" placeholder="Enter Business Name"
+                                        type="text" name="className" id="className" placeholder="Enter Class Name"
                                         ></label>
-                                @error('businessName')
+                                @error('className')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
 
                             
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="ownerName">Owner Name:
+                                <label class="my-2 block text-md font-robot font-medium" for="familyName">Family Name:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="ownerName" id="ownerName" placeholder="Enter Owner Name"
+                                        type="text" name="familyName" id="familyName" placeholder="Enter Family Name"
                                         ></label>
-                                @error('ownerName')
+                                @error('familyName')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
@@ -93,56 +84,51 @@
 
                            
                         </div>
-                      
-                       
+
                         <div class="w-full">
-                            
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="issueDate">Issue Date:
+                                <label class="my-2 block text-md font-robot font-medium" for="commonName">Common Name:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="date" name="issueDate" id="issueDate" placeholder="Enter Issue Date"
+                                        type="text" name="commonName" id="commonName" placeholder="Enter Common Name"
                                         ></label>
-                                @error('issueDate')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                                </div>
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="expirationDate">Enter Expiration Date:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="date" name="expirationDate" id="expirationDate" placeholder="Enter Expiration Date"
-                                        ></label>
-                                @error('expirationDate')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
-                        
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="address">Enter Address:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="address" id="address" placeholder="Enter Address"
-                                        ></label>
-                                @error('address')
+                                @error('commonName')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
 
-                        </div>
-                           
-                            
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="scientificName">Scientific Name:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="scientificName" id="scientificName" placeholder="Enter Scientific Name"
+                                        ></label>
+                                @error('scientificName')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+                            <div class="mt-2">
+                                <label class="my-2 block text-md font-robot font-medium" for="description">Description:
+                                    <input
+                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
+                                        type="text" name="description" id="description" placeholder="Enter Description"
+                                        ></label>
+                                @error('description')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+
             
-                    </div>
-                    <div class=" px-10 py-2 flex  gap-2">
-                        <button type="submit"
-                            class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Create
-                            Permit</button>
-    
-                    </div>
+                    </div> 
+                    
                    
                 </div>
-               
+                <div class=" px-10 py-2 flex  gap-2">
+                    <button type="submit"
+                        class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Create
+                        Permit</button>
+
+                </div>
 
             </div>
 
@@ -157,7 +143,6 @@
        
     </section>
 
-  
     @include('admin.layout.admin-script')
 </body>
 

@@ -10,12 +10,15 @@ use App\Models\User;
 use App\Models\Butterfly;
 use App\Models\Verifytoken;
 use App\Models\ApplicationForm;
+use App\Models\ButterflySpecies;
+use App\Models\OrderOfPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Mail;
 
 class AdminCRUDController extends Controller
@@ -209,14 +212,13 @@ class AdminCRUDController extends Controller
 
         return redirect('/admin/dashboard/users');
     }
-    public function edit($id)
-    {
+    public function edit($id){
         $user = User::find($id);
         return view('admin.users.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
+    
         
         $user = User::findOrFail($id);
       
@@ -250,8 +252,8 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/users')->with('success', 'User updated successfully');
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id) {
+   
         $user = User::find($id);
     
         if ($user) {
@@ -269,11 +271,22 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/applications')->with('success', 'Application deleted successfully.');
     }
     
-    public function approveApplication(ApplicationForm $form)
+    public function showApproveApplication(ApplicationForm $form){
+
+    }
+    public function approveApplication(ApplicationForm $form, Request $request)
     {
         $form->status = 'Accepted';
         $form->save();
         
+        $order_no = Str::random(10);
+        $orderOfPayments = new OrderOfPayment();
+     
+        $orderOfPayments->order_number = $order_no;
+        $orderOfPayments->application_form_id = $form->id;
+        $orderOfPayments->payment_amount = $request->payment_amount;
+        $orderOfPayments->save();
+
         $user = User::findOrFail($form->user_id);     
         Mail::to($user->email)->send(new NotifyApprove());
 
@@ -293,6 +306,14 @@ class AdminCRUDController extends Controller
         $form = ApplicationForm::with('butterflies')->findOrFail($id);
       
         return view('admin.users.view-application', compact('form'));
+    
+    }
+
+    public function reviewApplication($id){
+
+        $form = ApplicationForm::with('butterflies')->findOrFail($id);
+      
+        return view('admin.CRUD.review-application', compact('form'));
     
     }
 
@@ -349,32 +370,83 @@ class AdminCRUDController extends Controller
     }
     //Order of Payment
     public function showOrderOfPayment(){
-        return view('admin.dashboard.admin-dashboard-order-payment');
+        $orderOfPayments = OrderOfPayment::paginate(10);
+        return view('admin.dashboard.admin-dashboard-order-payment', compact('orderOfPayments'));
+    }
+
+    public function editOrderOfPayment($id){
+
+        $orderOfPayment = OrderOfPayment::findOrFail($id);
+        $application = ApplicationForm::findOrFail($orderOfPayment->application_form_id);
+        return view('admin.CRUD.edit-order-of-payment',compact('orderOfPayment','application'));
+    }
+
+    public function updateOrderOfPayment(Request $request,$id){
+        $data = $request->validate([
+            'paymentAmount' => 'required',
+            'orNumber' => 'required',
+        ]);
+
+        $orderOfPayment = OrderOfPayment::findOrFail($id);
+        $orderOfPayment->payment_amount = $request->paymentAmount;
+        $orderOfPayment->or_number = $request->orNumber;
+        $orderOfPayment->save();
+        return redirect('admin/dashboard/order-of-payment');
     }
 
     //BUtterfly 
 
+    public function showWilfLifePermit(){
+        $wildlifePermits = Permit::paginate(10);
+        return view('admin.dashboard.admin-dashboard-wildlife-permit', compact('wildlifePermits'));
+    }
+    
+    public function editWildLifePermit($id){
+
+        $permit = Permit::findOrFail($id);
+        return view('admin.CRUD.edit-wildlife-permit', compact('permit'));
+    }
+    public function updateWildLifePermit(Request $request, $id){
+        
+        $permit = Permit::findOrFail($id);
+        $permitId = $permit->id;
+        $data = $request->validate([
+            'permitType' => 'required|in:wfp,wcp',
+            'permitNo' => 'required|unique:permits,permit_no,' . $permitId,
+            'businessName' => 'required',
+            'ownerName' =>'required',
+            'address' => 'required',
+            'issueDate' => 'required|date',
+            'expirationDate' => 'required|date',
+        ]);
+        
+      
+        $permit->permit_type = $request->permitType;
+        $permit->permit_no = $request->permitNo;
+        $permit->business_name = $request->businessName;
+        $permit->owner_name = $request->ownerName;
+        $permit->address = $request->address;
+        $permit->issue_date = $request->issueDate;
+        $permit->expiration_date = $request->expirationDate;
+        $permit->save();
+
+       return redirect('admin/dashboard/wildlife-permits');
+    }
     public function addButterflySpecies(){
         return view('admin.add-butterfly');
     }
 
-    public function storeButterflySpecies(){
 
+    public function editButterflySpecies($id){
+        $butterflies = ButterflySpecies::find($id);
+        return view('admin.CRUD.edit-butterfly', compact('butterflies'));
     }
 
-    public function editButterflySpecies(){
+    public function updateButterflySpecies(Request $request, $id){
 
     }
-
-    public function updateButterflySpecies(){
-
-    }
-
-    public function viewButterflySpecies(){
-
-    }
-
-    public function deleteButterflySpecies()
+   
+    public function deleteButterflySpecies($i)
     {
 
     }

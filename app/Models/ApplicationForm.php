@@ -17,6 +17,10 @@ class ApplicationForm extends Model
         return $this->hasMany(Butterfly::class,'application_forms_id');
     }
 
+    public function orderOfPermit(){
+        return $this->hasMany(OrderOfPayment::class);
+    }
+
     protected $fillable = [
         'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status',
       ];

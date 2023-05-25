@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\PermitController;
+use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\UserCRUDController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -56,7 +57,7 @@ use Illuminate\Http\Request;
         Route::get('/profile/users/{user}/edit', [UserCRUDController::class, 'edit'])->name('users.edit');
         Route::put('/profile/users/{user}', [UserCRUDController::class, 'update'])->name('users.update');
        
-
+        Route::get('myapplication/or-receipt/{id}', [SignatureController::class, 'ShowGetPermit'])->name('user.get-permit.show');
 
         });
 
@@ -71,9 +72,13 @@ use Illuminate\Http\Request;
        
         Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'ShowApplication'])->name('admin.dashboard.show-app');
        
-       
-        Route::post('/admin/store-wildlife-permit', [PermitController::class, 'AddWildLifePermit']);
-        Route::get('/admin/create-permit', [PermitController::class, 'CreatePermit']);
+        Route::get('/admin/dashboard/order-of-payment', [AdminCRUDController::class, 'showOrderOfPayment'])->name('admin.order-of-payment.show');
+
+        Route::get('/admin/dashboard/wildlife-permits', [AdminCRUDController::class, 'showWilfLifePermit'])->name('admin.dashboard.show-wilflife');
+        
+        
+        
+      
         Route::get('/admin/logout', [AdminController::class, 'logout']);
         
 
@@ -83,6 +88,11 @@ use Illuminate\Http\Request;
         Route::put('/admin/dashboard/users/{user}', [AdminCRUDController::class, 'update'])->name('admin.users.update');
         Route::delete('/admin/application/{form}', [AdminCRUDController::class,'deleteApplication'])->name('delete-application');
        
+        Route::get('/admin/application-forms/view{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
+        Route::get('/admin/application-forms/review/{id}', [AdminCRUDController::class,'reviewApplication'])->name('application-forms.review');
+        Route::get('/admin/application-form/review/{id}/accept', [AdminCRUDController::class, 'showApproveApplication'])->name('application-from-approve.show');
+       
+            
         Route::post('/admin/application/{form}/approve', [AdminCRUDController::class,'approveApplication'])->name('approve-application');
         Route::post('/admin/application/{form}/deny', [AdminCRUDController::class,'denyApplication'])->name('deny-application');
 
@@ -93,25 +103,24 @@ use Illuminate\Http\Request;
     
         //Butterfly Spcies Routing
         Route::get('admin/butterfly/add', [AdminCRUDController::class, 'addButterflySpecies'])->name('admin.add-butterfly.show');
-        Route::post('/admin/store-butterfly', [AdminCRUDController::class, 'storeButterflySpecies'])->name('admin.store-butterfly');
         Route::get('/admin/butterfly/{id}/edit', [AdminCRUDController::class, 'editButterflySpecies'])->name('admin.edit-butterfly');
         Route::put('admin/butterfly/{id}', [AdminCRUDController::class, 'updateButterflySpecies'])->name('admin.update-butterfly');
         Route::get('admin/butterfly/view/{id}', [AdminCRUDController::class, 'viewButterflySpecies'])->name('admin.view-butterfly');
         Route::delete('/admin/butterfly/delete/{id}', [AdminCRUDController::class, 'deleteButterflySpecies'])->name('admin.delete-butterfly');
-
-                
-       
-        Route::get('/admin/dashboard/order-of-payment', [AdminCRUDController::class, 'showOrderOfPayment'])->name('admin.order-of-payment.show');
-
-    });
+        
+        Route::get('/admin/create-permit', [PermitController::class, 'CreatePermit']);
+        Route::post('/admin/store-wildlife-permit/store', [PermitController::class, 'AddWildLifePermit']);
+        Route::put('admin/wildlife-permit/{id}', [AdminCRUDController::class, 'updateWildLifePermit'])->name('admin.update-wildlife-permit');
+        Route::get('admin/wildlife-permit/{id}/edit', [AdminCRUDController::class, 'editWildLifePermit'])->name('admin.edit-wildlife-permit');
+      
+        Route::get('/admin/order-of-payment/{form}/edit', [AdminCRUDController::class, 'editOrderOfPayment'])->name('admin.edit-orderofpayment.show');
+        Route::put('/admin/order-of-payment/{form}', [AdminCRUDController::class, 'updateOrderOfPayment'])->name('admin.update-orderofpayment');
+    }); 
         
     Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    
     Route::post('/admin/register/process', [AdminController::class, 'CreateAccount']);
     
-    Route::get('/admin/application-forms/{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
-
-   
-        
+  
 
 
     Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])->name('password.request');

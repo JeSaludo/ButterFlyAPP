@@ -87,8 +87,8 @@
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('application-forms.show', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                    <a href="{{ route('application-forms.review', $form->id)}}"
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Review</a>
                                     <a href="{{ route('edit-application', $form->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <form action="{{ Route('delete-application', $form->id)}}" method="POST"
@@ -98,20 +98,7 @@
                                         <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
                                             onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                                     </form>
-                                    <form action="{{route('approve-application', $form->id) }}" method="POST"
-                                        style="display: inline-block;">
-                                        @csrf
-                                        <button type="submit"
-                                            class="mr-2 bg-green-400 hover:bg-green-700 text-white font-bold py-1 px-2 rounded"
-                                            onclick="return confirm('Are you sure you want to approve this application?')"><i class='bx bx-sm bx-check' ></i></button>
-                                    </form>
-                                    <form action="{{route('deny-application', $form->id)}}" method="POST"
-                                        style="display: inline-block;">
-                                        @csrf
-                                        <button type="submit"
-                                            class="bg-red-400 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                                            onclick="return confirm('Are you sure you want to reject this application?')"><i class='bx bx-sm bx-x'></i></button>
-                                    </form>
+                                   
 
 
                                 </td>
@@ -321,7 +308,7 @@
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
                                     
-                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Returned</a>
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">

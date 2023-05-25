@@ -57,7 +57,13 @@
                             </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                   <a href="{{ route('user.application-forms.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                                                   
+                                  @if ($form->status === "Accepted")
+                                    <a href="{{ route('user.get-permit.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Get Permit</a>
+                                    @elseif ($form->status === "Released")
+                                    <a href="{{ route('user.get-permit.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Print Permit</a>
+                                
+                                    @endif
+                                                               
                               </td>
 
                               <td>
