@@ -7,6 +7,7 @@ use App\Models\Butterfly;
 use App\Models\Permit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PermitController extends Controller
 {
@@ -145,6 +146,45 @@ class PermitController extends Controller
 
     public function CreatePermit(){
         return view('admin.add-wildlife-permit');
+    }
+    public function uploadLTP(Request $request, $id)
+    {
+        $request->validate([
+            'pdf_file' => 'required|mimes:pdf|max:2048', // Validate file type and maximum size
+        ]);
+
+        $application = ApplicationForm::findOrFail($id);
+        if ($request->hasFile('pdf_file')) {
+            $pdfFile = $request->file('pdf_file');
+            $filename = date('YmdHis') . '-' . $pdfFile->getClientOriginalName();
+            $pdfFile->move(public_path('ltpPermit'), $filename);
+                       
+            $application->ltp_name = $filename;          
+            $application->ltp_path = 'ltpPermit/' . $filename;
+            $application->status = "Released";
+            $application->save();
+           
+           
+            return redirect('/myapplication/show-submit');
+        }
+    
+      
+    }
+
+    public function PrintLTP($id){
+        $applicationForm = ApplicationForm::findOrFail($id);
+
+        $pdfPath = $applicationForm->ltp_path;
+        
+        $absolutepdfPath = public_path($pdfPath);
+        
+        if (file_exists($absolutepdfPath)) {
+            return response()->file($absolutepdfPath, [
+                'Content-Disposition' => 'attachment; filename="' . $applicationForm->ltp_name . '"',
+            ]);
+        } else {
+            abort(404, 'File not found');
+        }
     }
 
 }

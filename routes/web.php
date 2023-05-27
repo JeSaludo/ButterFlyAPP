@@ -58,8 +58,12 @@ use Illuminate\Http\Request;
         Route::put('/profile/users/{user}', [UserCRUDController::class, 'update'])->name('users.update');
        
         Route::get('myapplication/or-receipt/{id}', [SignatureController::class, 'ShowGetPermit'])->name('user.get-permit.show');
-
-        });
+        Route::put('myapplication/or-receipt/store/{id}', [SignatureController::class, 'StoreUserSignatories'])->name('user.store-permit');
+       
+        Route::post('myapplication/print/ltp/{form}', [PermitController::class, 'PrintLTP'])->name('user.print-permit');
+    
+    
+    });
 
     Route::get('/admin/login', [AdminController::class, 'ShowLogin'])->name('admin.login');
     Route::post('/admin/login/authenticate', [AdminController::class, 'Authenticate']);
@@ -76,9 +80,11 @@ use Illuminate\Http\Request;
 
         Route::get('/admin/dashboard/wildlife-permits', [AdminCRUDController::class, 'showWilfLifePermit'])->name('admin.dashboard.show-wilflife');
         
+        Route::get('/admin/release-permit/{form}', [AdminCRUDController::class, 'releasePermitShow'])->name('admin.dashboard.release-permit.show');
         
-        
-      
+        Route::get('/admin/download/signature/{id}', [SignatureController::class,'download'])->name('download');
+        Route::post('/admin/upload/LTP/{id}', [PermitController::class, 'UploadLTP'])->name('uploadltp');
+
         Route::get('/admin/logout', [AdminController::class, 'logout']);
         
 
@@ -114,7 +120,7 @@ use Illuminate\Http\Request;
         Route::get('admin/wildlife-permit/{id}/edit', [AdminCRUDController::class, 'editWildLifePermit'])->name('admin.edit-wildlife-permit');
       
         Route::get('/admin/order-of-payment/{form}/edit', [AdminCRUDController::class, 'editOrderOfPayment'])->name('admin.edit-orderofpayment.show');
-        Route::put('/admin/order-of-payment/{form}', [AdminCRUDController::class, 'updateOrderOfPayment'])->name('admin.update-orderofpayment');
+        Route::put('/admin/order-of-payment/store/{form}', [AdminCRUDController::class, 'updateOrderOfPayment'])->name('admin.update-orderofpayment');
     }); 
         
     Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    
@@ -130,4 +136,5 @@ use Illuminate\Http\Request;
 
 
     Route::get('test/admin/dashboard', );
+    
     

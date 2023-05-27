@@ -52,16 +52,24 @@
                                 <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Draft</p>
                                 
                                     @else
-                                    <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20">On Process</p>
+                                    <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 whitespace-nowrap">On Process</p>
                                 @endif
                             </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                  <a href="{{ route('user.application-forms.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                  @if ($form->status === "Accepted")
-                                    <a href="{{ route('user.get-permit.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Get Permit</a>
+                                  <a href="{{ route('user.application-forms.show', $form->id)}}" class=" mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                     @if ($form->status === "Accepted")
+                                        @if(!$form->file_name)
+                                            <a href="{{ route('user.get-permit.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Encode OR</a>
+                                        @elseif($form->file_name && $form->status==="Accepted")
+                                            <a  class="mx-2 text-yellow-600 ">Processing</a>
+                                         @endif
                                     @elseif ($form->status === "Released")
-                                    <a href="{{ route('user.get-permit.show', $form->id)}}" class="mx-2 text-indigo-600 hover:text-indigo-900">Print Permit</a>
-                                
+
+                                        <form action="{{ route('user.print-permit', $form->id)}} " class="inline" method="POST">
+                                            @csrf
+                                            <button type="submit" class="mx-2 text-indigo-600">Print</button>
+                                        </form>
+                                    
                                     @endif
                                                                
                               </td>

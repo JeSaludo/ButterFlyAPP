@@ -107,9 +107,10 @@
                                
                                
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                   
+                                  
+                                            
                                     <a href="{{route('admin.edit-orderofpayment.show' , $orderOfPayment->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Update</a>
                                     <form action="" method="POST"
                                         style="display: inline-block;">
                                         @csrf

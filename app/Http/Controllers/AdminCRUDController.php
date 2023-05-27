@@ -57,7 +57,7 @@ class AdminCRUDController extends Controller
         ->where('status', 'On Process')
         ->paginate(10);
 
-        $acceptedApplicationForm = ApplicationForm::with('butterflies')
+        $acceptedApplicationForm = ApplicationForm::with(['butterflies', 'orderOfPayment'])
         ->where('is_draft', false)
         ->where('status', 'Accepted')
         ->paginate(10);
@@ -405,6 +405,7 @@ class AdminCRUDController extends Controller
 
         $permit = Permit::findOrFail($id);
         return view('admin.CRUD.edit-wildlife-permit', compact('permit'));
+    
     }
     public function updateWildLifePermit(Request $request, $id){
         
@@ -451,6 +452,12 @@ class AdminCRUDController extends Controller
 
     }
 
-    //
+    //Release Permit
+
+
+    public function releasePermitShow($id){
+         $applicationForm = ApplicationForm::findOrFail($id);
+         return view('admin.CRUD.release-permit', compact('applicationForm'));
+    }
 
 }

@@ -35,7 +35,7 @@
                 @endauth
             </div>
         </div>
-        <form action="admin/store-wildlife-permit/store" method="post">
+        <form action="store-wildlife-permit/store" method="post">
             @csrf
             
             <div>

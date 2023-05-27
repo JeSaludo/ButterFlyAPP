@@ -10,32 +10,25 @@
         </header>
 
 
-        <div class="">
+        <div class="h-full overflow-y-auto">
             <div>
                 <ul class="">
                   
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-5 rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="/admin/dashboard" class="flex items-center font-poppins">
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-5 rounded-md  hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="/admin/dashboard" class="flex items-center font-poppins text-xl">
                             <i class='bx bxs-dashboard px-5' ></i>
                             <span class=" text transition-all duration-200 ease-in ">Dashboard</span>
                         </a>
                     </li>
                     <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Management</p>
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md  hover:bg-custom-blue transition-all duration-200 ease-in">
                         <a href="{{route('admin.dashboard.show-user')}}" class="flex items-center font-poppins text-base">
                             <i class='bx bxs-user-detail px-5' ></i>
                             <span class="text transition-all duration-200 ease-in">User Accounts</span>
                         </a>
-                    </li>
+                    </li>                   
 
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="" class="flex items-center font-poppins text-base">
-                            <i class='bx bxs-user-detail px-5' ></i>
-                            <span class="text transition-all duration-200 ease-in">Admin Accounts</span>
-                        </a>
-                    </li>
-
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-default hover:bg-custom-blue transition-all duration-200 ease-in">
                         <a href="{{route('admin.dashboard.show-app')}}" class="flex items-center  font-poppins text-base">
                             <i class='bx bx-file px-5' ></i>
                             <span class="text transition-all duration-200 ease-in">Applications Review</span>

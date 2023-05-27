@@ -77,9 +77,7 @@
                                 <th
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
-                                <th
-                                    class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
-                                    Action</th>
+                              
                             </tr>
                         </thead>
                         <tbody>
@@ -102,22 +100,7 @@
                                     <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Returned</a>
                                     @endif
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('application-forms.show', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="{{ route('edit-application', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="{{ Route('delete-application', $form->id)}}" method="POST"
-                                        style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
-                                            onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
-                                    </form>
-                                    
-
-
-                                </td>
+                               
 
 
                             </tr>

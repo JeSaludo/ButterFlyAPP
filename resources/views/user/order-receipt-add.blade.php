@@ -17,9 +17,10 @@
             @include('layout.user-nav-dashboard')
         </div>
         <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
-            <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">Create Wild Life Permit
-                <form action="">
-                    
+            <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue text-center">Permit Completion</h1>
+                <form action="{{route('user.store-permit', $form->id)}}" method="POST" class="w-6/12 mx-auto py-4" enctype="multipart/form-data">
+                    @csrf
+                    @method('put')
                     <div class="mt-2">
                         <label class="my-2 block text-md font-robot font-medium" for="orNumber">OR Number:
                             <input
@@ -29,15 +30,22 @@
                         @error('orNumber')
                         <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                         @enderror
+                    </div>
 
+                    <div class="mt-2">
+                        
                         <label class="my-2 block text-md font-robot font-medium" for="signature">Your Signature:</label>
                         <input class="w-full block mt-2 bg-transparent" type="file" name="signature" id="signature">
 
                         @error('signature')
                         <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                         @enderror
-
                     </div>
+
+                    <div class="flex justify-between gap-2">
+                        <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
+                       
+                     </div>
                 </form>
            
             </div>

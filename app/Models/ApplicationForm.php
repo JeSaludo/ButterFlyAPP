@@ -16,12 +16,15 @@ class ApplicationForm extends Model
     public function butterflies(){
         return $this->hasMany(Butterfly::class,'application_forms_id');
     }
-
-    public function orderOfPermit(){
-        return $this->hasMany(OrderOfPayment::class);
+    public function orderOfPayment()
+    {
+        return $this->hasOne(OrderOfPayment::class);
     }
 
     protected $fillable = [
-        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status',
+        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status','file_name','file_path'
       ];
+
+  
+      
 }

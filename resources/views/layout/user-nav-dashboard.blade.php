@@ -20,9 +20,7 @@
                 <a href="{{route('home')}}" class="text-md text-white hover:text-custom-dark-600">HOME</a>
             </li>
 
-            <li class="ml-4 my-6 md:my-0 ">
-                <a href="/#features" class="text-md  text-white hover:text-custom-dark-600">FEATURES</a>
-            </li>
+           
 
             <li class="ml-4 my-6 md:my-0 ">
                 <a href="{{route('myapplications.submit.show')}}" class="text-md  text-white hover:text-custom-dark-600">MY APPLICATION</a>

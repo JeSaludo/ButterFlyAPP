@@ -174,8 +174,8 @@
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Date of Submission</th>
-                                <th
-                                    class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th
+                                    class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
                                 <th
                                     class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
@@ -191,17 +191,25 @@
                                 <td class="px-6 py-4">{{ $form->name }}</td>
 
                                 <td class="px-6 py-4">{{ $form->created_at }}</td>
-
-                                <td
-                                    class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                    
-                                    <a class=" bg-green-100 text-green-700 px-3 py-2 rounded-20">Accepted</a>
+                                <td class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                    @if ($form->orderOfPayment && $form->orderOfPayment->status === "paid")                                 
+                                    <a class=" bg-green-100 text-green-700 px-6 py-2 rounded-20">Paid</a>
+                                    @else
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Unpaid</a>
+                                    @endif
                                    
+                              
+                               
                                 </td>
+                              
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('application-forms.show', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="{{ route('edit-application', $form->id)}}"
+                                    @if($form->orderOfPayment && $form->orderOfPayment->status === "paid")
+                                    <a class="mx-2 text-indigo-600 cursor-pointer hover:text-indigo-900">Release</a>
+                                    @else
+                                    <a 
+                                        class="mx-2 text-gray-600 opacity-70">Release</a>
+                                    @endif
+                                        <a href="{{ route('edit-application', $form->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <form action="{{ Route('delete-application', $form->id)}}" method="POST"
                                         style="display: inline-block;">
@@ -498,7 +506,7 @@
 
         <div class="px-4 pt-2">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Used Applications</p>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Application History</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 table-auto">
