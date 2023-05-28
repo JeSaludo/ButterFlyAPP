@@ -49,12 +49,7 @@
                         </a>
                     </li>
 
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="" class="flex items-center  font-poppins text-base">
-                            <i class='bx bx-bug px-5' ></i>
-                            <span class="text transition-all duration-200 ease-in">Butterfly Sp</span>
-                        </a>
-                    </li>
+                
 
                     <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Create</p>
                    
@@ -85,12 +80,12 @@
                     <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Monitoring</p>
                     
                     <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="" class="flex items-center  font-poppins text-base">
+                        <a href="{{route('admin.report.show')}}" class="flex items-center  font-poppins text-base">
                             <i class='bx bxs-report px-5' ></i>
                             <span class="text transition-all duration-200 ease-in">Reports</span>
-                        </a>
+                        </a>                      
                     </li>
-                    
+                   
                 </ul>
             </div>
         </div>

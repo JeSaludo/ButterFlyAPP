@@ -28,10 +28,7 @@
    
     <section class="main home transition-all duration-300 ease-in">     
         
-        @include('admin.layout.dashboard-header')            
-        
-      
-    
+        @include('admin.layout.dashboard-header', ["title" => "Admin Dashboard"])           
           
           <div class="w-full  grid grid-flow-row md:grid-flow-col gap-2 px-4 my-8">
             <div class="w-full px-6 py-2  rounded-md shadow-md bg-[#7AD3FF]">
@@ -115,7 +112,7 @@
           </div>
 
           <div class="mt-5  w-full mx-auto text-center" >
-            <a class="hover:cursor-pointer hover:underline font-poppins font-medium text-custom-blue" >View More</a>
+            <a href="/admin/dashboard/applications" class="hover:cursor-pointer hover:underline font-poppins font-medium text-custom-blue" >View More</a>
           </div>
        
       

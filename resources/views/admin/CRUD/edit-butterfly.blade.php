@@ -35,9 +35,10 @@
                 @endauth
             </div>
         </div>
-        <form action="{{route('admin.edit-butterfly')}}" method="post">
+        <form action="{{route('admin.update-butterfly', $butterflies->id)}}" method="post">
             @csrf
             
+            @method("put")
             <div>
                 <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
                     <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue">Create Butterfly
@@ -50,7 +51,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="speciesType" id="speciesType" placeholder="Enter Species Type"
-                                        ></label>
+                                        value="{{$butterflies->species_type}}"></label>
                                 @error('speciesType')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
@@ -61,7 +62,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="className" id="className" placeholder="Enter Class Name"
-                                        ></label>
+                                        value="{{$butterflies->class_name}}"></label>
                                 @error('className')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
@@ -73,7 +74,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="familyName" id="familyName" placeholder="Enter Family Name"
-                                        ></label>
+                                        value="{{$butterflies->family_name}}"></label>
                                 @error('familyName')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
@@ -91,7 +92,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="commonName" id="commonName" placeholder="Enter Common Name"
-                                        ></label>
+                                        value="{{$butterflies->common_name}}" ></label>
                                 @error('commonName')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
@@ -102,7 +103,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="scientificName" id="scientificName" placeholder="Enter Scientific Name"
-                                        ></label>
+                                        value="{{$butterflies->scientific_name}}"></label>
                                 @error('scientificName')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
@@ -112,7 +113,7 @@
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="description" id="description" placeholder="Enter Description"
-                                        ></label>
+                                        value="{{$butterflies->description}}"></label>
                                 @error('description')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror

@@ -65,7 +65,7 @@
                                          @endif
                                     @elseif ($form->status === "Released")
 
-                                        <form action="{{ route('user.print-permit', $form->id)}} " class="inline" method="POST">
+                                        <form action="{{ route('user.print-permit', $form->id)}} " class="inline" method="POST" target="_blank">
                                             @csrf
                                             <button type="submit" class="mx-2 text-indigo-600">Print</button>
                                         </form>

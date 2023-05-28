@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Mail\NotifyApprove;
+use App\Mail\NotifyReturned;
 use App\Mail\WelcomeMail;
 use App\Models\Permit;
 use App\Models\User;
@@ -79,7 +80,7 @@ class AdminCRUDController extends Controller
 
         $usedApplicationForm = ApplicationForm::with('butterflies')
         ->where('is_draft', false)
-        ->where('status', 'Released')
+        ->where('status', 'Used')
         ->paginate(10);
         
         return view('admin.dashboard.admin-dashboard-app', compact('greeting', 'pendingApplicationForm', 'acceptedApplicationForm', 'returnedApplicationForm','expiredApplicationForm','releasedApplicationForm', 'usedApplicationForm'));
@@ -128,7 +129,25 @@ class AdminCRUDController extends Controller
         return view('admin.dashboard.admin-dashboard',compact('greeting','userCount','verifiedUserCount','nonverifiedUserCount',
         'pendingApplicationForm', 'releasedApplicationForm', 'returnedApplicationForm', 'acceptedApplicationForm','applications' ));
     }
-
+    public function ShowReports()
+    {
+        $butterflies = ButterflySpecies::paginate(10);
+    
+        $releasedApplicationForms = ApplicationForm::where('status', 'Released')->get();
+    
+        $permitData = [];
+    
+        foreach ($releasedApplicationForms as $applicationForm) {
+            $permitData[] = [
+                'month' => date('F', strtotime($applicationForm->updated_at)),
+                'year' => date('Y', strtotime($applicationForm->updated_at)),
+                'permits' => $releasedApplicationForms->count(),
+            ];
+        }
+    
+        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'permitData'));
+    }
+    
 
     public function create(){
         return view('admin.users.create');
@@ -290,12 +309,15 @@ class AdminCRUDController extends Controller
         $user = User::findOrFail($form->user_id);     
         Mail::to($user->email)->send(new NotifyApprove());
 
-        return redirect('/admin/dashboard/applications')->with('success', 'Application approved successfully.');
+        return redirect('/admin/dashboard/order-of-payment')->with('success', 'Application approved successfully.');
     }
     
     public function denyApplication(ApplicationForm $form)
     {
         $form->status = 'Returned';
+        
+        $user = User::findOrFail($form->user_id);     
+        Mail::to($user->email)->send(new NotifyReturned());
         $form->save();
     
         return redirect('/admin/dashboard/applications')->with('success', 'Application denied successfully.');
@@ -374,6 +396,8 @@ class AdminCRUDController extends Controller
         return view('admin.dashboard.admin-dashboard-order-payment', compact('orderOfPayments'));
     }
 
+ 
+
     public function editOrderOfPayment($id){
 
         $orderOfPayment = OrderOfPayment::findOrFail($id);
@@ -400,6 +424,8 @@ class AdminCRUDController extends Controller
         $wildlifePermits = Permit::paginate(10);
         return view('admin.dashboard.admin-dashboard-wildlife-permit', compact('wildlifePermits'));
     }
+
+    
     
     public function editWildLifePermit($id){
 
@@ -407,6 +433,7 @@ class AdminCRUDController extends Controller
         return view('admin.CRUD.edit-wildlife-permit', compact('permit'));
     
     }
+
     public function updateWildLifePermit(Request $request, $id){
         
         $permit = Permit::findOrFail($id);
@@ -439,20 +466,68 @@ class AdminCRUDController extends Controller
 
 
     public function editButterflySpecies($id){
-        $butterflies = ButterflySpecies::find($id);
+        $butterflies = ButterflySpecies::findOrFail($id);
         return view('admin.CRUD.edit-butterfly', compact('butterflies'));
     }
 
+    public function viewButterflySpecies($id){
+        $butterflies = ButterflySpecies::findOrFail($id);
+        return view('admin.users.view-butterfly', compact('butterflies'));
+    }
+
+    public function storeButterflySpecies(Request $request){
+        $data = $request->validate([
+            'speciesType' => 'required',
+            'className' => 'required',
+            'familyName' => 'required',
+            'commonName' => 'required',
+            'scientificName' => 'required',
+            'description' => 'required',
+
+        ]);
+
+
+        $butterflySp = ButterflySpecies::create([
+            'species_type' => $request->speciesType,
+            'class_name' => $request->className,
+            'family_name' => $request->familyName,
+            'common_name' => $request->commonName,
+            'scientific_name' => $request->scientificName,
+            'description' => $request->description,
+        ]);
+       return redirect('/admin/dashboard/butterfly-sp');
+    }
     public function updateButterflySpecies(Request $request, $id){
+        $data = $request->validate([
+            'speciesType' => 'required',
+            'className' => 'required',
+            'familyName' => 'required',
+            'commonName' => 'required',
+            'scientificName' => 'required',
+            'description' => 'required',
+        ]);
+
+        $butterflySp = ButterflySpecies::findOrFail($id);
+        $butterflySp->species_type = $request->speciesType;
+        $butterflySp->class_name = $request->className;
+        $butterflySp->family_name = $request->familyName;
+        $butterflySp->common_name = $request->commonName;
+        $butterflySp->scientific_name = $request->scientificName;
+        $butterflySp->description = $request->description;
+        $butterflySp->save();
+        return redirect('admin/dashboard/reports');
 
     }
    
-    public function deleteButterflySpecies($i)
+    public function deleteButterflySpecies($id)
     {
-
+       $butterfly = ButterflySpecies::findOrFail($id);
+       $butterfly->delete();
+        return redirect('/admin/dashboard/reports')->with('success', 'Application deleted successfully.');
+    
     }
 
-    //Release Permit
+  
 
 
     public function releasePermitShow($id){

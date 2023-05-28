@@ -91,6 +91,16 @@
                                         <p
                                             class="text-custom-dark-400 w-20 text-center rounded-md bg-green-300 text-green-700  font-poppins">
                                             Accepted</p>
+
+                                        @elseif ($form->status=="Released")
+                                        <p
+                                            class="text-custom-dark-400 w-20 text-center rounded-md bg-green-300 text-green-700  font-poppins">
+                                            Released</p>
+
+                                        @elseif ($form->status=="Used")
+                                        <p
+                                        class="text-custom-dark-400 w-20 text-center rounded-md bg-yellow-300 text-yellow-700  font-poppins">
+                                        Used</p>
                                         @elseif($form->status=="On Process")
                                         <p
                                             class="text-custom-dark-400 w-28 px-2 text-center rounded-md bg-orange-300 text-orange-700  font-poppins">

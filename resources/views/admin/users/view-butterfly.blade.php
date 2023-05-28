@@ -33,35 +33,31 @@
                                 <div>
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Species Type:</p>
-                                        <p class="text-custom-dark-400 font-poppins"> HATDOG</p>
+                                        <p class="text-custom-dark-400 font-poppins"> {{$butterflies->species_type}}</p>
                                     </div>
 
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Class Name:</p>
-                                        <p class="text-custom-dark-400 font-poppins">CRAB DIG</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$butterflies->class_name}}</p>
                                     </div>
 
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold  ">Family Name:</p>
-                                        <p class="text-custom-dark-400 font-poppins">KRAZY MONARCH</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$butterflies->family_name}}</p>
                                     </div>
-
-                                    
-                                </div>
-                                <div>
 
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Scientific Name:</p>
-                                        <p class="text-custom-dark-400 font-poppins">MONARCHUS KUNIS</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$butterflies->scientific_name}}/p>
                                            
                                     </div>
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold  ">Common name:</p>
-                                        <p class="text-custom-dark-400 font-poppins"> MONARCH - KUN </p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$butterflies->common_name}}</p>
                                     </div>
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Description:</p>
-                                        <p class="text-custom-dark-400 font-poppins">Abdul Jabar Ahmed Lamar Derozan Abdullah Suliman Kudarat Mehmed Ertugrul Mohammed</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$butterflies->description}}</p>
                                     </div>
 
                                     

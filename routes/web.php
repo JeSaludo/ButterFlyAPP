@@ -80,6 +80,10 @@ use Illuminate\Http\Request;
 
         Route::get('/admin/dashboard/wildlife-permits', [AdminCRUDController::class, 'showWilfLifePermit'])->name('admin.dashboard.show-wilflife');
         
+       
+
+        Route::get('/admin/dashboard/reports', [AdminCRUDController::class, 'ShowReports'])->name('admin.report.show');
+
         Route::get('/admin/release-permit/{form}', [AdminCRUDController::class, 'releasePermitShow'])->name('admin.dashboard.release-permit.show');
         
         Route::get('/admin/download/signature/{id}', [SignatureController::class,'download'])->name('download');
@@ -109,6 +113,7 @@ use Illuminate\Http\Request;
     
         //Butterfly Spcies Routing
         Route::get('admin/butterfly/add', [AdminCRUDController::class, 'addButterflySpecies'])->name('admin.add-butterfly.show');
+        Route::post('/admin/butterfly/store', [AdminCRUDController::class, 'storeButterflySpecies'])->name('admin.store-butterfly');
         Route::get('/admin/butterfly/{id}/edit', [AdminCRUDController::class, 'editButterflySpecies'])->name('admin.edit-butterfly');
         Route::put('admin/butterfly/{id}', [AdminCRUDController::class, 'updateButterflySpecies'])->name('admin.update-butterfly');
         Route::get('admin/butterfly/view/{id}', [AdminCRUDController::class, 'viewButterflySpecies'])->name('admin.view-butterfly');

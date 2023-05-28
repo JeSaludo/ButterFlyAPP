@@ -46,7 +46,7 @@
                         <div class="w-full">
                             
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="permitNo">Species Type:
+                                <label class="my-2 block text-md font-robot font-medium" for="speciesType">Species Type:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
                                         type="text" name="speciesType" id="speciesType" placeholder="Enter Species Type"

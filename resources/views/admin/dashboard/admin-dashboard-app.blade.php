@@ -28,21 +28,7 @@
    
     <section class="main home transition-all duration-300 ease-in">     
         
-        <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
-            <div class="px-6">         
-                <p class="text-auto md:text-3xl  font-poppins font-medium">Application Management</p>                  
-               
-            </div>
-            <div class="py-2 px-2 whitespace-nowrap">
-                <i class='bx bxs-bell'></i>
-                @auth('admin')
-                <span class=" px-2 text-auto md:text-xl text-gray-800 font-raleway font-bold">
-                    {{ Auth::guard('admin')->user()->username}}
-                    <i class='bx bxs-down-arrow bx-xs cursor-pointer'></i>
-                </span>
-                @endauth
-            </div>
-        </div>
+        @include('admin.layout.dashboard-header-v2', ["title" => "Application Management"])    
 
    
         <div class="px-4 pt-5">
@@ -204,7 +190,7 @@
                               
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
                                     @if($form->orderOfPayment && $form->orderOfPayment->status === "paid")
-                                    <a class="mx-2 text-indigo-600 cursor-pointer hover:text-indigo-900">Release</a>
+                                    <a href="{{route('admin.dashboard.release-permit.show', $form->id)}}" class="mx-2 text-indigo-600 cursor-pointer hover:text-indigo-900">Release</a>
                                     @else
                                     <a 
                                         class="mx-2 text-gray-600 opacity-70">Release</a>
@@ -506,7 +492,7 @@
 
         <div class="px-4 pt-2">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Application History</p>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Used Application</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 table-auto">

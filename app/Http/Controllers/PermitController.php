@@ -150,7 +150,7 @@ class PermitController extends Controller
     public function uploadLTP(Request $request, $id)
     {
         $request->validate([
-            'pdf_file' => 'required|mimes:pdf|max:2048', // Validate file type and maximum size
+            'pdf_file' => 'required|mimes:pdf|max:50000', // Validate file type and maximum size
         ]);
 
         $application = ApplicationForm::findOrFail($id);
@@ -165,26 +165,37 @@ class PermitController extends Controller
             $application->save();
            
            
-            return redirect('/myapplication/show-submit');
+            return redirect('/admin/dashboard/applications');
         }
     
       
     }
 
     public function PrintLTP($id){
+
         $applicationForm = ApplicationForm::findOrFail($id);
 
         $pdfPath = $applicationForm->ltp_path;
-        
-        $absolutepdfPath = public_path($pdfPath);
-        
-        if (file_exists($absolutepdfPath)) {
-            return response()->file($absolutepdfPath, [
-                'Content-Disposition' => 'attachment; filename="' . $applicationForm->ltp_name . '"',
-            ]);
+        $absolutePdfPath = public_path($pdfPath);
+
+        if (file_exists($absolutePdfPath)) {
+            return response()->file($absolutePdfPath);
         } else {
             abort(404, 'File not found');
         }
+       // $applicationForm = ApplicationForm::findOrFail($id);
+//
+       // $pdfPath = $applicationForm->ltp_path;
+        
+      //  $absolutepdfPath = public_path($pdfPath);
+        
+       // if (file_exists($absolutepdfPath)) {
+       ///     return response()->file($absolutepdfPath, [
+       //         'Content-Disposition' => 'attachment; filename="' . $applicationForm->ltp_name . '"',
+        //    ]);
+       // } else {
+       //     abort(404, 'File not found');
+        //}
     }
 
 }

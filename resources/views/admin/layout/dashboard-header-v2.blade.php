@@ -1,7 +1,7 @@
 <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
     <div class="px-6">         
         <p class="text-auto md:text-3xl  font-poppins font-medium">{{$title}}</p>                  
-        <p class="font-poppins text-auto md:text-xl">{{$greeting}}, Admin</p>
+       
     </div>
     <div class="py-2 px-2 whitespace-nowrap">
         

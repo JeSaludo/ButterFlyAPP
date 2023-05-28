@@ -16,9 +16,9 @@
         <div class="bg-custom-dark-900">
             @include('layout.user-nav-dashboard')
         </div>
-        <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
+        <div class="bg-gray-50 w-6/12 rounded-md mx-auto mt-6 mb-5 ">
             <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue text-center">Permit Completion</h1>
-                <form action="{{route('user.store-permit', $form->id)}}" method="POST" class="w-6/12 mx-auto py-4" enctype="multipart/form-data">
+                <form action="{{route('user.store-permit', $form->id)}}" method="POST" class="w-8/12 mx-auto py-4" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="mt-2">

@@ -21,37 +21,32 @@
         @include('admin.layout.dashboard-nav')
 
         <section class="main home transition-all duration-300 ease-in">
-            <div class="h-14 w-full flex justify-between py-2 transition-all duration-300 ease-in">
-                <div class="px-6">         
-                    <p class="text-auto md:text-3xl  font-poppins font-medium">Review Application</p>                  
-            
-                </div>
-                <div class="py-2 px-2 whitespace-nowrap">
-                    <i class='bx bxs-bell'></i>
-                    @auth('admin')
-                    <span class=" px-2 text-auto md:text-xl text-gray-800 font-raleway font-bold">
-                        {{ Auth::guard('admin')->user()->username}}
-                        <i class='bx bxs-down-arrow bx-xs cursor-pointer'></i>
-                    </span>
-                    @endauth
-                </div>
-            </div>
+            @include('admin.layout.dashboard-header-v2', ["title" => "Application Management"])    
+
 
             <form action="{{ route('uploadltp', $applicationForm->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
               
                 <div>
-                    <div class="bg-gray-50 w-11/12 rounded-md mx-auto mt-3 mb-3 ">
+                    <div class="bg-gray-50 w-8/12 rounded-md mx-auto mt-3 mb-6 shadow-md ">
                         <h1 class="px-6 py-2 font-lora font-bold text-3xl text-custom-dark-blue text-center">Finalized Permit</h1>
                         
-
-                        <a href="{{ route('download', ['id' => $applicationForm->id]) }}">{{ $applicationForm->file_name }}</a>
-                      
-                      
-                        <input type="file" name="pdf_file">
-                        @error('pdf_file')
-                        <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                        @enderror
+                            <p class="text-center w-9/12 mx-auto">Download Client Signature to add to the permit</p>
+                            <a class="my-4 block text-center w-24 rounded-md mx-auto bg-custom-blue text-white hover:bg-custom-dark-blue" href="{{ route('download', ['id' => $applicationForm->id]) }}">Download</a>
+                            
+                            <div class="flex justify-center">
+                                <div class="text-center">
+                                    <label for="pdf_file" class="block text-sm font-medium text-gray-700">Upload PDF File:</label>
+                                    <input type="file" name="pdf_file" id="pdf_file" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                    @error('pdf_file')
+                                    <p class="mt-2 text-red-700 text-xs font-medium">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            
+                            
+                    
+                       
                        
                        
                         <div class=" px-10 py-2 flex  gap-2">

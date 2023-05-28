@@ -28,11 +28,12 @@
    
     <section class="main home transition-all duration-300 ease-in">     
         
-        @include('admin.layout.dashboard-header-v2', ["title" => "Order of Payment Management"])    
+        @include('admin.layout.dashboard-header-v2', ["title" => "Reports"])    
 
+   
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Order Of Payments</p>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Butterfly Species</p>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 table-auto">
@@ -40,22 +41,19 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    ID</th>
+                                    Species Type</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Order Number</th>
+                                    Common Name</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Application ID</th>
+                                    Scientific Name</th>
                                 <th
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Payment Amount</th>
-                                    <th
-                                    class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Order Receipt No</th>
-                                <th
-                                    class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
-                                    Status</th>
+                                    Class Name</th>
+
+                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Family Name</th>
                                 <th
                                     class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
                                     Action</th>
@@ -63,47 +61,30 @@
                         </thead>
                         <tbody>
                         
-                            @foreach($orderOfPayments as $orderOfPayment)
+                            @foreach($butterflies as $butterfly)
                             <tr>
                                 <td class="px-6 py-4">
-                                    {{$orderOfPayment->id}}
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{$orderOfPayment->order_number}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$orderOfPayment->application_form_id}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$orderOfPayment->payment_amount}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    @if (!$orderOfPayment->or_number)
-                                       NULL
-                                       @else 
-                                         {{$orderOfPayment->or_number}}
-                                       
-                                    @endif
-                                   
-                                </td>
-                                <td class="px-6 py-4 text-center" >
-                                    {{$orderOfPayment->status}}
-                                </td>
-                               
-                               
+                                    {{$butterfly->species_type}}</td>
+                                <td class="px-6 py-4">{{ $butterfly->common_name }}</td>
+
+                                <td class="px-6 py-4">{{ $butterfly->scientific_name }}</td>
+
+                                <td class="px-6 py-4">{{ $butterfly->class_name }}</td>
+                                <td class="px-6 py-4">{{ $butterfly->family_name }}</td>
+
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                  
-                                            
-                                    <a href="{{route('admin.edit-orderofpayment.show' , $orderOfPayment->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Update</a>
-                                    <form action="" method="POST"
+                                    <a href="{{ route('admin.view-butterfly', $butterfly->id)}}"
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
+                                    <a href="{{ route('admin.edit-butterfly', $butterfly->id)}}"
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <form action="{{ Route('admin.delete-butterfly', $butterfly->id)}}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
                                             onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                                     </form>
-                                    
+                                   
 
 
                                 </td>
@@ -119,13 +100,13 @@
                     <nav class="flex items-center justify-between">
                         <div class="flex-1 flex justify-between">
                             <!-- Previous Page Link -->
-                            @if ($orderOfPayments->onFirstPage())
+                            @if ($butterflies->onFirstPage())
                             <span
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
                                 Previous
                             </span>
                             @else
-                            <a href="{{ $orderOfPayments->previousPageUrl() }}"
+                            <a href="{{ $butterflies->previousPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Previous
                             </a>
@@ -133,16 +114,16 @@
 
                             <div class="text-sm text-gray-500 py-2">
                                 <span>{!! __('Showing') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->firstItem() }}</span>
+                                <span class="font-medium">{{ $butterflies->firstItem() }}</span>
                                 <span>{!! __('to') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->lastItem() }}</span>
+                                <span class="font-medium">{{ $butterflies->lastItem() }}</span>
                                 <span>{!! __('of') !!}</span>
-                                <span class="font-medium">{{ $orderOfPayments->total() }}</span>
+                                <span class="font-medium">{{ $butterflies->total() }}</span>
                                 <span>{!! __('results') !!}</span>
                             </div>
 
-                            @if ($orderOfPayments->hasMorePages())
-                            <a href="{{ $orderOfPayments->nextPageUrl() }}"
+                            @if ($butterflies->hasMorePages())
+                            <a href="{{ $butterflies->nextPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Next
                             </a>
@@ -162,8 +143,29 @@
 
            
         </div>
+        <div class="px-4 pt-5">
+            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month and Year</p>
+                <div id="permitIssuedByMonthAndYearChart"></div>
+                
+            </div>           
+        </div>
 
+        <div class="px-4 pt-5">
+            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Year</p>
+                <div id="permitIssuedByYearChart"></div>
+                
+            </div>           
+        </div>
 
+        <div class="px-4 pt-5">
+            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Total Permits Issued by Month and Year</p>
+                <div id="totalPermitIssuedByMonthAndYearChart"></div>
+                
+            </div>           
+        </div>
     </section>
     
 
@@ -171,7 +173,89 @@
    @include('admin.layout.admin-script')
    
    
+
+   <script>
+    let permitData = {!! json_encode($permitData) !!};
+
+    const chartData = permitData.map(item => ({
+        x: `${item.month} ${item.year}`,
+        y: item.permits
+    }));
   
+    // Create chart
+    const options = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{ name: 'Permits', data: chartData }],
+        xaxis: {
+            type: 'category',
+        },
+        colors: ['#B09FFF'],
+    };
+
+    const chart = new ApexCharts(document.querySelector('#permitIssuedByMonthAndYearChart'), options);
+    chart.render();
+
+    let permitData1 = {!! json_encode($permitData) !!};
+
+    const chartData1 = permitData1.map(item => ({
+        x: item.year,
+        y: item.permits
+    }));
+
+    // Create chart
+    const options1 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{ name: 'Permits', data: chartData1 }],
+        xaxis: {
+            type: 'category',
+        },
+        colors: ['#FFD572'],
+    };
+
+    const chart1 = new ApexCharts(document.querySelector('#permitIssuedByYearChart'), options1);
+    chart1.render();
+
+    let permitData2 = {!! json_encode($permitData) !!};
+
+    // Group the data by month and year and calculate the total permits for each month-year combination
+    let groupedData = permitData2.reduce((acc, item) => {
+        let key = `${item.month} ${item.year}`;
+        if (!acc[key]) {
+            acc[key] = 0;
+        }
+        acc[key] += item.permits;
+        return acc;
+    }, {});
+
+    // Convert the grouped data into an array of objects for chart rendering
+    const chartData2 = Object.keys(groupedData).map(key => ({
+        x: key,
+        y: groupedData[key]
+    }));
+
+    // Create chart
+    const options2 = {
+        chart: {
+            type: 'bar',
+            height: 350,
+        },
+        series: [{ name: 'Permits', data: chartData2 }],
+        xaxis: {
+            type: 'category',
+        },
+        colors: ['#7AD3FF'],
+    };
+
+    const chart2 = new ApexCharts(document.querySelector('#totalPermitIssuedByMonthAndYearChart'), options2);
+    chart2.render();
+    </script>
+
   
 
 </body>
