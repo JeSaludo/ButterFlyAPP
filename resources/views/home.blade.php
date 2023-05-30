@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @vite('resources/css/app.css')
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
+    
 
 </head>
 <body> 
@@ -125,8 +126,8 @@
         <div class="flex flex-col md:flex-row justify-between pt-4">
             <div class="w-full pl-8 "> 
                 <h1 class=" text-3xl font-poppins font-bold text-custom-white"><span class="text-custom-light-blue">WILD</span>LIFE</h1>
-                <p class="text-custom-white w-69 ">
-                    The largest Butterfly marketplace. Authenthic and truly unique delicious. Signed and issued by the creator, made possible by blockchain technology.
+                <p class="text-custom-white w-69 "> 
+                    Online Frontline Services Permitting and Transaction Service!
                 </p>
             </div>
             <div class="flex justify-evenly  w-full sm:my-8 md:my-0 py-8 sm:pt-6 md:pt-0">

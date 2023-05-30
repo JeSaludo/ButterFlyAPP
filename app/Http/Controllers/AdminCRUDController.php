@@ -408,7 +408,8 @@ class AdminCRUDController extends Controller
     public function updateOrderOfPayment(Request $request,$id){
         $data = $request->validate([
             'paymentAmount' => 'required',
-            'orNumber' => 'required',
+            'orNumber' => 'required|unique:order_of_payments,or_number,' . $id,
+      
         ]);
 
         $orderOfPayment = OrderOfPayment::findOrFail($id);
