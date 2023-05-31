@@ -126,6 +126,10 @@ use Illuminate\Http\Request;
       
         Route::get('/admin/order-of-payment/{form}/edit', [AdminCRUDController::class, 'editOrderOfPayment'])->name('admin.edit-orderofpayment.show');
         Route::put('/admin/order-of-payment/store/{form}', [AdminCRUDController::class, 'updateOrderOfPayment'])->name('admin.update-orderofpayment');
+        Route::delete('/admin/order-of-payment/{form}/delete', [AdminCRUDController::class, 'deleteOrderOfPayment'])->name('admin.delete-orp');
+            
+        
+    
     }); 
         
     Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    

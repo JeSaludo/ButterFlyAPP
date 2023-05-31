@@ -144,7 +144,23 @@
 
            
         </div>
-        <div class="px-4 pt-5">
+
+        <div class="w-full  grid grid-flow-row md:grid-flow-col gap-2 px-4 ">
+            <div class="w-full px-6 py-2  rounded-md shadow-md bg-[#7AD3FF]">
+                <p class=" text-2xl font-poppins font-semibold">Total Permit Issued</p>          
+               <p class="font-poppins text-xl">{{$totalPermits}}</p>
+            </div>
+            <div class="w-full px-6 py-2  rounded-md shadow-md bg-[#FFD572]">
+                <p class=" text-2xl font-poppins font-semibold">Pending Permits</p>          
+                <p class="font-poppins text-xl">{{$pendingPermit}}</p>
+            </div>
+    
+            <div class="w-full px-6 py-2 rounded-md shadow-md bg-[#B09FFF]">
+                <p class=" text-2xl font-poppins font-semibold">Returned Permits</p>          
+                <p class="font-poppins text-xl">{{$returnPermit}}</p>
+            </div>
+          </div>  
+        <div class="px-4 pt-2">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
                 <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month and Year</p>
                 <div id="permitIssuedByMonthAndYearChart"></div>
@@ -154,11 +170,14 @@
 
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Year</p>
-                <div id="permitIssuedByYearChart"></div>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Total Revenue Collection by Month and Year</p>
+                <div id="revenueChart"></div>
                 
             </div>           
         </div>
+
+
+       
 
        
     </section>
@@ -190,7 +209,41 @@
     };
     var chart = new ApexCharts(document.querySelector('#permitIssuedByMonthAndYearChart'), options);
     chart.render();
-    </script>
+
+    var revenueData = @json($revenueData);
+
+
+    var labels = [];
+    var dataSeries = [];
+
+    revenueData.forEach(function(item) {
+            var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            var month = monthNames[item.month - 1];
+            var label = month + ' ' + item.year;
+            
+            labels.push(label);
+            dataSeries.push(item.totalRevenue);
+        });
+
+    var options1 = {
+        chart: {
+            type: 'bar',
+            height: 350
+        },
+        series: [{
+            name: 'Revenue',
+            data: dataSeries
+        }],
+        xaxis: {
+            categories: labels
+        },
+        colors: ['#B09FFF', '#FFD572', '#7AD3FF']
+    };
+
+    // Render the chart
+    var chart2 = new ApexCharts(document.querySelector("#revenueChart"), options1);
+    chart2.render();
+        </script>
 
   
 

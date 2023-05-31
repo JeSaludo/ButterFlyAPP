@@ -22,6 +22,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 class AdminCRUDController extends Controller
 {
   
@@ -136,13 +137,16 @@ class AdminCRUDController extends Controller
         $butterflies = ButterflySpecies::paginate(10);
     
         $permits = ApplicationForm::where('status', 'released')->get();
-
-    // Group the permits by year and month
+        $totalPermits = $permits->count();
+        $pendingPermits = ApplicationForm::where('status', 'On Process')->get();
+        $pendingPermit = $pendingPermits->count();
+        $returnPermits = ApplicationForm::where('status', 'returned')->get();
+        $returnPermit = $returnPermits->count();
         $permitsByYearMonth = $permits->groupBy(function ($permit) {
             return Carbon::parse($permit->created_at)->format('Y-m');
         });
 
-        // Prepare the data for the chart
+       
         $chartData = [];
         foreach ($permitsByYearMonth as $yearMonth => $permits) {
             $year = substr($yearMonth, 0, 4);
@@ -152,7 +156,45 @@ class AdminCRUDController extends Controller
                 'y' => $permits->count(),
             ];
         }
-        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'chartData'));
+
+      
+
+        $orders = OrderOfPayment::where('status', 'paid')
+        ->get();
+
+    $revenueData = [];
+
+    foreach ($orders as $order) {
+        $year = $order->created_at->format('Y');
+        $month = $order->created_at->format('m');
+        
+        $found = false;
+        $index = -1;
+        
+        // Check if the month already exists in the revenueData array
+        foreach ($revenueData as $key => $data) {
+            if ($data['year'] == $year && $data['month'] == $month) {
+                $found = true;
+                $index = $key;
+                break;
+            }
+        }
+        
+        // If the month is found, add the payment_amount to the existing totalRevenue
+        if ($found) {
+            $revenueData[$index]['totalRevenue'] += $order->payment_amount;
+        } else {
+            $revenueData[] = [
+                'year' => $year,
+                'month' => $month,
+                'totalRevenue' => $order->payment_amount
+            ];
+        }
+        }   
+        
+     
+
+        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'chartData', 'revenueData', 'totalPermits','returnPermit','pendingPermit'));
     }
     
 
@@ -289,7 +331,17 @@ class AdminCRUDController extends Controller
             return redirect('/admin/dashboard/users')->with('error', 'User not found.');
         }
     }
-
+    public function deleteOrderOfPayment($id) {
+   
+        $orp = OrderOfPayment::find($id);
+    
+        if ($orp) {
+            $orp->delete();
+            return redirect('/admin/dashboard/order-of-payment')->with('success', 'User deleted successfully.');
+        } else {
+            return redirect('/admin/dashboard/order-of-payment')->with('error', 'User not found.');
+        }
+    }
 
     public function deleteApplication(ApplicationForm $form)
     {
@@ -305,7 +357,8 @@ class AdminCRUDController extends Controller
         $form->status = 'Accepted';
         $form->save();
         
-        $order_no = Str::random(10);
+        $order_no = $randomNumber = str_pad(mt_rand(0, 999999), 8, '0', STR_PAD_LEFT);
+
         $orderOfPayments = new OrderOfPayment();
      
         $orderOfPayments->order_number = $order_no;

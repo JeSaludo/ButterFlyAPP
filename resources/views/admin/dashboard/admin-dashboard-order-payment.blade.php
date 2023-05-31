@@ -97,7 +97,7 @@
                                             
                                     <a href="{{route('admin.edit-orderofpayment.show' , $orderOfPayment->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Update</a>
-                                    <form action="" method="POST"
+                                    <form action="{{route('admin.delete-orp', $orderOfPayment->id)}}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
