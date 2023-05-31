@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
@@ -17,20 +18,23 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $password = 'password123';
+
+        $hashedPassword = Hash::make($password);
         return [
-            'first_name' => $faker->firstName,
-            'last_name' => $faker->lastName,
-            'username' => $faker->userName,
-            'wfp_permit' => $faker->word,
-            'wcp_permit' => $faker->word,
-            'business_name' => $faker->company,
-            'owner_name' => $faker->name,
-            'address' => $faker->address,
-            'contact' => $faker->phoneNumber,
-            'email' => $faker->unique()->safeEmail,
-            'validated' => $faker->boolean,
-            'password' => bcrypt('password'), // Replace 'password' with the desired default password
-            'role' => $faker->randomElement(['admin', 'user']),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'username' => $this->faker->unique()->userName,
+            'wfp_permit' => $this->faker->word,
+            'wcp_permit' => $this->faker->word,
+            'business_name' => $this->faker->company,
+            'owner_name' => $this->faker->name,
+            'address' => $this->faker->address,
+            'contact' => $this->faker->phoneNumber,
+            'email' => $this->faker->unique()->safeEmail,
+            'validated' => $this->faker->boolean,
+            'password' =>   $hashedPassword,
+            'role' => 0,
         ];
     }
 

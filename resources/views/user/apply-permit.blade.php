@@ -94,7 +94,7 @@
                             <div class="grid grid-flow-col gap-2">
                                 <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]">
                                 <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity[]">
-                                <a href="#" class="add text-white bg-custom-blue p-1.5 rounded-md mt-2 cursor-pointer "> Add Field</a>
+                                <a href="#" class="add text-white bg-custom-blue hover:bg-[#390A86] p-1.5 rounded-md mt-2 cursor-pointer "> Add Field</a>
                                
                             </div>
                             <div class="inp-group">

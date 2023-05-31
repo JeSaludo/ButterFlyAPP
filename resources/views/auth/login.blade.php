@@ -72,10 +72,10 @@
                             <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                             @enderror
                        
-                        <button type="submit" class="font-poppins text-xl text-white bg-custom-blue mt-4 w-11/12 py-2 border-none rounded-md">Login</button>
+                        <button type="submit" class="font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4 w-11/12 py-2 border-none rounded-md">Login</button>
                         
                         <div class="text-right mr-6 mt-2">
-                            <a href="{{ route('password.request') }}" class=" text-white font-light right">Forgot Password?</a>
+                            <a href="{{ route('password.request') }}" class=" text-white font-light right hover:text-gray-200">Forgot Password?</a>
                         </div>
                          </div>
                         

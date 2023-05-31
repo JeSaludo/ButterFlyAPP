@@ -12,6 +12,7 @@
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     @vite('resources/css/app.css')
     <link rel="icon" href="{{ asset('images/favicon.ico') }}" type="image/x-icon">
@@ -32,7 +33,7 @@
             </div>
             
             <div class="swiper-pagination "></div>                               
-          </div>
+        </div>
       
           @include('layout.user-nav')
     
@@ -49,47 +50,52 @@
             <p class="md:text-justify md-text-center my-2 w-full mx-auto md:mx-0 xl:mx-0 md:w-9/12  xl:text-lg md:text-md sm:text-sm text-center  text-custom-white-p">Welcome to our online platform for wildlife transport permitting and transactions. Apply for permits, track your applications, and manage your a easily and securely on our website. Streamline your wildlife transport permitting process today.</p>
             
             <div class="flex justify-between gap-5 mt-5  text-center w-full md:w-9/12  mx-auto md:mx-0">
-                <a href="/permit/apply" class="font-poppins text-xs xl:text-xl text-white bg-custom-blue  w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply For Permit</a>
-                <a href="#learn-more" class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4  border-white border-2 rounded-xl">Learn More</a>
+                <a href="/permit/apply" class="font-poppins text-xs xl:text-xl text-white bg-custom-blue hover:bg-[#390A86] w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply For Permit</a>
+                <a href="#learn-more" class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4 hover:bg-gray-100 hover:text-black border-white border-2 rounded-xl">Learn More</a>
             </div>
         </div>
     </div>
 
 
-    <section id="features" class="mt-8 md:mt-16 pt-0 md:pt-12">
+    <section id="features" class="mt-8 md:mt-16 pt-0 md:pt-12 mb-24">
         <div class="">
            <h1 class="mt-48 text-4xl w-6/12 lg:w-5/12 text-center mx-auto font-raleway font-bold"><span class="text-custom-blue">Key Features</span> of our Butterfly Permitting System</h1>
-
-            <div class="grid grid-row xl:grid-cols-3 gap-4 my-36">
-
-                <div class="w-full mb-20 md:mb-0 ">
-                    <img class="mx-auto w-258 h-258" src="{{asset('images/feature-1.png')}}" alt="">
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-4">Permitting Status Traching:</h3>
-                    <p class="font-light mx-auto w-8/12 text-center mt-2">The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
-                </div>
-
                 
-                <div class="w-full mb-20 md:mb-0">
-                    <img class="mx-auto w-258 h-258" src="{{asset('images/feature-2.png')}}" alt="">
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-4">Permit Applications:</h3>
-                    <p class="font-light mx-auto w-8/12 text-center mt-2">
-                        The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
+                <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-row md:grid-cols-2 mt-24">
+                    <img class="mx-auto w-258 h-258 " src="{{asset('images/feature-1.png')}}" alt="">
+                    <div class="my-10 text-lg w-full">
+                        <h3 class="font-bold mx-auto w-full text-center md:text-left mt-4">Permitting Status Traching:</h3>
+                        <p class="font-light mx-auto w-full text-center md:text-left mt-2">The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
+                   
+                    </div>
                 </div>
 
+               
+                <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-rows md:grid-cols-2 mt-16">
+                    <img class="h-258 w-258 mx-auto md:mx-64 order-1 md:order-2" src="{{asset('images/feature-2.png')}}" alt="">
+                    <div class="my-10 text-lg w-full order-2 md:order-1">
+                      <h3 class="font-bold mx-auto md:mx-36 w-full text-center md:text-left mt-4">Permit Applications:</h3>
+                      <p class="font-light mx-auto md:mx-36 w-full text-center md:text-left mt-2">The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
+                    </div>
+                  </div>
                 
-                <div class="w-full ">
-                    <img class="mx-auto w-258 h-258" src="{{asset('images/feature-3.png')}}" alt="">
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-4">User-Friendly Interface:</h3>
-                    <p class="font-light mx-auto w-6/12 text-center mt-2">
-                        The website offers a clean and intuitive interface, making it easy for users to navigate through the various features and sections.</p>
+                  <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-row md:grid-cols-2 mt-16">
+                    <img class="mx-auto w-258 h-258 " src="{{asset('images/feature-3.png')}}" alt="">
+                    <div class="my-10 text-lg w-full">
+                        <h3 class="font-bold mx-auto w-full text-center md:text-left mt-4">User-Friendly Interface:</h3>
+                        <p class="font-light mx-auto w-full text-center md:text-left mt-2">The website offers a clean and intuitive interface, making it easy for users to navigate through the various features and sections.</p>
+                   
+                    </div>
                 </div>
+                
+            
 
 
-            </div>
+          
         </section>
 
-        <section id="learn-more">
-            <h1 class="text-4xl w-7/12 md:w-3/12 text-center mx-auto font-raleway font-bold"><span class="text-custom-blue">How To Apply In </span>Our Website</h1>
+        <section id="learn-more" class="bg-[#F7F5FF] py-8">
+            <h1 class="text-4xl w-7/12 md:w-3/12 text-center mx-auto font-raleway font-bold pt-10"><span class="text-custom-blue">How To Apply In </span>Our Website</h1>
 
             <div class="grid grid-row xl:grid-cols-3 gap-4 my-36">
 
@@ -120,6 +126,56 @@
 
         </div>
     </section>
+    <section class="mt-20 mb-36">
+        <h1 class="text-4xl w-7/12 md:w-4/12 text-center my-10 mx-auto font-raleway font-bold"><span class="text-custom-blue">Local Butterfly Species </span>in Philippines</h1>
+      
+        <div class="container flex justify-center items-center w-full mx-auto">
+            <div class="card-slider overflow-hidden">
+              <div class="cards flex transition-transform duration-300">
+                <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                  <img src="{{asset('images/Butterfly-1.png')}}" alt="Image 1" class="w-full">
+                </div>
+                <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                  <img src="{{asset('images/Butterfly-2.png')}}" alt="Image 2" class="w-full">
+                </div>
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                  <img src="{{asset('images/Butterfly-3.png')}}" alt="Image 3" class="w-full">
+                </div>
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                    <img src="{{asset('images/Butterfly-4.png')}}" alt="Image 3" class="w-full">
+                </div>
+
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                    <img src="{{asset('images/Butterfly-5.png')}}" alt="Image 3" class="w-full">
+                </div>
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                    <img src="{{asset('images/Butterfly-6.png')}}" alt="Image 3" class="w-full">
+                </div>
+
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                    <img src="{{asset('images/Butterfly-7.png')}}" alt="Image 3" class="w-full">
+                </div>
+
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                    <img src="{{asset('images/Butterfly-8.png')}}" alt="Image 3" class="w-full">
+                </div>
+
+                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                    <img src="{{asset('images/Butterfly-9.png')}}" alt="Image 3" class="w-full">
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-center mt-4">
+                <button id="prevButton" class="prev-button absolute left-0 md:mx-10  text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-left bx-lg'></i></button>
+                <button id="nextButton" class="next-button absolute right-0 md:mx-10 text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-right bx-lg'></i></i></button>
+              </div>
+          </div>
+          
+          
+    </section>
+    
+
+   
     
     <footer class="bg-custom-dark-900">
        
@@ -197,12 +253,46 @@
         
         pagination: {
             el: '.swiper-pagination',
-        },
+        },  
+        
 
        
         });
-    
+
+        const prevButton = document.getElementById("prevButton");
+        const nextButton = document.getElementById("nextButton");
+        const cards = document.querySelector(".cards");
+        const cardWidth = 435; // Width of each card
+        let translateX = 0;
+        const numCards = document.querySelectorAll(".card").length;
+        const totalWidth = cardWidth * numCards;
+
+        prevButton.addEventListener("click", () => {
+        translateX += cardWidth;
+        if (translateX > 0) {
+            translateX = -totalWidth + cardWidth;
+        }
+        cards.style.transform = `translateX(${translateX}px)`;
+        });
+
+        nextButton.addEventListener("click", () => {
+        translateX -= cardWidth;
+        if (translateX <= -totalWidth) {
+            translateX = 0;
+        }
+        cards.style.transform = `translateX(${translateX}px)`;
+        });
+
+
+
+        
+        
+        
         
     </script>
+
+
+
+   
 </body>
 </html>

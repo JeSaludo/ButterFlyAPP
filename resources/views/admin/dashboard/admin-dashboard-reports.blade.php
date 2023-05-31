@@ -160,13 +160,7 @@
             </div>           
         </div>
 
-        <div class="px-4 pt-5">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Total Permits Issued by Month and Year</p>
-                <div id="totalPermitIssuedByMonthAndYearChart"></div>
-                
-            </div>           
-        </div>
+       
     </section>
     
 
@@ -176,85 +170,26 @@
    
 
    <script>
-    let permitData = {!! json_encode($permitData) !!};
+   var chartData = @json($chartData);
 
-    const chartData = permitData.map(item => ({
-        x: `${item.month} ${item.year}`,
-        y: item.permits
-    }));
-  
-    // Create chart
-    const options = {
+
+    var options = {
+        series: [
+            {
+                name: 'Permits Issued',
+                data: chartData,
+            },
+        ],
         chart: {
-            type: 'bar',
+            type: 'area',
             height: 350,
         },
-        series: [{ name: 'Permits', data: chartData }],
         xaxis: {
-            type: 'category',
+            type: 'datetime',
         },
-        colors: ['#B09FFF'],
     };
-
-    const chart = new ApexCharts(document.querySelector('#permitIssuedByMonthAndYearChart'), options);
+    var chart = new ApexCharts(document.querySelector('#permitIssuedByMonthAndYearChart'), options);
     chart.render();
-
-    let permitData1 = {!! json_encode($permitData) !!};
-
-    const chartData1 = permitData1.map(item => ({
-        x: item.year,
-        y: item.permits
-    }));
-
-    // Create chart
-    const options1 = {
-        chart: {
-            type: 'bar',
-            height: 350,
-        },
-        series: [{ name: 'Permits', data: chartData1 }],
-        xaxis: {
-            type: 'category',
-        },
-        colors: ['#FFD572'],
-    };
-
-    const chart1 = new ApexCharts(document.querySelector('#permitIssuedByYearChart'), options1);
-    chart1.render();
-
-    let permitData2 = {!! json_encode($permitData) !!};
-
-    // Group the data by month and year and calculate the total permits for each month-year combination
-    let groupedData = permitData2.reduce((acc, item) => {
-        let key = `${item.month} ${item.year}`;
-        if (!acc[key]) {
-            acc[key] = 0;
-        }
-        acc[key] += item.permits;
-        return acc;
-    }, {});
-
-    // Convert the grouped data into an array of objects for chart rendering
-    const chartData2 = Object.keys(groupedData).map(key => ({
-        x: key,
-        y: groupedData[key]
-    }));
-
-    // Create chart
-    const options2 = {
-        chart: {
-            type: 'bar',
-            height: 350,
-        },
-        series: [{ name: 'Permits', data: chartData2 }],
-        xaxis: {
-            type: 'category',
-        },
-        colors: ['#7AD3FF'],
-    };
-
-    const chart2 = new ApexCharts(document.querySelector('#totalPermitIssuedByMonthAndYearChart'), options2);
-    chart2.render();
     </script>
 
   

@@ -69,7 +69,7 @@
                                 <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror                        
                         
-                            <button type="submit" class="font-poppins text-xl text-white bg-custom-blue mt-4 w-11/12 py-2 border-none rounded-md">VERIFY</button>
+                            <button type="submit" class="font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4 w-11/12 py-2 border-none rounded-md">VERIFY</button>
                         
                       
                          </div>

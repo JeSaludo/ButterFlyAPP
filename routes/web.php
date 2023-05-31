@@ -68,7 +68,7 @@ use Illuminate\Http\Request;
     Route::get('/admin/login', [AdminController::class, 'ShowLogin'])->name('admin.login');
     Route::post('/admin/login/authenticate', [AdminController::class, 'Authenticate']);
     
-    
+  
     Route::middleware(['admin.auth'])->group(function () {
         Route::get('admin/dashboard', [AdminCRUDController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
         

@@ -85,7 +85,7 @@
                     </div>
                     <div class=" px-10 py-2 flex  gap-2">
                         <button type="submit"
-                            class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">
+                            class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue  hover:bg-[#390A86] mt-4  py-2 border-none rounded-md">
                             Update Order of Payment</button>
     
                     </div>

@@ -21,7 +21,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Mail;
-
+use Carbon\Carbon;
 class AdminCRUDController extends Controller
 {
   
@@ -129,23 +129,30 @@ class AdminCRUDController extends Controller
         return view('admin.dashboard.admin-dashboard',compact('greeting','userCount','verifiedUserCount','nonverifiedUserCount',
         'pendingApplicationForm', 'releasedApplicationForm', 'returnedApplicationForm', 'acceptedApplicationForm','applications' ));
     }
+
+
     public function ShowReports()
     {
         $butterflies = ButterflySpecies::paginate(10);
     
-        $releasedApplicationForms = ApplicationForm::where('status', 'Released')->get();
-    
-        $permitData = [];
-    
-        foreach ($releasedApplicationForms as $applicationForm) {
-            $permitData[] = [
-                'month' => date('F', strtotime($applicationForm->updated_at)),
-                'year' => date('Y', strtotime($applicationForm->updated_at)),
-                'permits' => $releasedApplicationForms->count(),
+        $permits = ApplicationForm::where('status', 'released')->get();
+
+    // Group the permits by year and month
+        $permitsByYearMonth = $permits->groupBy(function ($permit) {
+            return Carbon::parse($permit->created_at)->format('Y-m');
+        });
+
+        // Prepare the data for the chart
+        $chartData = [];
+        foreach ($permitsByYearMonth as $yearMonth => $permits) {
+            $year = substr($yearMonth, 0, 4);
+            $month = substr($yearMonth, 5);
+            $chartData[] = [
+                'x' => "$year-$month",
+                'y' => $permits->count(),
             ];
         }
-    
-        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'permitData'));
+        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'chartData'));
     }
     
 

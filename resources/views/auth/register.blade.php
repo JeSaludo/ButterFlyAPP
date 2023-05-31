@@ -154,7 +154,7 @@
 
                         
 
-                        <button type="submit" class="mb-5 font-poppins text-xl text-white bg-custom-blue mt-5 w-full py-2 border-none rounded-md">Create an Account</button>
+                        <button type="submit" class="mb-5 font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-5 w-full py-2 border-none rounded-md">Create an Account</button>
             
                     </div> 
                     

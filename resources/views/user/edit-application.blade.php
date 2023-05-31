@@ -82,7 +82,7 @@
                              </div>
 
                              <div class="flex justify-between gap-2">
-                                <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
+                                <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4  py-2 border-none rounded-md">Submit</button>
                                
                              </div>
                         </div>
