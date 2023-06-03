@@ -20,216 +20,306 @@
 
 </head>
 <body> 
-    <div class="min-h-screen ">
+   
         <div class="bg-custom-dark-800 md:bg-transparent">
-        <div class="swiper  absolute overflow-x-hidden  top-0 -z-10 w-full sm:max-w-none sm:w-full md:max-w-1440 md:w-full">
-           
-            <div class="swiper-wrapper">
-          
-              <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-799" src="{{asset('images/slide-img-1.png')}}" alt=""></div>
-              <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-799" src="{{asset('images/slide-img-2.png')}}" alt=""></div>
-              <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-799" src="{{asset('images/slide-img-3.png')}}" alt=""></div>
-           
+            <div
+                class="swiper  absolute overflow-x-hidden  top-0 -z-10 w-full sm:max-w-none sm:w-full md:max-w-1440 md:w-full">
+
+                <div class="swiper-wrapper">
+
+                    <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-[600px]"
+                            src="{{asset('images/slide-img-1.png')}}" alt=""></div>
+                    <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-[600px]"
+                            src="{{asset('images/slide-img-2.png')}}" alt=""></div>
+                    <div class="swiper-slide "><img class="hidden md:block object-cover object-center w-full h-[600px]"
+                            src="{{asset('images/slide-img-3.png')}}" alt=""></div>
+
+                </div>
+
+                <div class="swiper-pagination "></div>
             </div>
-            
-            <div class="swiper-pagination "></div>                               
+
+            @include('layout.user-nav')
+
+            <div class="w-full md:w-7/12 py-10 px-16 text-center md:text-left">
+                @auth
+                <p class="text-2xl mb-4 font-roboto font-semibold text-gray-400">Welcome, {{Auth::user()->first_name}}!
+                </p>
+                @endauth
+
+                <div class="mt-6">
+                    <h3
+                        class="md:text-justify text-1xl md:text-xs   xl:text-2xl  text-center  text-custom-dark-600 font-roboto font-light">
+                        LOCAL TRANSPORT PERMIT FOR WILDLIFE</h3>
+                    <h1
+                        class="md:text-justify text-2xl mt-4 mx-auto md:mx-0 md:text-xl xl:text-5xl leading-normal md:leading-10 text-center  w-full md:w-8/12   font-roboto font-semibold text-custom-white">
+                        Simplify Your <span class="text-custom-light-blue">Wildlife Transport Compliance</span></h1>
+                    <p
+                        class="md:text-justify md-text-center mt-6 my-2 w-full mx-auto md:mx-0 xl:mx-0 md:w-7/12  xl:text-xl md:text-md sm:text-sm text-center  text-custom-white-p">
+                        OFSPTS Enables Easy Local Butterfly Permitting with its Intuitive Online System</p>
+                </div>
+                <div class="flex justify-between gap-5 mt-12  text-center w-full md:w-8/12  mx-auto md:mx-0">
+                    <a href="/permit/apply"
+                        class="font-poppins text-xs xl:text-xl text-white bg-custom-blue hover:bg-[#390A86] w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply
+                        For Permit</a>
+                    <a href="#learn-more"
+                        class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4 hover:bg-gray-100 hover:text-black border-white border-2 rounded-xl">Learn
+                        More</a>
+                </div>
+            </div>
         </div>
+        
+        <section class="mt-8 md:mt-36" >
+            <h1 class="text-5xl w-7/12 md:w-4/12 text-center my-10 mx-auto font-raleway font-bold"><span
+                    class="text-custom-blue">Welcome to </span>OFSPTS</h1>
+            <p class="w-9/12 md:w-7/12 mx-auto text-center text-2xl font-raleway">Your trusted online platform for
+                obtaining local transport permits for butterflies. Our goal is to streamline the permitting process,
+                making it hassle-free for butterfly enthusiasts, researchers, and professionals alike.
+                With our user-friendly interface and intuitive features, you can apply for permits in just a few simple
+                steps. Our online system enables you to submit applications, track their progress in real-time, and
+                receive updates at each stage.</p>
+        </section>
+        <div class="w-full relative ">
+            <div
+                class="w-auto md:w-[1142px] h-[380px] bg-[#242424] mx-auto absolute -z-20 left-1/2 transform -translate-x-1/2 translate-y-16 rounded-t-lg">
+            </div>
+            <img class="mx-auto mt-12 md:mt-24 mb-0 md:mb-4" src="{{asset('images/butterfly-showcase.png')}}" alt="">
+            <div class="w-full h-[126px] bg-[#242424]">
+                <h1 class="font-raleway font-bold text-2xl md:text-4xl text-white text-center py-10">Learn More About
+                    <span class="text-custom-blue">OFSPTS</span></h1>
+            </div>
+            <div class="bg-[#F2F3FB] py-10" id="features">
+                <h1 class="text-2xl md:text-4xl w-7/12 md:w-5/12 text-center pb-10 mx-auto font-raleway font-bold"><span
+                        class="text-custom-blue">Key Features </span>Of Our Butterfly Permitting System</h1>
+                <div class="grid grid-flow-row md:grid-flow-col justify-items-center">
+                    <div class="px-10 mt-10 md:mt-0">
+                        <h1 class="text-xl mb-2 font-raleway font-bold flex items-center"><i
+                                class='bx bx-check bx-sm text-[#4F85F0]'></i> Online Permit Application</h1>
+                        <p class="px-6 text-[18px] w-full font-raleway text-[#3B393A]">Conveniently apply for butterfly
+                            transport permits by filling out an online form and uploading required documents.</p>
+                    </div>
+                    <div class="px-10 mt-10 md:mt-0 md:border-l md:border-r md:border-gray-400">
+                        <h1 class="text-xl mb-2 font-raleway font-bold flex items-center"><i
+                                class='bx bx-check bx-sm text-[#4F85F0]'></i> Real-time Permit Status Tracking</h1>
+                        <p class="px-6 text-[18px] w-full text-[#3B393A]">Track the progress of your permit application
+                            in real-time, receiving updates and notifications along the way.</p>
+                    </div>
+                    <div class="px-10 mt-10 md:mt-0">
+                        <h1 class="text-xl mb-2 font-raleway font-bold flex items-center"><i
+                                class='bx bx-check bx-sm text-[#4F85F0]'></i> User-Friendly Interface</h1>
+                        <p class="px-6 text-[18px] w-full text-[#3B393A]">Save valuable time with our efficient online
+                            application process, avoiding the need for manual form filling and long waiting times.</p>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+                <div class="grid  md:grid-cols-3 ">
+                    <div class="bg-[#023E8A] h-[350px] ">
+                        <h1 class="w-8/12 mx-auto text-center font-raleway font-2xl text-4xl text-white mt-20">
+                            Convenience</h1>
+                        <div class="w-[97px] h-[10px] bg-white mx-auto mt-2"></div>
+                        <p
+                            class="opacity-0 hover:opacity-100 transition-all duration-300 delay-100 cursor-pointer ease-in  text-center text-white font-raleway font-regular w-9/12 mx-auto mt-6">
+                            Ensure that your transportation of butterflies is in full compliance with local regulations
+                            and legal requirements by obtaining the necessary permit through our system.</p>
+                    </div>
+                    <div class="bg-[#0096C7] h-[350px] ">
+                        <h1 class="  mx-auto  text-center font-raleway font-2xl text-4xl text-white mt-20 ">Compliance
+                            and Legality</h1>
+                        <div class="w-[97px] h-[10px] bg-white mx-auto mt-2"></div>
+                        <p
+                            class="opacity-0 hover:opacity-100 transition-all duration-300 delay-100 cursor-pointer ease-in  text-center text-white font-raleway font-regular w-9/12 mx-auto mt-6">
+                            Ensure that your transportation of butterflies is in full compliance with local regulations
+                            and legal requirements by obtaining the necessary permit through our system.</p>
+
+                    </div>
+                    <div class="bg-[#48CAE4] h-[350px] ">
+                        <h1 class="w-8/12 mx-auto text-center font-raleway font-2xl text-4xl text-white mt-20">Time
+                            Efficiency</h1>
+                        <div class="w-[97px] h-[10px] bg-white mx-auto mt-2"></div>
+                        <p
+                            class="opacity-0 hover:opacity-100 transition-all duration-300 delay-100 cursor-pointer ease-in  text-center text-white font-raleway font-regular w-9/12 mx-auto mt-6">
+                            Save valuable time with our efficient online application process, avoiding the need for
+                            manual form filling and long waiting times.</p>
+
+                    </div>
+                </div>
+                <div class="bg-[#F2F3FB] py-10">
+                    <h1 class="text-2xl md:text-4xl w-7/12 md:w-5/12 text-center pb-10 mx-auto font-raleway font-bold"><span
+                            class="text-custom-blue">How to apply in </span> our Website</h1>
+                    <div class="grid grid-flow-row md:grid-flow-col justify-items-center">
+                        <div class="px-10 mt-10 md:mt-0">
+                            <h1 class="text-xl text-[#023E8A] font-raleway font-bold flex items-center">01.</h1>
+                            <h1 class="text-xl mb-2 font-raleway font-bold flex items-center"> Start An Application</h1>
+                            <p class="text-[18px] w-full font-raleway text-[#3B393A]">Conveniently apply for butterfly
+                                transport permits by filling out an online form and uploading required documents.</p>
+                        </div>
+                        <div class="px-10 mt-10 md:mt-0 md:border-l md:border-r md:border-gray-400">
+                            <h1 class="text-xl text-[#023E8A] font-raleway font-bold flex items-center">02.</h1>
+                            <h1 class="text-xl mb-2 font-raleway font-bold flex items-center"> Fill out the application form</h1>
+                            <p class=" text-[18px] w-full text-[#3B393A]">Track the progress of your permit application
+                                in real-time, receiving updates and notifications along the way.</p>
+                        </div>
+                        <div class="px-10 mt-10 md:mt-0">
+                            <h1 class="text-xl text-[#023E8A] font-raleway font-bold flex items-center">03.</h1>
+                            <h1 class="text-xl mb-2 font-raleway font-bold flex items-center">Submitting the application for review</h1>
+                            <p class=" text-[18px] w-full text-[#3B393A]">Save valuable time with our efficient online
+                                application process, avoiding the need for manual form filling and long waiting times.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-[#242424] w-full h-[739px]">
+                    <h1 class="text-4xl w-11/12 md:w-4/12 text-center px-10 py-10 mx-auto font-raleway font-bold text-white"><span class="text-custom-blue">Local Butterfly Species </span>in Philippines</h1>
       
-          @include('layout.user-nav')
-    
-        <div class="w-full md:w-7/12 py-10 px-16 text-center md:text-left">
-            @auth
-            <p class="text-2xl mb-4 font-roboto font-semibold text-gray-400">Welcome, {{Auth::user()->first_name}}! </p>
-            @endauth
-           
-           
-           <h3 class="md:text-justify text-1xl md:text-xs   xl:text-2xl  text-center  text-custom-dark-600 font-roboto font-light">LOCAL TRANSPORT PERMIT FOR WILDLIFE</h3>
-           <h1 class="md:text-justify text-2xl mt-2 mx-auto md:mx-0 md:text-xl xl:text-3xl leading-normal md:leading-10 text-center  w-full md:w-9/12   font-roboto font-semibold text-custom-white">Obtain Your <span class="text-custom-light-blue">Wildlife Transport Permits</span> with 
-            Ease - Apply Online Now
-            and Simplify the Process</h1>
-            <p class="md:text-justify md-text-center my-2 w-full mx-auto md:mx-0 xl:mx-0 md:w-9/12  xl:text-lg md:text-md sm:text-sm text-center  text-custom-white-p">Welcome to our online platform for wildlife transport permitting and transactions. Apply for permits, track your applications, and manage your a easily and securely on our website. Streamline your wildlife transport permitting process today.</p>
+                    <div class="container flex justify-center items-center w-full mx-auto">
+                        <div class="card-slider overflow-hidden">
+                          <div class="cards flex transition-transform duration-300">
+                            <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                              <img src="{{asset('images/Butterfly-1.png')}}" alt="Image 1" class="w-full">
+                            </div>
+                            <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                              <img src="{{asset('images/Butterfly-2.png')}}" alt="Image 2" class="w-full">
+                            </div>
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                              <img src="{{asset('images/Butterfly-3.png')}}" alt="Image 3" class="w-full">
+                            </div>
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                                <img src="{{asset('images/Butterfly-4.png')}}" alt="Image 3" class="w-full">
+                            </div>
             
-            <div class="flex justify-between gap-5 mt-5  text-center w-full md:w-9/12  mx-auto md:mx-0">
-                <a href="/permit/apply" class="font-poppins text-xs xl:text-xl text-white bg-custom-blue hover:bg-[#390A86] w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply For Permit</a>
-                <a href="#learn-more" class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4 hover:bg-gray-100 hover:text-black border-white border-2 rounded-xl">Learn More</a>
-            </div>
-        </div>
-    </div>
-
-
-    <section id="features" class="mt-8 md:mt-16 pt-0 md:pt-12 mb-24">
-        <div class="">
-           <h1 class="mt-48 text-4xl w-6/12 lg:w-5/12 text-center mx-auto font-raleway font-bold"><span class="text-custom-blue">Key Features</span> of our Butterfly Permitting System</h1>
-                
-                <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-row md:grid-cols-2 mt-24">
-                    <img class="mx-auto w-258 h-258 " src="{{asset('images/feature-1.png')}}" alt="">
-                    <div class="my-10 text-lg w-full">
-                        <h3 class="font-bold mx-auto w-full text-center md:text-left mt-4">Permitting Status Traching:</h3>
-                        <p class="font-light mx-auto w-full text-center md:text-left mt-2">The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
-                   
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                                <img src="{{asset('images/Butterfly-5.png')}}" alt="Image 3" class="w-full">
+                            </div>
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
+                                <img src="{{asset('images/Butterfly-6.png')}}" alt="Image 3" class="w-full">
+                            </div>
+            
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                                <img src="{{asset('images/Butterfly-7.png')}}" alt="Image 3" class="w-full">
+                            </div>
+            
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                                <img src="{{asset('images/Butterfly-8.png')}}" alt="Image 3" class="w-full">
+                            </div>
+            
+                            <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
+                                <img src="{{asset('images/Butterfly-9.png')}}" alt="Image 3" class="w-full">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex justify-center mt-4">
+                            <button id="prevButton" class="prev-button absolute left-0 md:mx-10  text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-left bx-lg'></i></button>
+                            <button id="nextButton" class="next-button absolute right-0 md:mx-10 text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-right bx-lg'></i></i></button>
+                          </div>
+                      </div>
                     </div>
                 </div>
 
                
-                <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-rows md:grid-cols-2 mt-16">
-                    <img class="h-258 w-258 mx-auto md:mx-64 order-1 md:order-2" src="{{asset('images/feature-2.png')}}" alt="">
-                    <div class="my-10 text-lg w-full order-2 md:order-1">
-                      <h3 class="font-bold mx-auto md:mx-36 w-full text-center md:text-left mt-4">Permit Applications:</h3>
-                      <p class="font-light mx-auto md:mx-36 w-full text-center md:text-left mt-2">The website provides a convenient platform for users to submit their butterfly permit applications online.</p>
-                    </div>
-                  </div>
+             
+        
                 
-                  <div class="w-9/12 mx-auto mb-20 md:mb-0 grid grid-row md:grid-cols-2 mt-16">
-                    <img class="mx-auto w-258 h-258 " src="{{asset('images/feature-3.png')}}" alt="">
-                    <div class="my-10 text-lg w-full">
-                        <h3 class="font-bold mx-auto w-full text-center md:text-left mt-4">User-Friendly Interface:</h3>
-                        <p class="font-light mx-auto w-full text-center md:text-left mt-2">The website offers a clean and intuitive interface, making it easy for users to navigate through the various features and sections.</p>
-                   
-                    </div>
-                </div>
-                
-            
-
-
-          
-        </section>
-
-        <section id="learn-more" class="bg-[#F7F5FF] py-8">
-            <h1 class="text-4xl w-7/12 md:w-3/12 text-center mx-auto font-raleway font-bold pt-10"><span class="text-custom-blue">How To Apply In </span>Our Website</h1>
-
-            <div class="grid grid-row xl:grid-cols-3 gap-4 my-36">
-
-                <div class="w-full mb-20 md:mb-0">
-                    <p class="font-roboto font-bold text-9xl text-center text-custom-red">01</p>
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-2">Start an Application</h3>
-                    <p class="font-light mx-auto w-8/12 text-center mt-2">Click on the "Apply for a Butterfly Permit" or similar option to begin the application process.</p>
-                </div>
-
-                
-                <div class="w-full mb-20 md:mb-0">
-                    <p class="font-roboto font-bold text-9xl text-center text-custom-pink">02</p>
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-2">Fill out the Application Form</h3>
-                    <p class="font-light mx-auto w-8/12 text-center mt-2">
-                    Filling out the application form with necessary details</p>
-                </div>
-
-                
-                <div class="w-full mb-20 md:mb-0">
-                    <p class="font-roboto font-bold text-9xl text-center text-custom-violet">03</p>
-                    <h3 class="font-bold mx-auto w-3/6 text-center mt-2">Submitting the application for review</h3>
-                    <p class="font-light mx-auto w-6/12 text-center mt-2">
-                    Click the "Submit" or similar button to send your application for review.</p>
-                </div>
-
-
-            </div>
-
-        </div>
-    </section>
-    <section class="mt-20 mb-36">
-        <h1 class="text-4xl w-7/12 md:w-4/12 text-center my-10 mx-auto font-raleway font-bold"><span class="text-custom-blue">Local Butterfly Species </span>in Philippines</h1>
-      
-        <div class="container flex justify-center items-center w-full mx-auto">
-            <div class="card-slider overflow-hidden">
-              <div class="cards flex transition-transform duration-300">
-                <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
-                  <img src="{{asset('images/Butterfly-1.png')}}" alt="Image 1" class="w-full">
-                </div>
-                <div class="card flex-none w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                  <img src="{{asset('images/Butterfly-2.png')}}" alt="Image 2" class="w-full">
-                </div>
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                  <img src="{{asset('images/Butterfly-3.png')}}" alt="Image 3" class="w-full">
-                </div>
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
-                    <img src="{{asset('images/Butterfly-4.png')}}" alt="Image 3" class="w-full">
-                </div>
-
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                    <img src="{{asset('images/Butterfly-5.png')}}" alt="Image 3" class="w-full">
-                </div>
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md rounded-lg">
-                    <img src="{{asset('images/Butterfly-6.png')}}" alt="Image 3" class="w-full">
-                </div>
-
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                    <img src="{{asset('images/Butterfly-7.png')}}" alt="Image 3" class="w-full">
-                </div>
-
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                    <img src="{{asset('images/Butterfly-8.png')}}" alt="Image 3" class="w-full">
-                </div>
-
-                <div class="card flex-none  w-[400px] mx-4 p-2 bg-gray-300 shadow-md  rounded-lg">
-                    <img src="{{asset('images/Butterfly-9.png')}}" alt="Image 3" class="w-full">
-                </div>
-              </div>
-            </div>
-            <div class="flex justify-center mt-4">
-                <button id="prevButton" class="prev-button absolute left-0 md:mx-10  text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-left bx-lg'></i></button>
-                <button id="nextButton" class="next-button absolute right-0 md:mx-10 text-custom-blue font-bold py-2 px-4 rounded"><i class='bx bx-chevron-right bx-lg'></i></i></button>
-              </div>
-          </div>
-          
-          
-    </section>
-    
-
-   
-    
-    <footer class="bg-custom-dark-900">
        
-        <div class="flex flex-col md:flex-row justify-between pt-4">
-            <div class="w-full pl-8 "> 
-                <h1 class=" text-3xl font-poppins font-bold text-custom-white"><span class="text-custom-light-blue">WILD</span>LIFE</h1>
-                <p class="text-custom-white w-69 "> 
-                    Online Frontline Services Permitting and Transaction Service!
-                </p>
-            </div>
-            <div class="flex justify-evenly  w-full sm:my-8 md:my-0 py-8 sm:pt-6 md:pt-0">
-                <div class="w-full text-custom-white text-center md:ml-16">
-                    <ul>
-                    <li><a href="#"></a>LINKS</li>
-                    <li><a href="#"></a>Features</li>
-                    <li><a href="#"></a>Cotact Us!</li>
-                    <li><a href="#"></a>Our Services</li>
-                    </ul>
-                </div>
-                <div class="w-full text-custom-white text-center">
-                    <ul>
-                    <li><a href="#"></a>AFFLIATED LINKS</li>
-                    <li><a href="#"></a>Office of the President</li>
-                    <li><a href="#"></a>Office of the Vice President</li>
-                    <li><a href="#"></a>Senate of the Philippines</li>
-                    </ul>
-                </div>
-            </div>
-            
-            
-            
-            <div class="w-full md:w-3/6 px-10 mx-auto md:ml-24">
-            <div class="text-left text-custom-white">
-            <p class="text-sm md:text-xl pb-1 font-bold">Join our Newsletter</p>
+        
+        </div>
+        <div class="bg-[#0096C7] h-[220px]">
+            <div class="flex justify-between flex-col md:flex-row mx-auto w-9/12 py-24">
+                <h1 class="text-white font-raleway font-bold text-lg md:text-5xl">JOIN OUR NEWSLETTER</h1>
+
                 <form action="" class="flex ">                    
-                    <input type="email" placeholder="Your Email Address" class="text-custom-dark-900  font-poppins font-bold p-2 sm:w-full md:w-auto">
-                    <button type="submit" class="font-poppins font-bold bg-custom-blue p-2 sm:w-full md:w-auto">Subscribe</button>
-                </form>                
-            <p class="mt-2">Get the latest updates on butterfly permits.</p>
+                    <input type="email" placeholder="Your Email Address" class="text-custom-dark-900  font-poppins font-bold p-2 sm:w-24 md:w-auto">
+                    <button type="submit" class="font-poppins font-regular text-white bg-[#48CAE4] p-2 sm:w-full md:w-auto">Subscribe</button>
+                </form>  
             </div>
+                
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <footer class="bg-custom-dark-900 h-auto md:h-[500px]">
+            <div class="grid grid-flow-row md:grid-cols-4">
+                <div class="">
+                    <h1 class="text-custom-blue font-semibold font-poppins text-4xl px-10 py-8">OFS<span class="text-white">PTS</span></h1>
+                    <p class="text-white px-10">Welcome to OFSPTS, the premier online platform for butterfly enthusiasts, researchers, and conservationists. Our website provides a streamlined and convenient process for obtaining butterfly permits, ensuring compliance with regulations while promoting the conservation and study of these mesmerizing creatures.</p>
+                    <ul class="px-10 mt-14 text-white">
+                        <li class="mt-2"><i class='bx bx-current-location' ></i> MARINDUQUE, PH</li>
+                        <li class="mt-2"><i class='bx bx-envelope' ></i>  wildlifebutterfly01@gmail.com</li>
+                        <li class="mt-2"><i class='bx bx-phone-call' ></i> +64 203 123 324</li>
+                    </ul>
+                
+                </div>
+
+                <div class="">
+                    <h1 class="text-white font-poppins text-2xl px-10 pt-8 ">LINKS</h1>
+                    <div class="text-blue-500 w-[40px] h-[10px] "></div>
+                    <ul class="px-6 py-8">
+                        <li href="features" class="flex items-center mt-2 text-lg text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Features</li>
+                        <li href="#" class="flex items-center mt-2 text-lg text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Contact Us!</li>
+                        <li href="#" class="flex items-center mt-2 text-lg text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Our Services</li>
+                        <li href="#" class="flex items-center mt-2 text-lg text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>FAQs</li>
+                        <li href="#" class="flex items-center mt-2 text-lg text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>My Butterfly</li>
+                    </ul>
+
+                  
+                </div>
+
+                <div class="">
+                    <h1 class="text-white font-poppins text-2xl px-10 pt-8">AFFILIATED LINKS</h1>
+                    <ul class="px-6 py-8">
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Office of the President</li>
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Office of the Vice President</li>
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Senate of the Philippines</li>
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Sandiganbayan</li>
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Supreme Court</li>
+                        <li class="flex items-center mt-2 text-white"><i class='bx bx-chevron-right bx-sm text-[#0096C7]' ></i>Court of Appeals</li>
+                    </ul>
+                </div>
+
+                <div class="">
+                    <h1 class="text-white font-poppins text-2xl px-10 py-8">QUICK CONTACT</h1>
+                    <p class="w-full px-10 text-white">You can contact us by using our contact number or email us below by using our email wildlifebutterfly01@gmail.com</p>
+                    <form action="" method="" class="px-10 mt-4">
+                        <input type="email" class="bg-[#494646] py-2 w-full rounded-md px-3 text-gray-200 placeholder:text-gray-200" placeholder="Email">
+                        <textarea id="message" name="message" rows="4" cols="35" class="mt-2 w-full bg-[#494646] py-2 rounded-md px-3 text-gray-200 placeholder:text-gray-200" ondragstart="return false;" placeholder="Message"></textarea>
+                        <button class="w-full bg-custom-blue mt-3 py-2 rounded-md">Send Message</button>
+                      </form>
+                      
+                      
+                </div>
+            </div>
+
+            
+        
+        
+        </footer>
+
+        <div class="bg-[#151618] h-[100px]">
+            <div class="flex justify-start">
+            <h1 class="text-custom-blue font-regular font-poppins text-2xl pl-10 py-8">OFS<span class="text-white">PTS</span></h1>
+            <p class="text-lg text-white px-2 py-8">| ALL RIGHTS RESERVED  2023</p>  
             </div>
         </div>
 
-        <div class="text-custom-white text-center flex mt-6 mx-10 pb-6">
-            <p class="flex-1 text-xs xl:text-xl">@All Rights Reserved |</p>
-            <p class="flex-1 text-xs xl:text-xl">wildlifebutterfly01@gmail.com</p>
-            <p class="flex-1 text-xs xl:text-xl">| +63 123456789</p>
-        
-        </div>
-    </footer>
-        
-    </div>
-
+           
+      
    
+
+      
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     

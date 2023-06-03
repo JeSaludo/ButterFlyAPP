@@ -1,15 +1,15 @@
-<nav class="px-4 font-poppins  bg-custom-dark-900 md:bg-transparent flex justify-between">
+<nav class="px-4 font-poppins  bg-custom-dark-900  flex justify-between">
     <div class="flex justify-between items-center">
         <span class="font-2xl text-custom-dark-500 py-4 px-2 cursor-pointer font-raleway font-bold text-2xl">
             <img class="h-10 inline " src="{{asset('images/logo.png')}}" alt="" srcset="">
-            <span class="text-custom-blue ">WILD</span>LIFE               
+            <span class="text-custom-blue ">OFS</span>PTS               
         </span>
     </div>
 
     <span class="py-4 text-3xl text-white cursor-pointer mx-2 mb-2 md:hidden block"><ion-icon name="menu-outline" onclick="Menu(this)"></ion-icon>
     </span>
    
-   <ul class="md:flex bg-custom-dark-900 md:bg-transparent  md:items-center md:z-auto md:static absolute  z-30 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+   <ul class="md:flex bg-custom-dark-900   md:items-center md:z-auto md:static absolute  z-30 w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
     
 
 
@@ -17,17 +17,17 @@
     <div class="md:flex py-4 mr-10 lg:mr-80">
        
             <li class="ml-4 my-6 md:my-0 ">
-                <a href="{{route('home')}}" class="text-md text-white hover:text-custom-dark-600">HOME</a>
+                <a href="{{route('home')}}" class="text-md text-white hover:text-custom-dark-600">Home</a>
             </li>
 
            
 
             <li class="ml-4 my-6 md:my-0 ">
-                <a href="{{route('myapplications.submit.show')}}" class="text-md  text-white hover:text-custom-dark-600">MY APPLICATION</a>
+                <a href="{{route('myapplications.submit.show')}}" class="text-md  text-white hover:text-custom-dark-600">My Application</a>
             </li>
 
             <li class="ml-4 my-6 md:my-0 ">
-                <a href="{{route('myapplications.draft.show')}}" class="text-md  text-white hover:text-custom-dark-600">MY DRAFT</a>
+                <a href="{{route('myapplications.draft.show')}}" class="text-md  text-white hover:text-custom-dark-600">My Draft</a>
             </li>
     </div>
     <div class="md:flex  py-4">

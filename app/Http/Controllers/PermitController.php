@@ -90,13 +90,13 @@ class PermitController extends Controller
         }
         
        
-       return redirect('/');//add msg with successfull
+       return redirect('myapplication/show-submit');//add msg with successfull
        
      
     }
 
     public function DraftApplication(Request $request){
-        
+       
         $data = $request->validate([
             'name' => 'required',
             'address' => 'required',
@@ -107,6 +107,7 @@ class PermitController extends Controller
             'butterfly_name.*' => 'required',
             'butterfly_quantity.*' => 'required',
         ]);
+        // add validation
 
         $applicationForm =  new ApplicationForm();
         $applicationForm->user_id = Auth::user()->id;
@@ -139,7 +140,7 @@ class PermitController extends Controller
         }
         
        
-       return redirect('/');//add msg with successfull
+       return redirect('/myapplication/show-draft');//add msg with successfull
        
      
     }

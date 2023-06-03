@@ -156,14 +156,22 @@
             </div>
     
             <div class="w-full px-6 py-2 rounded-md shadow-md bg-[#B09FFF]">
-                <p class=" text-2xl font-poppins font-semibold">Returned Permits</p>          
-                <p class="font-poppins text-xl">{{$returnPermit}}</p>
+                <p class=" text-2xl font-poppins font-semibold">Released Permits</p>          
+                <p class="font-poppins text-xl">{{$totalPermits}}</p>
             </div>
           </div>  
         <div class="px-4 pt-2">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month and Year</p>
-                <div id="permitIssuedByMonthAndYearChart"></div>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month</p>
+                <div id="permitIssuedByMonthChart"></div>
+                
+            </div>           
+        </div>
+
+        <div class="px-4 pt-2">
+            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Year</p>
+                <div id="permitIssuedByYearChart"></div>
                 
             </div>           
         </div>
@@ -189,26 +197,47 @@
    
 
    <script>
-   var chartData = @json($chartData);
-
-
-    var options = {
-        series: [
-            {
-                name: 'Permits Issued',
-                data: chartData,
+   
+   var options = {
+            series: [{
+                name: 'Permits',
+                data: @json($values)
+            }],
+            chart: {
+                type: 'area',
+                height: 350
             },
-        ],
-        chart: {
-            type: 'area',
-            height: 350,
-        },
-        xaxis: {
-            type: 'datetime',
-        },
-    };
-    var chart = new ApexCharts(document.querySelector('#permitIssuedByMonthAndYearChart'), options);
+            xaxis: {
+                categories: @json($labels),
+            },
+        };
+
+    
+
+    var chart = new ApexCharts(document.querySelector("#permitIssuedByMonthChart"), options);
     chart.render();
+
+    var options2 = {
+            series: [{
+                name: 'Permits',
+                data: @json($values1)
+            }],
+            chart: {
+                type: 'area',
+                height: 350
+            },
+            xaxis: {
+                categories: @json($labels1),
+            },
+            colors: ['#FFD572'],
+        };
+
+    
+
+    var chart3 = new ApexCharts(document.querySelector("#permitIssuedByYearChart"), options2);
+    chart3.render();
+    
+    
 
     var revenueData = @json($revenueData);
 

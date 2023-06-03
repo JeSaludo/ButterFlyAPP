@@ -2,7 +2,7 @@
         <header class="relative">
             <div class="flex px-4 py-2 text-3xl font-raleway font-bold text-custom-blue ">
                 <img class="w-8" src="{{asset('images/logo.png')}}" alt="">
-                <span class="text transition-all duration-300 ease-in">WILD<span class="text-white">LIFE</span></span></a>
+                <span class="text transition-all duration-300 ease-in">OFS<span class="text-white">PTS</span></span></a>
             </div>
           
 

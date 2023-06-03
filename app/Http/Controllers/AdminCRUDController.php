@@ -142,22 +142,23 @@ class AdminCRUDController extends Controller
         $pendingPermit = $pendingPermits->count();
         $returnPermits = ApplicationForm::where('status', 'returned')->get();
         $returnPermit = $returnPermits->count();
-        $permitsByYearMonth = $permits->groupBy(function ($permit) {
-            return Carbon::parse($permit->created_at)->format('Y-m');
+        $data = $permits->groupBy(function ($permit) {
+            return Carbon::parse($permit->created_at)->format('M Y');
+        })->map(function ($group) {
+            return $group->count();
+        });
+    
+        $labels = $data->keys()->toArray();
+        $values = $data->values()->toArray();
+      
+        $data = $permits->groupBy(function ($permit) {
+            return Carbon::parse($permit->created_at)->format('Y');
+        })->map(function ($group) {
+            return $group->count();
         });
 
-       
-        $chartData = [];
-        foreach ($permitsByYearMonth as $yearMonth => $permits) {
-            $year = substr($yearMonth, 0, 4);
-            $month = substr($yearMonth, 5);
-            $chartData[] = [
-                'x' => "$year-$month",
-                'y' => $permits->count(),
-            ];
-        }
-
-      
+        $labels1 = $data->keys()->toArray();
+        $values1 = $data->values()->toArray();
 
         $orders = OrderOfPayment::where('status', 'paid')
         ->get();
@@ -194,7 +195,7 @@ class AdminCRUDController extends Controller
         
      
 
-        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'chartData', 'revenueData', 'totalPermits','returnPermit','pendingPermit'));
+        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'revenueData', 'totalPermits','returnPermit','pendingPermit','labels','values', 'labels1', 'values1'));
     }
     
 
