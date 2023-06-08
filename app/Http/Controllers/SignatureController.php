@@ -18,8 +18,9 @@ class SignatureController extends Controller
     public function StoreUserSignatories($id, Request $request){
         $data = $request->validate([
             'orNumber' => 'required',
-            'signature' => 'required|image|mimetypes:image/jpeg,image/png,image/jpg,image/gif|max:2048',
+            'signature' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        
         
         
         $application = ApplicationForm::findOrFail($id);
@@ -34,12 +35,13 @@ class SignatureController extends Controller
         
         if($orderOfPayment->or_number === $request->orNumber){
             if ($request->hasFile('signature')) {
-                $image = $request->file('signature');
-                $imageName = date('YmdHis') . '-' . $application->user_id . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('signatures'), $imageName);
+                $file = $request->file('signature');
+                $fileName = date('YmdHis') . '-' . $application->user_id . '.' . $file->getClientOriginalExtension();
             
-                $application->file_name = $imageName;
-                $application->file_path = 'signatures/' . $imageName;
+                $filePath = $file->storeAs('signatures', $fileName, 'public');
+            
+                $application->file_name = $fileName;
+                $application->file_path = $filePath;
             
                 $application->save();
             
@@ -48,6 +50,7 @@ class SignatureController extends Controller
             
                 return redirect('/myapplication/show-submit');
             }
+            
             
 
         }
@@ -60,19 +63,17 @@ class SignatureController extends Controller
     public function download($id)
     {
         $applicationForm = ApplicationForm::findOrFail($id);
-
         $filePath = $applicationForm->file_path;
-        
-        $absoluteFilePath = public_path($filePath);
-        
+        $absoluteFilePath = storage_path('app/public/' . $filePath);
+
         if (file_exists($absoluteFilePath)) {
-            return response()->file($absoluteFilePath, [
-                'Content-Disposition' => 'attachment; filename="' . $applicationForm->file_name . '"',
-            ]);
+            return response()->download($absoluteFilePath, $applicationForm->file_name);
         } else {
             abort(404, 'File not found');
         }
 
+        
         return redirect('/myapplication/show-submit');
+
     }
 }
