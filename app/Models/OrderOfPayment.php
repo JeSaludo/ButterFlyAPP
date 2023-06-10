@@ -27,4 +27,7 @@ class OrderOfPayment extends Model
     {
         return $this->belongsTo(ApplicationForm::class);
     }
+  
+
+    
 }

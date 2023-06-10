@@ -99,12 +99,11 @@
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
                                     
-                                    <a class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20">On Process</a>
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Returned</a>
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('application-forms.review', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Review</a>
+                                
                                     <a href="{{ route('edit-application', $form->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <form action="{{ Route('delete-application', $form->id)}}" method="POST"

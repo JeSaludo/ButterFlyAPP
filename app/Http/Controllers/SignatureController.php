@@ -11,8 +11,7 @@ use chillerlan\QRCode\{QRCode, QROptions};
 class SignatureController extends Controller
 {
     public function ShowGetPermit($id){
-        $form = ApplicationForm::findOrFail($id);
-        
+        $form = ApplicationForm::findOrFail($id);        
         return view('user.order-receipt-add', compact('form'));
     }
 
@@ -21,15 +20,13 @@ class SignatureController extends Controller
             'orNumber' => 'required',
             'signature' => 'required|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        
-        
-        
+                
         $application = ApplicationForm::findOrFail($id);
 
         $orderOfPayment = OrderOfPayment::where('application_form_id', $id)->firstOrFail();
        
         if(!$orderOfPayment->or_number){
-            //if null
+        
             
             return redirect('/myapplication/show-submit');
         }
@@ -45,12 +42,7 @@ class SignatureController extends Controller
                 $application->file_path = $filePath;
 
                 $applicationID = ApplicationForm::findOrFail($id);
-                //$qrCode = QrCode::format('svg')
-                //->size(200)
-                //->generate($applicationID->id);
-                 
-               // 
-               // Storage::disk('public')->put('qrcodes/' . $qrName, $qrCode);
+               
                
                $options = new QROptions([
                 'outputType' => QRCode::OUTPUT_IMAGE_PNG,

@@ -53,8 +53,7 @@ class UserCRUDController extends Controller
         if ($request->has('password')) {
             $user->password = bcrypt($request->password);
             $user->save();
-        }
-    
+        }   
       
         return redirect('/')->with('success', 'User updated successfully');
     }
@@ -64,7 +63,8 @@ class UserCRUDController extends Controller
         $searchTerm = $request->input('search');
         $sort = $request->input('sort', 'latest');
         $forms = ApplicationForm::with(['butterflies', 'orderOfPayment'])
-            ->where('is_draft', false);
+            ->where('is_draft', false)
+            ->where('user_id', $currentUserId);
            
         if ($searchTerm) {
             $forms->where(function ($query) use ($searchTerm) {
@@ -75,15 +75,12 @@ class UserCRUDController extends Controller
             });
         }
         if ($sort === 'oldest') {
-            $forms->orderBy('created_at', 'asc');
+            $forms->orderBy('id', 'asc');
         } else {
-            $forms->orderBy('created_at', 'desc');
+            $forms->orderBy('id', 'desc');
         }
 
         $usersWithPermit = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
-       
-      
-         
 
         return view('user.dashboard-view-submitted-form', compact('usersWithPermit','sort', 'searchTerm'));
     }
@@ -92,7 +89,8 @@ class UserCRUDController extends Controller
         $currentUserId = auth()->user()->id;
         $sort = $request->input('sort', 'latest');
         $forms = ApplicationForm::with(['butterflies', 'orderOfPayment'])
-            ->where('is_draft', true);
+            ->where('is_draft', true)
+            ->where('user_id', $currentUserId);
            
 
         if ($sort === 'oldest') {

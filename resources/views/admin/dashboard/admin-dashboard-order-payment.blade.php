@@ -100,7 +100,7 @@
                            
                                 <td class="px-6 py-4">
                                     PMDQ-LTP-{{$orderOfPayment->created_at->year}}-{{sprintf('%04d', $orderOfPayment->id)}}</td>
-                                  
+                                    
                                 </td>
                                 <td class="px-6 py-4">
                                     {{$orderOfPayment->order_number}}

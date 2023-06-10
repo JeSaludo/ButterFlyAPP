@@ -56,7 +56,7 @@
                         Simplify Your <span class="text-custom-light-blue">Wildlife Transport Compliance</span></h1>
                     <p
                         class="md:text-justify md-text-center mt-6 my-2 w-full mx-auto md:mx-0 xl:mx-0 md:w-7/12  xl:text-xl md:text-md sm:text-sm text-center  text-custom-white-p">
-                        OFSPTS Enables Easy Local Butterfly Permitting with its Intuitive Online System</p>
+                        Online Frontline Services Permitting and Transaction System Enables Easy Local Butterfly Permitting with its Intuitive Online System</p>
                 </div>
                 <div class="flex justify-between gap-5 mt-12  text-center w-full md:w-8/12  mx-auto md:mx-0">
                     <a href="/permit/apply"
@@ -69,7 +69,7 @@
             </div>
         </div>
         
-        <section class="mt-8 md:mt-36" >
+        <section class="mt-8 md:mt-36"  id="learn-more">
             <h1 class="text-5xl w-7/12 md:w-4/12 text-center my-10 mx-auto font-raleway font-bold"><span
                     class="text-custom-blue">Welcome to </span>OFSPTS</h1>
             <p class="w-9/12 md:w-7/12 mx-auto text-center text-2xl font-raleway">Your trusted online platform for

@@ -638,14 +638,16 @@ class AdminCRUDController extends Controller
         
         $sort = $request->input('sort', 'latest');
         $searchTerm = $request->input('search');
-        $form = OrderOfPayment::query();
+        $form = OrderOfPayment::with('ApplicationForm');
         if ($searchTerm) {
             $form->where(function ($query) use ($searchTerm) {
                 $query->where('id', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('order_number', 'LIKE', '%' . $searchTerm . '%')
-                    ->orWhere('application_form_id', 'LIKE', '%' . $searchTerm . '%');
+                    ->orWhere('order_number', 'LIKE', '%' . $searchTerm . '%');
+                    
             });
         }
+        
+        
         if ($sort === 'oldest') {
             $form->orderBy('created_at', 'asc');
         } else {
