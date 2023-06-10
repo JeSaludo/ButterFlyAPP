@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
 class AdminCRUDController extends Controller
 {
   
-    public function ShowUserAccount(){
+    public function ShowUserAccount(Request $request){
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
         $greeting = '';
@@ -38,10 +38,33 @@ class AdminCRUDController extends Controller
         } else {
             $greeting = 'Good evening';
         }
-        $users = User::paginate(10);
-        return view('admin.dashboard.admin-dashboard-user', compact('greeting', 'users'));
+        $sort = $request->input('sort', 'oldest');
+        $searchTerm = $request->input('search');
+        $user = User::query();
+        if ($searchTerm) {
+            $user->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('owner_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('username', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('first_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $user->orderBy('created_at', 'asc');
+        } else {
+            $user->orderBy('created_at', 'desc');
+        }
+        
+        $users = $user->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+   
+        return view('admin.dashboard.admin-dashboard-user', compact('greeting', 'users','sort', 'searchTerm'));
     }
-
+    
+    public function ShopApplicationReview()
+    {
+        return view('admin.dashboard.admin-dashboard-app-review');
+    }
     public function ShowApplication(){
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
@@ -86,7 +109,144 @@ class AdminCRUDController extends Controller
         
         return view('admin.dashboard.admin-dashboard-app', compact('greeting', 'pendingApplicationForm', 'acceptedApplicationForm', 'returnedApplicationForm','expiredApplicationForm','releasedApplicationForm', 'usedApplicationForm'));
     
+    
     }
+    
+    public function ShowApplicationPending(Request $request)
+    {
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $forms = ApplicationForm::with('butterflies')
+            ->where('is_draft', false)
+            ->where('status', 'On Process');
+            if ($searchTerm) {
+                $forms->where(function ($query) use ($searchTerm) {
+                    $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                        ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+                });
+            }
+            if ($sort === 'oldest') {
+                $forms->orderBy('created_at', 'asc');
+            } else {
+                $forms->orderBy('created_at', 'desc');
+            }
+            
+            $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+       
+
+        return view('admin.dashboard.admin-dashboard-app-pending', compact('forms','sort','searchTerm'));
+    }
+    public function ShopApplicationApproved(Request $request)
+    {
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+
+        $forms = ApplicationForm::with(['butterflies', 'orderOfPayment'])
+            ->where('is_draft', false)
+            ->where('status', 'Accepted');
+
+        if ($searchTerm) {
+            $forms->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
+
+        $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+        return view('admin.dashboard.admin-dashboard-app-approved', compact('forms', 'sort', 'searchTerm'));
+    }
+
+
+    public function ShopApplicationReturned(Request $request)
+    {
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $forms = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Returned');
+        if ($searchTerm) {
+            $forms->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
+
+        $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+      
+
+        return view('admin.dashboard.admin-dashboard-app-returned', compact('forms','sort','searchTerm'));
+    
+    }
+
+    public function ShopApplicationReleased(Request $request)
+    {
+    $sort = $request->input('sort', 'latest');
+    $searchTerm = $request->input('search');
+    $forms = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where('status', 'Released');
+    if ($searchTerm) {
+        $forms->where(function ($query) use ($searchTerm) {
+            $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+        });
+    }
+    if ($sort === 'oldest') {
+        $forms->orderBy('created_at', 'asc');
+    } else {
+        $forms->orderBy('created_at', 'desc');
+    }
+
+    $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+      
+
+    return view('admin.dashboard.admin-dashboard-app-released', compact('forms', 'sort','searchTerm'));
+    }
+
+
+    public function ShopApplicationExpiredUsed(Request $request)
+    {
+         $sort = $request->input('sort', 'latest');
+         $searchTerm = $request->input('search');
+        $forms = ApplicationForm::with('butterflies')
+        ->where('is_draft', false)
+        ->where(function ($query) {
+            $query->where('status', 'Expired')
+                ->orWhere('status', 'Used');
+        });
+        if ($searchTerm) {
+            $forms->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
+        
+        $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+      
+
+        return view('admin.dashboard.admin-dashboard-app-expired-used', compact('forms','sort','searchTerm'));
+    
+    }
+
+    
+
+
     public function ShowDashboard(){
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
@@ -131,10 +291,32 @@ class AdminCRUDController extends Controller
         'pendingApplicationForm', 'releasedApplicationForm', 'returnedApplicationForm', 'acceptedApplicationForm','applications' ));
     }
 
+   
 
-    public function ShowReports()
+
+    public function ShowReports(Request $request)
     {
-        $butterflies = ButterflySpecies::paginate(10);
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $butterfly = ButterflySpecies::query();
+         if ($searchTerm) {
+            $butterfly->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('common_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('species_type', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('class_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('family_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('scientific_name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $butterfly->orderBy('created_at', 'asc');
+        } else {
+            $butterfly->orderBy('created_at', 'desc');
+        }
+        
+        $butterflies = $butterfly->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+      
     
         $permits = ApplicationForm::where('status', 'released')->get();
         $totalPermits = $permits->count();
@@ -195,7 +377,7 @@ class AdminCRUDController extends Controller
         
      
 
-        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'revenueData', 'totalPermits','returnPermit','pendingPermit','labels','values', 'labels1', 'values1'));
+        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'revenueData', 'totalPermits','returnPermit','pendingPermit','labels','values', 'labels1', 'values1','sort','searchTerm'));
     }
     
 
@@ -452,9 +634,29 @@ class AdminCRUDController extends Controller
         
     }
     //Order of Payment
-    public function showOrderOfPayment(){
-        $orderOfPayments = OrderOfPayment::paginate(10);
-        return view('admin.dashboard.admin-dashboard-order-payment', compact('orderOfPayments'));
+    public function showOrderOfPayment(Request $request){
+        
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $form = OrderOfPayment::query();
+        if ($searchTerm) {
+            $form->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('order_number', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('application_form_id', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $form->orderBy('created_at', 'asc');
+        } else {
+            $form->orderBy('created_at', 'desc');
+        }
+
+        $orderOfPayments = $form->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+        return view('admin.dashboard.admin-dashboard-order-payment', compact('orderOfPayments','sort'));
+        
+      
+   
     }
 
  
@@ -482,9 +684,26 @@ class AdminCRUDController extends Controller
 
     //BUtterfly 
 
-    public function showWilfLifePermit(){
-        $wildlifePermits = Permit::paginate(10);
-        return view('admin.dashboard.admin-dashboard-wildlife-permit', compact('wildlifePermits'));
+    public function showWilfLifePermit(Request $request){
+
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $form = Permit::query();
+        if ($searchTerm) {
+            $form->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('owner_name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('permit_no', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $form->orderBy('created_at', 'asc');
+        } else {
+            $form->orderBy('created_at', 'desc');
+        }
+      
+        $wildlifePermits = $form->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+        return view('admin.dashboard.admin-dashboard-wildlife-permit', compact('wildlifePermits','sort','searchTerm'));
     }
 
     
@@ -538,6 +757,7 @@ class AdminCRUDController extends Controller
     }
 
     public function storeButterflySpecies(Request $request){
+       
         $data = $request->validate([
             'speciesType' => 'required',
             'className' => 'required',
@@ -547,7 +767,7 @@ class AdminCRUDController extends Controller
             'description' => 'required',
 
         ]);
-
+       
 
         $butterflySp = ButterflySpecies::create([
             'species_type' => $request->speciesType,
@@ -557,7 +777,7 @@ class AdminCRUDController extends Controller
             'scientific_name' => $request->scientificName,
             'description' => $request->description,
         ]);
-       return redirect('/admin/dashboard/butterfly-sp');
+       return redirect('/admin/dashboard/reports');
     }
     public function updateButterflySpecies(Request $request, $id){
         $data = $request->validate([

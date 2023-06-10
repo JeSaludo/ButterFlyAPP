@@ -48,33 +48,16 @@
                             <span class="text transition-all duration-200 ease-in">Wildlife Permits</span>
                         </a>
                     </li>
+                  
 
-                
-
-                    <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Create</p>
-                   
                     <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="{{route('admin.users.create')}}" class="flex items-center  font-poppins text-base">
-                            <i class='bx bx-user-plus px-5' ></i>
-                            <span class="text transition-all duration-200 ease-in">Create User</span>
+                        <a href="{{route('admin.dashboard.show-wilflife')}}" class="flex items-center  font-poppins text-base">
+                            <i class='bx bx-qr-scan px-5'></i>
+                            <span class="text transition-all duration-200 ease-in">Scan LTP </span>
                         </a>
                     </li>
 
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="/admin/create-permit" class="flex items-center  font-poppins text-base">
-                            <i class='bx bx-file-blank px-5' ></i>
-                            <span class="text transition-all duration-200 ease-in">Create Wildlife Permit</span>
-                        </a>
-                    </li>
-                
-
-                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-xl hover:bg-custom-blue transition-all duration-200 ease-in">
-                        <a href="{{route('admin.add-butterfly.show')}}" class="flex items-center  font-poppins text-base">
-                            <i class='bx bx-plus-circle px-5' ></i>
-                            <span class="text transition-all duration-200 ease-in">Create Butterfly Sp</span>
-                        </a>
-                    </li>
-                
+                    
                 
 
                     <p class="text-custom-white-p mt-2 font-poppins font-light px-4 text transition-all duration-200 ease-in">Monitoring</p>

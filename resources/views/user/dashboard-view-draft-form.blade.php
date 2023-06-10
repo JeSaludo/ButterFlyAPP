@@ -14,13 +14,26 @@
 </head>
 <body class="bg-custom-light-tint-blue">
     <div class="min-h-screen">
-        <div class="bg-custom-dark-900">
+        
             @include('layout.user-nav-dashboard')
-        </div>
+        
 
         <div>
-            <div class="bg-gray-50 w-9/12 rounded-md mx-auto mt-10 ">
-            <h1 class="p-4 font-roboto font-bold text-3xl text-custom-dark-blue">LIST OF DRAFT APPLICATIONS</h1>
+            <div class="bg-gray-50 w-9/12 rounded-md mx-auto my-4 ">
+                <div class="flex justify-between">
+                    <h1 class="p-4 font-roboto font-bold text-3xl text-custom-dark-blue">LIST OF DRAFT APPLICATIONS</h1>
+           
+                    <div class="flex items-center mx-4">
+                        <form action="{{ route('myapplications.draft.show') }}" method="GET">
+                            <label for="sort" class="mr-2">Sort By:</label>
+                            <select id="sort" name="sort" onchange="this.form.submit()">
+                                <option value="latest" {{ $sort === 'latest' ? 'selected' : '' }}>Latest</option>
+                                <option value="oldest" {{ $sort === 'oldest' ? 'selected' : '' }}>Oldest</option>
+                                
+                            </select>
+                        </form>
+                    </div>
+                </div>
             <div class="overflow-x-auto">
               <table class="w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -33,8 +46,8 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($usersWithPermit as $user)
-                        @foreach($user->applicationForms as $form)
+                  
+                        @foreach($usersWithPermit as $form)
                             <tr>
                                 <td class="px-6 py-4">PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%06d', $form->id)}}</td>
                                 <td class="px-6 py-4">{{ $form->name }}</td>
@@ -58,7 +71,7 @@
                                   
                               </tr>
                         @endforeach
-                    @endforeach
+                 
                    
                 </tbody>
             </table>

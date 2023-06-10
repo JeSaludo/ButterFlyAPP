@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dashboard | WildLife</title>
+    <title>Dashboard | OFSPTS</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@400;500;700&family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,300&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"> 
@@ -72,6 +72,8 @@
                                 <p class=" bg-green-100 text-green-700 px-3 py-2 rounded-20 text-center">Released</p>
                             @elseif ($form->status=="Draft")
                             <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Draft</p>
+                            @elseif ($form->status=="Used")
+                            <p class=" bg-orange-100 text-orange-700 px-3 py-2 rounded-20 text-center">Used</p>
                             
                                 @else
                                 <p class=" bg-orange-100 text-orange-700 px-3 w-28 py-2 rounded-20">On Process</p>

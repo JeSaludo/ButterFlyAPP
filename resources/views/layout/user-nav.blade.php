@@ -1,4 +1,4 @@
-<nav class="px-4 font-poppins  bg-custom-dark-900 md:bg-transparent flex justify-between">
+<nav class="px-4 font-poppins  bg-custom-dark-900 flex justify-between sticky top-0 z-50">
     <div class="flex justify-between items-center">
         <span class="font-2xl text-custom-dark-500 py-4 px-2 cursor-pointer font-raleway font-bold text-2xl">
             <img class="h-10 inline " src="{{asset('images/logo.png')}}" alt="" srcset="">

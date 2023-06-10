@@ -20,7 +20,7 @@
 
 </head>
 <body> 
-   
+    @include('layout.user-nav')
         <div class="bg-custom-dark-800 md:bg-transparent">
             <div
                 class="swiper  absolute overflow-x-hidden  top-0 -z-10 w-full sm:max-w-none sm:w-full md:max-w-1440 md:w-full">
@@ -39,7 +39,7 @@
                 <div class="swiper-pagination "></div>
             </div>
 
-            @include('layout.user-nav')
+          
 
             <div class="w-full md:w-7/12 py-10 px-16 text-center md:text-left">
                 @auth

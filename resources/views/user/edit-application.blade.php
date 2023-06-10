@@ -16,17 +16,17 @@
     <div class="min-h-screen">
         @include('layout.user-nav')
 
-        <div class="bg-custom-bg-light-dark w-7/12  mx-auto  ">
-            <div class="mx-auto pt-8 ">
+        <div class="bg-custom-bg-light-dark w-7/12  mx-auto rounded-20 pb-4 mb-4">
+            <div class="mx-auto pt-2 my-4 0 ">
                 <h1 class="text-center text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">UPDATE <span class="text-white">DRAFT  APPLICATION</span></h1>
                 <p class="text-center text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Lorem ipsum dolor sit amet, consectetur..</p>
                 
                 <form action="{{ route('user.update-application', $form->id) }}" method="post">
                     @csrf
                     @method('PUT')
-                    <div class="grid grid-flow-col">
+                    
                         
-                        <div class="w-full px-10 pb-10">
+                        <div class="w-full px-10 pb-4">
                             <p class="text-white mt-6">PERSONAL INFORMATION</p>
                             <div>
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="name">Full Name:</label>
@@ -81,38 +81,51 @@
                                 @enderror
                              </div>
 
-                             <div class="flex justify-between gap-2">
-                                <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4  py-2 border-none rounded-md">Submit</button>
-                               
-                             </div>
+                             
+
+                            
                         </div>
 
                         <div class="w-full px-10">
                             <p class="text-white mt-6 ">BUTTERFLY INFORMATION</p>
+                             
                             <div class="grid grid-flow-col">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Name:</label>
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="purpose">Quantity:</label>
-                        
-                            </div>
-                            @foreach ($form->butterflies as $butterfly)
                                 
-                                <div class="grid grid-flow-col gap-2">
-                                    
-                                    <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]" value="{{ $butterfly->name }}">
-                                    <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity[]" value="{{ $butterfly->quantity }}">
-                                </div>
+                            </div>                            
+                           
+                           <div class="inp-group">
+      
+                            @foreach ($form->butterflies as $index => $butterfly)
+                            <div class="grid grid-flow-col gap-2">
+                                <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]" value="{{ old('butterfly_name.' . ($index + 1), $butterfly->name) }}">
+                                <input type="number" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Quantity" name="butterfly_quantity[]" value="{{ old('butterfly_quantity.' . ($index + 1), $butterfly->quantity) }}">
+                            </div>
                             @endforeach
-                            <div class="grid grid-flow-col">
-                                @error('butterfly_name[]')
-                                <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                                @enderror
-                                @error('butterfly_quantity[]')
-                                <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
-                                @enderror
+                            <div class="my-4">
+                                <a href="#" class="add text-white bg-custom-blue hover:bg-[#390A86] p-1.5  rounded-md  cursor-pointer "> Add Field</a>
+                           
                             </div>
                         </div>
+                        <div class="grid grid-flow-col">
+                            @error('butterfly_name.*')
+                            <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+                            @enderror
+                            @error('butterfly_quantity.*')
+                            <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
+                            @enderror
+                        </div>  
+   
+
+                            <div class="flex justify-between gap-2">
+                                <button type="submit" class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4  py-2 border-none rounded-md">Submit</button>
+                                <button type="submit" formaction="{{ route('draft.save-draft') }}" class="w-6/12 mx-auto font-poppins text-xl text-white bg-transparent border-custom-dark-500 border-2 mt-4 py-2 rounded-md">Draft</button>
+   
+                             </div>
+                        </div>
                        
-                    </div>
+                       
                    
                 </form>
 
@@ -128,7 +141,7 @@
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
+    <script src="{{asset('js/customize-form.js')}}"></script>
     <script>
         function Menu(e){
             let list  = document.querySelector("ul")

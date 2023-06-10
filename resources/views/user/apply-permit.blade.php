@@ -18,16 +18,16 @@
     <div class="min-h-screen">
         @include('layout.user-nav')
 
-        <div class="bg-custom-bg-light-dark w-7/12  mx-auto  ">
-            <div class="mx-auto pt-8 ">
+        <div class="bg-custom-bg-light-dark w-7/12  mx-auto rounded-20 ">
+            <div class="mx-auto pt-3 ">
                 <h1 class="text-center text-custom-dark-600 text-auto md:text-3xl lg:text-xl xl:text-3xl font-lora font-bold">REGISTER <span class="text-white">AN APPLICATION</span></h1>
                 <p class="text-center text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Please fill up the form</p>
                 
                 <form action="/permit/apply-permit-process" method="post">
                     @csrf
-                    <div class="grid grid-flow-col">
+                
                         
-                        <div class="w-full px-10 pb-10">
+                        <div class="w-full px-10 pb-2 ">
                             <p class="text-white mt-6">PERSONAL INFORMATION</p>
                             <div>
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="name">Full Name:</label>
@@ -82,14 +82,9 @@
                                 @enderror
                              </div>
 
-                             <div class="flex justify-between gap-2">
-                                <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
-                                <button type="submit" formaction="{{ route('draft.save') }}" class="w-6/12 mx-auto font-poppins text-xl text-white bg-transparent border-custom-dark-500 border-2 mt-4  py-2  rounded-md">Draft</button>
-            
-                             </div>
+                             
                         </div>
-
-                        <div class="w-full px-10">
+                        <div class="w-full px-10 pb-10">
                             <p class="text-white mt-6 mb-4">BUTTERFLY INFORMATION</p>
                             <div class="grid grid-flow-col gap-2">
                                 <input type="text" class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md" placeholder="Enter Butterfly" name="butterfly_name[]">
@@ -110,11 +105,16 @@
                                 @enderror
                             </div>
                           
-                          
+                            <div class="flex justify-between gap-2">
+                                <button type="submit" class="w-6/12 mx-auto font-poppins text-xl text-white bg-custom-blue mt-4  py-2 border-none rounded-md">Submit</button>
+                                <button type="submit" formaction="{{ route('draft.save') }}" class="w-6/12 mx-auto font-poppins text-xl text-white bg-transparent border-custom-dark-500 border-2 mt-4  py-2  rounded-md">Draft</button>
+            
+                             </div>
                            
                         </div>
+                      
                        
-                    </div>
+                   
                    
                 </form>
 

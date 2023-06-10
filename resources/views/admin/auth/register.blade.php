@@ -18,7 +18,7 @@
             <div class="flex justify-between items-center">
                 <span class="font-2xl text-custom-dark-500 py-4 px-2 cursor-pointer font-raleway font-bold text-2xl">
                     <img class="h-10 inline " src="{{asset('images/logo.png')}}" alt="" srcset="">
-                    <span class="text-custom-blue ">WILD</span>LIFE               
+                    <span class="text-custom-blue ">OFS</span>PTS              
                 </span>
             </div>
 

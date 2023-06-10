@@ -9,8 +9,8 @@ function removeInput(){
 }
 
 let counter = 0;
-function addInput(){
-   
+function addInput(event){
+    event.preventDefault();
     counter++;
     const name = document.createElement("input");
     name.type="text";
@@ -36,6 +36,9 @@ function addInput(){
     flex.appendChild(name);
     flex.appendChild(amount);
     flex.appendChild(btn);
+
+     const newField = flex.lastElementChild;
+  newField.scrollIntoView({ behavior: 'smooth' });
 }
 
 addBtn.addEventListener("click", addInput);

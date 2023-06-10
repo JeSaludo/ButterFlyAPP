@@ -1,4 +1,4 @@
-<div class="h-18 w-auto flex justify-between py-2 transition-all duration-300 ease-in mt-2 mx-2 bg-white shadow-md rounded-20">
+<div class="h-18 w-auto flex justify-between py-2 transition-all duration-300 ease-in mt-2 mx-2 text-custom-dark-blue  bg-white shadow rounded-20">
     <div class="px-6 ">         
         <p class="text-auto md:text-3xl  font-poppins font-medium">{{$title}}</p>                  
         <p class="font-poppins text-auto md:text-xl">{{$greeting}}, Admin</p>

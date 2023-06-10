@@ -11,6 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@400;500;700&family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,300&family=Roboto:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet"> 
+    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     
@@ -29,14 +30,14 @@
    
     <section class="main home transition-all duration-300 ease-in">     
         
-        @include('admin.layout.dashboard-header-v2', ["title" => "Reports"])    
+        @include('admin.layout.dashboard-header-v2', ["title" => "Approved Applications"])    
 
    
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 rounded-md shadow-md">
                 <div class="flex justify-between flex-col md:flex-row">
                     <div class="px-5 py-3">
-                        <form action="{{ route('admin.report.show') }}" method="GET">
+                        <form action="{{ route('admin.dashboard.approved') }}" method="GET">
                             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -48,7 +49,7 @@
                         </form>
                     </div>
                     <div class="flex items-center px-4">
-                        <form action="{{ route('admin.report.show') }}" method="GET" class="flex items-center">
+                        <form action="{{ route('admin.dashboard.approved') }}" method="GET" class="flex items-center">
                             <label for="sort" class="mr-2 text-sm font-medium text-gray-900">Sort By:</label>
                             <div class="relative">
                                 <select id="sort" name="sort" onchange="this.form.submit()"
@@ -61,9 +62,6 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="px-2 ">
-                            <a href="/admin/butterfly/add" class="inline-block px-4 py-2 font-medium bg-custom-blue hover:bg-[#390A86] text-white text-xs whitespace-nowrap md:text-sm rounded-md">Create Butterfly <span class="hidden md:block">Species</span></a>
-                          </div>
                     </div>
                 </div>
                 
@@ -73,19 +71,16 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Species Type</th>
+                                    Application ID</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Common Name</th>
+                                    Applicant Name</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Scientific Name</th>
+                                    Date of Submission</th>
                                 <th
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Class Name</th>
-
-                                <th class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Family Name</th>
+                                    Status</th>
                                 <th
                                     class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
                                     Action</th>
@@ -93,23 +88,34 @@
                         </thead>
                         <tbody>
                         
-                            @foreach($butterflies as $butterfly)
-                            <tr>
-                                <td class="px-6 py-4">
-                                    {{$butterfly->species_type}}</td>
-                                <td class="px-6 py-4">{{ $butterfly->common_name }}</td>
+                            @foreach($forms as $index => $form)
+                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} border-b-2 border-gray-100">
+                                <td class="px-6 py-4 ">
+                                    PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
+                                <td class="px-6 py-4">{{ $form->name }}</td>
 
-                                <td class="px-6 py-4">{{ $butterfly->scientific_name }}</td>
+                                <td class="px-6 py-4">{{ $form->created_at }}</td>
 
-                                <td class="px-6 py-4">{{ $butterfly->class_name }}</td>
-                                <td class="px-6 py-4">{{ $butterfly->family_name }}</td>
-
+                                <td
+                                    class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
+                                    
+                                    @if ($form->orderOfPayment && $form->orderOfPayment->status === "paid")                                 
+                                    <a class=" bg-green-100 text-green-700 px-6 py-2 rounded-20">Paid</a>
+                                    @else
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Unpaid</a>
+                                    @endif
+                                   
+                                </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('admin.view-butterfly', $butterfly->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="{{ route('admin.edit-butterfly', $butterfly->id)}}"
+                                    @if($form->orderOfPayment && $form->orderOfPayment->status === "paid")
+                                    <a href="{{route('admin.dashboard.release-permit.show', $form->id)}}" class="mx-2 text-indigo-600 cursor-pointer hover:text-indigo-900">Release</a>
+                                    @else
+                                    <a 
+                                        class="mx-2 text-gray-600 opacity-70">Release</a>
+                                    @endif
+                                    <a href="{{ route('edit-application', $form->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
-                                    <form action="{{ Route('admin.delete-butterfly', $butterfly->id)}}" method="POST"
+                                    <form action="{{ Route('delete-application', $form->id)}}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
@@ -132,13 +138,13 @@
                     <nav class="flex items-center justify-between">
                         <div class="flex-1 flex justify-between">
                             <!-- Previous Page Link -->
-                            @if ($butterflies->onFirstPage())
+                            @if ($forms->onFirstPage())
                             <span
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
                                 Previous
                             </span>
                             @else
-                            <a href="{{ $butterflies->previousPageUrl() }}"
+                            <a href="{{ $forms->previousPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Previous
                             </a>
@@ -146,16 +152,16 @@
 
                             <div class="text-sm text-gray-500 py-2">
                                 <span>{!! __('Showing') !!}</span>
-                                <span class="font-medium">{{ $butterflies->firstItem() }}</span>
+                                <span class="font-medium">{{ $forms->firstItem() }}</span>
                                 <span>{!! __('to') !!}</span>
-                                <span class="font-medium">{{ $butterflies->lastItem() }}</span>
+                                <span class="font-medium">{{ $forms->lastItem() }}</span>
                                 <span>{!! __('of') !!}</span>
-                                <span class="font-medium">{{ $butterflies->total() }}</span>
+                                <span class="font-medium">{{ $forms->total() }}</span>
                                 <span>{!! __('results') !!}</span>
                             </div>
 
-                            @if ($butterflies->hasMorePages())
-                            <a href="{{ $butterflies->nextPageUrl() }}"
+                            @if ($forms->hasMorePages())
+                            <a href="{{ $forms->nextPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Next
                             </a>
@@ -175,50 +181,9 @@
 
            
         </div>
-
-        <div class="w-full  grid grid-flow-row md:grid-flow-col gap-2 px-4 ">
-            <div class="w-full px-6 py-2  rounded-md shadow bg-[#7AD3FF]">
-                <p class=" text-2xl font-poppins font-semibold">Total Permit Issued</p>          
-               <p class="font-poppins text-xl">{{$totalPermits}}</p>
-            </div>
-            <div class="w-full px-6 py-2  rounded-md shadow bg-[#FFD572]">
-                <p class=" text-2xl font-poppins font-semibold">Pending Permits</p>          
-                <p class="font-poppins text-xl">{{$pendingPermit}}</p>
-            </div>
-    
-            <div class="w-full px-6 py-2 rounded-md shadow bg-[#B09FFF]">
-                <p class=" text-2xl font-poppins font-semibold">Released Permits</p>          
-                <p class="font-poppins text-xl">{{$totalPermits}}</p>
-            </div>
-          </div>  
-        <div class="px-4 pt-2">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month</p>
-                <div id="permitIssuedByMonthChart"></div>
-                
-            </div>           
-        </div>
-
-        <div class="px-4 pt-2">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Year</p>
-                <div id="permitIssuedByYearChart"></div>
-                
-            </div>           
-        </div>
-
-        <div class="px-4 pt-5">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Total Revenue Collection by Month and Year</p>
-                <div id="revenueChart"></div>
-                
-            </div>           
-        </div>
-
-
        
 
-       
+      
     </section>
     
 
@@ -226,85 +191,7 @@
    @include('admin.layout.admin-script')
    
    
-
-   <script>
-   
-   var options = {
-            series: [{
-                name: 'Permits',
-                data: @json($values)
-            }],
-            chart: {
-                type: 'area',
-                height: 350
-            },
-            xaxis: {
-                categories: @json($labels),
-            },
-        };
-
-    
-
-    var chart = new ApexCharts(document.querySelector("#permitIssuedByMonthChart"), options);
-    chart.render();
-
-    var options2 = {
-            series: [{
-                name: 'Permits',
-                data: @json($values1)
-            }],
-            chart: {
-                type: 'area',
-                height: 350
-            },
-            xaxis: {
-                categories: @json($labels1),
-            },
-            colors: ['#FFD572'],
-        };
-
-    
-
-    var chart3 = new ApexCharts(document.querySelector("#permitIssuedByYearChart"), options2);
-    chart3.render();
-    
-    
-
-    var revenueData = @json($revenueData);
-
-
-    var labels = [];
-    var dataSeries = [];
-
-    revenueData.forEach(function(item) {
-            var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-            var month = monthNames[item.month - 1];
-            var label = month + ' ' + item.year;
-            
-            labels.push(label);
-            dataSeries.push(item.totalRevenue);
-        });
-
-    var options1 = {
-        chart: {
-            type: 'bar',
-            height: 350
-        },
-        series: [{
-            name: 'Revenue',
-            data: dataSeries
-        }],
-        xaxis: {
-            categories: labels
-        },
-        colors: ['#B09FFF', '#FFD572', '#7AD3FF']
-    };
-
-    // Render the chart
-    var chart2 = new ApexCharts(document.querySelector("#revenueChart"), options1);
-    chart2.render();
-        </script>
-
+  
   
 
 </body>

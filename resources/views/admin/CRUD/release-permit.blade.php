@@ -34,8 +34,9 @@
                         
                             <p class="text-center w-9/12 mx-auto">Download Client Signature to add to the permit</p>
                             <a class="my-4 block text-center w-24 rounded-md mx-auto bg-custom-blue text-white hover:bg-custom-dark-blue" href="{{ route('download', ['id' => $applicationForm->id]) }}">Download</a>
-                            
-                            <div class="flex justify-center">
+                            <p class="text-center w-9/12 mx-auto">Download QR Code to add to the permit</p>
+                            <a class="my-4 block text-center w-24 rounded-md mx-auto bg-custom-blue text-white hover:bg-custom-dark-blue" href="{{ route('download.qr-code', ['id' => $applicationForm->id]) }}">Download</a>
+                             <div class="flex justify-center">
                                 <div class="text-center">
                                     <label for="pdf_file" class="block text-sm font-medium text-gray-700">Upload PDF File:</label>
                                     <input type="file" name="pdf_file" id="pdf_file" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">

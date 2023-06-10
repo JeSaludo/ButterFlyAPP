@@ -7,6 +7,7 @@ use App\Models\OrderOfPayment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+use chillerlan\QRCode\{QRCode, QROptions};
 class SignatureController extends Controller
 {
     public function ShowGetPermit($id){
@@ -36,13 +37,38 @@ class SignatureController extends Controller
         if($orderOfPayment->or_number === $request->orNumber){
             if ($request->hasFile('signature')) {
                 $file = $request->file('signature');
-                $fileName = date('YmdHis') . '-' . $application->user_id . '.' . $file->getClientOriginalExtension();
+                $fileName = date('YmdHis') . '-Signature-' . $application->id . '.' . $file->getClientOriginalExtension();
             
                 $filePath = $file->storeAs('signatures', $fileName, 'public');
             
                 $application->file_name = $fileName;
                 $application->file_path = $filePath;
-            
+
+                $applicationID = ApplicationForm::findOrFail($id);
+                //$qrCode = QrCode::format('svg')
+                //->size(200)
+                //->generate($applicationID->id);
+                 
+               // 
+               // Storage::disk('public')->put('qrcodes/' . $qrName, $qrCode);
+               
+               $options = new QROptions([
+                'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+                'eccLevel' => QRCode::ECC_L,
+                'scale' => 10,
+                ]);
+                $qrName = date('YmdHis') . '-QRCode-'. $applicationID->id  . '.png';
+                
+                $qrPath = 'qrcodes/' . $qrName;
+                $qrcode = new QRCode($options);
+                $qrcode->render($applicationID->id, storage_path('app/public/' . $qrPath));
+                
+                
+
+                $application->qr_code = $qrPath;
+                $application->qr_code_name = $qrName;
+               
+
                 $application->save();
             
                 $orderOfPayment->status = "paid";

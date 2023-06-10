@@ -59,34 +59,51 @@ class UserCRUDController extends Controller
         return redirect('/')->with('success', 'User updated successfully');
     }
 
-    public function ShowSubmitApplicationForm(){
+    public function ShowSubmitApplicationForm(Request $request){
         $currentUserId = auth()->user()->id;
+        $searchTerm = $request->input('search');
+        $sort = $request->input('sort', 'latest');
+        $forms = ApplicationForm::with(['butterflies', 'orderOfPayment'])
+            ->where('is_draft', false);
+           
+        if ($searchTerm) {
+            $forms->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('created_at', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('status', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
 
-        $usersWithPermit = User::where('id', $currentUserId)
-        ->whereHas('applicationForms', function ($query) {
-            $query->where('is_draft', false);
-        })
-        ->with(['applicationForms' => function ($query) {
-            $query->where('is_draft', false);
-        }, 'applicationForms.butterflies'])
-        ->paginate(10);
+        $usersWithPermit = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+       
+      
+         
 
-        return view('user.dashboard-view-submitted-form', compact('usersWithPermit'));
+        return view('user.dashboard-view-submitted-form', compact('usersWithPermit','sort', 'searchTerm'));
     }
 
-    public function ShowDraftApplicationForm(){
+    public function ShowDraftApplicationForm(Request $request){
         $currentUserId = auth()->user()->id;
+        $sort = $request->input('sort', 'latest');
+        $forms = ApplicationForm::with(['butterflies', 'orderOfPayment'])
+            ->where('is_draft', true);
+           
 
-        $usersWithPermit = User::where('id', $currentUserId)
-        ->whereHas('applicationForms', function ($query) {
-            $query->where('is_draft', true);
-        })
-        ->with(['applicationForms' => function ($query) {
-            $query->where('is_draft', true);
-        }, 'applicationForms.butterflies'])
-        ->paginate(10);
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
 
-        return view('user.dashboard-view-draft-form', compact('usersWithPermit'));
+        $usersWithPermit = $forms->paginate(10)->appends(['sort' => $sort]);
+
+        return view('user.dashboard-view-draft-form', compact('usersWithPermit','sort'));
     }
 
     public function deleteApplication(ApplicationForm $form)

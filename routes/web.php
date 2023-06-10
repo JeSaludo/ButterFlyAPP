@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\auth\ResetPasswordController;
 use App\Http\Controllers\auth\UserController;
 use App\Http\Controllers\PermitController;
+use App\Http\Controllers\QRController;
 use App\Http\Controllers\SignatureController;
 use App\Http\Controllers\UserCRUDController;
 use Illuminate\Support\Facades\Route;
@@ -41,7 +42,7 @@ use Illuminate\Http\Request;
     Route::middleware(['auth', 'verified'])->group(function(){
         Route::get('/permit/apply', [PermitController::class, 'ShowApplyPermit']);
         Route::post('/permit/apply-permit-process', [PermitController::class, 'RegisterApplication']);        
-      
+        Route::put('/permit/draft/save-draft', [PermitController::class, 'SaveDraftedtApplication'])->name('draft.save-draft');
         Route::post('/permit/draft/save', [PermitController::class, 'DraftApplication'])->name('draft.save');
        
         Route::get('/myapplication/show-submit', [UserCRUDController::class, 'ShowSubmitApplicationForm'])->name('myapplications.submit.show');
@@ -74,13 +75,19 @@ use Illuminate\Http\Request;
         
         Route::get('admin/dashboard/users', [AdminCRUDController::class, 'ShowUserAccount'])->name('admin.dashboard.show-user');
        
-        Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'ShowApplication'])->name('admin.dashboard.show-app');
-       
+        Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'ShopApplicationReview'])->name('admin.dashboard.show-app');
+        Route::get('admin/dashboard/applications/pending', [AdminCRUDController::class, 'ShowApplicationPending'])->name('admin.dashboard.pending');
+        Route::get('admin/dashboard/applications/approved', [AdminCRUDController::class, 'ShopApplicationApproved'])->name('admin.dashboard.approved');
+        Route::get('admin/dashboard/applications/returned', [AdminCRUDController::class, 'ShopApplicationReturned'])->name('admin.dashboard.returned');
+        Route::get('admin/dashboard/applications/released', [AdminCRUDController::class, 'ShopApplicationReleased'])->name('admin.dashboard.released');
+        Route::get('admin/dashboard/applications/expired-used', [AdminCRUDController::class, 'ShopApplicationExpiredUsed'])->name('admin.dashboard.expired-used');
+        
         Route::get('/admin/dashboard/order-of-payment', [AdminCRUDController::class, 'showOrderOfPayment'])->name('admin.order-of-payment.show');
 
         Route::get('/admin/dashboard/wildlife-permits', [AdminCRUDController::class, 'showWilfLifePermit'])->name('admin.dashboard.show-wilflife');
         
-       
+        Route::get('/admin/dashboard/scan-qr-code', [QRController::class, 'ShowQRDashboard'])->name('scan.qr-code');
+        Route::post('/admin/dashboard/update-status', [QRController::class, 'updateStatus'])->name('update.status');
 
         Route::get('/admin/dashboard/reports', [AdminCRUDController::class, 'ShowReports'])->name('admin.report.show');
 
@@ -88,9 +95,12 @@ use Illuminate\Http\Request;
         
         Route::get('/admin/download/signature/{id}', [SignatureController::class,'download'])->name('download');
         Route::post('/admin/upload/LTP/{id}', [PermitController::class, 'UploadLTP'])->name('uploadltp');
-
-        Route::get('/admin/logout', [AdminController::class, 'logout']);
+       
+        Route::get('/admin/download/qr-code/{id}', [QRController::class,'DownloadQR'])->name('download.qr-code');
+       
         
+        Route::get('/admin/logout', [AdminController::class, 'logout']);
+      
 
         Route::get('/admin/dashboard/users/create', [AdminCRUDController::class, 'create'])->name('admin.users.create');
         Route::post('/admin/dashboard/users/store', [AdminCRUDController::class, 'store'])->name('admin.users.store');

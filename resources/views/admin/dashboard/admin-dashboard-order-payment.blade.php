@@ -32,12 +32,42 @@
         @include('admin.layout.dashboard-header-v2', ["title" => "Order of Payment Management"])    
 
         <div class="px-4 pt-5">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">List of Order Of Payments</p>
+            <div class="bg-white w-full mx-auto my-4 rounded-md shadow-md">
+                <div class="flex justify-between">
+                    <div class="px-5 py-3">
+                        <form action="{{ route('admin.order-of-payment.show') }}" method="GET">
+                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-500 " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                </div>
+                                <input type="search" id="default-search" name="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  " placeholder="Search" required>
+                                <button type="submit"  class="text-white absolute right-2.5 bottom-2.5 bg-custom-blue hover:bg-[#390A86] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="flex items-center px-4">
+                        <form action="{{ route('admin.order-of-payment.show') }}" method="GET" class="flex items-center">
+                            <label for="sort" class="mr-2 text-sm font-medium text-gray-900">Sort By:</label>
+                            <div class="relative">
+                                <select id="sort" name="sort" onchange="this.form.submit()"
+                                    class="block w-36 py-2 pl-3 pr-8 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="latest" {{ $sort === 'latest' ? 'selected' : '' }}>Latest</option>
+                                    <option value="oldest" {{ $sort === 'oldest' ? 'selected' : '' }}>Oldest</option>
+                                </select>
+                                <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                   
+                                </div>
+                            </div>
+                        </form>
+                        
+                          
+                    </div>
+                </div>
                 
                 <div class="overflow-x-auto">
                     <table class="w-full divide-y divide-gray-200 table-auto">
-                        <thead class="">
+                        <thead class="border-b-2 border-gray-200">
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -63,11 +93,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            @foreach($orderOfPayments as $orderOfPayment)
-                            <tr>
+                           
+                            
+                            @foreach($orderOfPayments as $index => $orderOfPayment)
+                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} border-b-2 border-gray-100">
+                           
                                 <td class="px-6 py-4">
-                                    {{$orderOfPayment->id}}
+                                    PMDQ-LTP-{{$orderOfPayment->created_at->year}}-{{sprintf('%04d', $orderOfPayment->id)}}</td>
+                                  
                                 </td>
                                 <td class="px-6 py-4">
                                     {{$orderOfPayment->order_number}}
@@ -88,7 +121,11 @@
                                    
                                 </td>
                                 <td class="px-6 py-4 text-center" >
-                                    {{$orderOfPayment->status}}
+                                    @if ($orderOfPayment->status === "paid")                                 
+                                    <a class=" bg-green-100 text-green-700 px-6 py-2 rounded-20">Paid</a>
+                                    @else
+                                    <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Unpaid</a>
+                                    @endif
                                 </td>
                                
                                

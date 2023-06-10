@@ -157,46 +157,95 @@ class PermitController extends Controller
         $application = ApplicationForm::findOrFail($id);
         if ($request->hasFile('pdf_file')) {
             $pdfFile = $request->file('pdf_file');
-            $filename = date('YmdHis') . '-' . $pdfFile->getClientOriginalName();
-            $pdfFile->move(public_path('ltpPermit'), $filename);
-                       
-            $application->ltp_name = $filename;          
-            $application->ltp_path = 'ltpPermit/' . $filename;
+            $filename = date('YmdHis') . '-Permit-' . $pdfFile->getClientOriginalName();
+        
+            $filePath = $pdfFile->storeAs('ltpPermit', $filename, 'public');
+        
+            $application->ltp_name = $filename;
+            $application->ltp_path = $filePath;
             $application->status = "Released";
             $application->save();
-           
-           
+        
             return redirect('/admin/dashboard/applications');
         }
     
       
     }
 
+    public function SaveDraftedtApplication(Request $request)
+{
+    $data = $request->validate([
+        'name' => 'required',
+        'address' => 'required',
+        'transportAddress' => 'required',
+        'transportDate' => 'required',
+        'modeOfTransport' => 'required',
+        'purpose' => 'required',
+        'butterfly_name.*' => 'required',
+        'butterfly_quantity.*' => 'required',
+    ]);
+
+    $existingDraft = ApplicationForm::where('transport_date', $request->transportDate)
+        ->where('is_draft', true)
+        ->first();
+
+    if ($existingDraft) {
+        // Update the existing draft instead of creating a new one
+        $applicationForm = $existingDraft;
+    } else {
+        // Create a new draft
+        $applicationForm = new ApplicationForm();
+        $applicationForm->is_draft = true;
+    }
+
+    $applicationForm->user_id = Auth::user()->id;
+    $applicationForm->name = $request->name;
+    $applicationForm->address = $request->address;
+    $applicationForm->transport_address = $request->transportAddress;
+    $applicationForm->purpose = $request->purpose;
+    $applicationForm->transport_date = $request->transportDate;
+    $applicationForm->mode_of_transport = $request->modeOfTransport;
+    $applicationForm->save();
+
+    $butterflies = [];
+    $names = $request->input('butterfly_name');
+    $quantities = $request->input('butterfly_quantity');
+    foreach ($names as $index => $name) {
+        $quantity = $quantities[$index];
+        $butterflies[] = [
+            'name' => $name,
+            'quantity' => $quantity,
+        ];
+    }
+
+    // Delete existing butterflies associated with the draft
+    $applicationForm->butterflies()->delete();
+
+    foreach ($butterflies as $butterfly) {
+        $butterflyDB = new Butterfly();
+        $butterflyDB->application_forms_id = $applicationForm->id;
+        $butterflyDB->name = $butterfly['name'];
+        $butterflyDB->quantity = $butterfly['quantity'];
+        $butterflyDB->save();
+    }
+
+    return redirect('/myapplication/show-draft');//add msg with successfull
+}
+
+
     public function PrintLTP($id){
 
         $applicationForm = ApplicationForm::findOrFail($id);
-
         $pdfPath = $applicationForm->ltp_path;
-        $absolutePdfPath = public_path($pdfPath);
+        $absolutePdfPath = storage_path('app/public/' . $pdfPath);
 
         if (file_exists($absolutePdfPath)) {
             return response()->file($absolutePdfPath);
         } else {
             abort(404, 'File not found');
         }
-       // $applicationForm = ApplicationForm::findOrFail($id);
-//
-       // $pdfPath = $applicationForm->ltp_path;
-        
-      //  $absolutepdfPath = public_path($pdfPath);
-        
-       // if (file_exists($absolutepdfPath)) {
-       ///     return response()->file($absolutepdfPath, [
-       //         'Content-Disposition' => 'attachment; filename="' . $applicationForm->ltp_name . '"',
-        //    ]);
-       // } else {
-       //     abort(404, 'File not found');
-        //}
+
+    
     }
 
 }

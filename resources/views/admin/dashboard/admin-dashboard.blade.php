@@ -32,36 +32,36 @@
         @include('admin.layout.dashboard-header', ["title" => "Admin Dashboard"])           
           
           <div class="w-full  grid grid-flow-row md:grid-flow-col gap-2 px-4 my-8">
-            <div class="w-full px-6 py-2  rounded-md shadow-md bg-[#7AD3FF]">
+            <div class="w-full px-6 py-2  rounded-md shadow bg-[#7AD3FF]">
                 <p class=" text-2xl font-poppins font-semibold">Total Users</p>          
                <p class="font-poppins text-xl">{{$userCount}}</p>
             </div>
-            <div class="w-full px-6 py-2  rounded-md shadow-md bg-[#FFD572]">
+            <div class="w-full px-6 py-2  rounded-md shadow bg-[#FFD572]">
                 <p class=" text-2xl font-poppins font-semibold">Non Verified Users</p>          
                 <p class="font-poppins text-xl">{{$nonverifiedUserCount}}</p>
             </div>
     
-            <div class="w-full px-6 py-2 rounded-md shadow-md bg-[#B09FFF]">
+            <div class="w-full px-6 py-2 rounded-md shadow bg-[#B09FFF]">
                 <p class=" text-2xl font-poppins font-semibold">Verified Users</p>          
                 <p class="font-poppins text-xl">{{$verifiedUserCount}}</p>
             </div>
           </div>    
 
           <div class="px-4 w-full">
-            <div class="bg-white px-4 rounded-md shadow-md py-2 ">
+            <div class="bg-white px-4 rounded-md shadow py-2 ">
                 <div class="" id="chart"></div>
              </div>
         
           </div>
 
-          <p class="text-3xl font-poppins font-medium px-4 my-4">Recent Activity</p>
+          <p class="text-xl font-poppins font-medium px-5 my-4">Recent Activity</p>
 
           <div class="px-4 ">
-            <div class="bg-white w-full  mx-auto mt-3 p-2 rounded-20 shadow-md">
-                <p class="my-2 font-poppins  text-xl mx-5">List of Latest Applications</p>
-                <div class="overflow-x-auto">
-                    <table class="w-full divide-y divide-gray-200 table-auto">
-                        <thead class="">
+            <div class="bg-white w-full  mx-auto mt-3    shadow">
+                
+              <div class="overflow-x-auto">
+                <table class="w-full divide-y divide-gray-200 table-auto">
+                    <thead class="border-b-2 border-gray-200">
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -79,9 +79,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($applications as $form)
+                            @foreach($applications as $index=> $form)
                             
-                            <tr>
+                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} border-b-2 border-gray-100">
+                            
                                 <td class="px-6 py-4">
                                     PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
                                 <td class="px-6 py-4">{{ $form->name }}</td>
