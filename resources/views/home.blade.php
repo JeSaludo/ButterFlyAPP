@@ -59,13 +59,28 @@
                         Online Frontline Services Permitting and Transaction System Enables Easy Local Butterfly Permitting with its Intuitive Online System</p>
                 </div>
                 <div class="flex justify-between gap-5 mt-12  text-center w-full md:w-8/12  mx-auto md:mx-0">
-                    <a href="/permit/apply"
-                        class="font-poppins text-xs xl:text-xl text-white bg-custom-blue hover:bg-[#390A86] w-6/12 py-2 xl:py-4 border-none rounded-xl">Apply
-                        For Permit</a>
+                    
+                  
+                        <a href="/permit/apply" class="font-poppins text-xs xl:text-xl text-white bg-custom-blue hover:bg-[#390A86] w-6/12 py-2 xl:py-4 border-none rounded-xl ">Apply For Permit</a>
+                   
+
                     <a href="#learn-more"
                         class="font-poppins text-xs xl:text-xl text-white bg-transparent w-6/12 py-2 xl:py-4 hover:bg-gray-100 hover:text-black border-white border-2 rounded-xl">Learn
                         More</a>
                 </div>
+            
+                
+                @if (auth()->check() && auth()->user()->role === 1)
+                <div class="bg-red-200 mt-4 rounded-md w-8/12">
+                    <p class="py-2 px-2 text-xs text-red-600 font-medium">*Cannot Apply for Permit because your WFC or WCP has expired. Please update your Permit in the Profile.</p>
+                </div>
+            @endif
+            
+              
+                   
+              
+               
+                
             </div>
         </div>
         

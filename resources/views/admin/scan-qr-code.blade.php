@@ -79,10 +79,7 @@
                     const qrCodeData = result.text;
                     handleQRCode(qrCodeData);
                     stopScan(); // Turn off scanning after successful scan
-                    document.getElementById('myElement').classList.add('opacity-100');
-                    document.getElementById('myElement').classList.remove('opacity-0');
-                    document.getElementById('myElement').innerHTML = "Successfully Used a permit!";
-
+                  
                   }
                   if (err && !(err instanceof ZXing.NotFoundException)) {
                     console.error(err);
@@ -109,29 +106,45 @@
         }
       
         function handleQRCode(qrCodeData) {
-          // Send the QR code data to the server to update the status
-          fetch('/admin/dashboard/update-status', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            },
-            body: JSON.stringify({ application_id: qrCodeData }),
-          })
-            .then(response => {
-              if (response.ok) {
-                return response.json();
-              } else {
-                throw new Error('Network response was not OK.');
-              }
-            })
-            .then(data => {
-              console.log(data);
-            })
-            .catch(error => {
-              console.error(error);
-            });
+  // Send the QR code data to the server to update the status
+  fetch('/admin/dashboard/update-status', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+    },
+    body: JSON.stringify({ application_id: qrCodeData }),
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Network response was not OK.');
+      }
+    })
+    .then(data => {
+      if (data.status === 'success') {
+        if (data.isAlreadyUsed) {
+          document.getElementById('myElement').innerHTML = "Permit already used!";
+        } else {
+          document.getElementById('myElement').innerHTML = "Successfully Used a permit!";
         }
+        document.getElementById('myElement').classList.add('opacity-100');
+        document.getElementById('myElement').classList.remove('opacity-0');
+      } else {
+        document.getElementById('myElement').innerHTML = "Failed to update permit status.";
+        document.getElementById('myElement').classList.add('opacity-100');
+        document.getElementById('myElement').classList.remove('opacity-0');
+      }
+    })
+    .catch(error => {
+      console.error(error);
+      document.getElementById('myElement').innerHTML = "An error occurred while updating permit status.";
+      document.getElementById('myElement').classList.add('opacity-100');
+      document.getElementById('myElement').classList.remove('opacity-0');
+    });
+}
+
     </script>
       
    

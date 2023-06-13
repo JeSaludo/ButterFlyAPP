@@ -66,7 +66,7 @@ class SignatureController extends Controller
                 $orderOfPayment->status = "paid";
                 $orderOfPayment->save();
             
-                return redirect('/myapplication/show-submit');
+                return redirect('/myapplication/show-submit');//msg
             }
             
             

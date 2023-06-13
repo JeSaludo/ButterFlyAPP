@@ -23,7 +23,7 @@
     <section class="main home transition-all duration-300 ease-in">
         @include('admin.layout.dashboard-header-v2', ["title" => "Edit User Account"])    
 
-        <form action="{{ route('admin.users.update', $user->id) }}" method="post">
+        <form action="{{ route('admin.admins.update', $user->id) }}" method="post">
             @csrf
             @method("PUT")
             <div>
@@ -32,23 +32,15 @@
                     </h1>
                     <div class="grid grid-flow-row md:grid-flow-col gap-4 px-10 pb-4">
                         <div class="w-full">
+                           
+                                                       
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="firstName">First Name:
+                                <label class="my-2 block text-md font-robot font-medium" for="username">Name:
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="firstName" id="firstName" placeholder="Enter First Name"
-                                        value="{{$user->first_name}}"></label>
-                                @error('firstName')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="lastName">Last Name:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="lastName" id="lastName" placeholder="Enter Last Name"
-                                        value="{{$user->last_name}}"></label>
-                                @error('lastName')
+                                        type="text" name="name" id="name" placeholder="Enter Name"
+                                        value="{{$user->name}}"></label>
+                                @error('name')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
@@ -65,16 +57,7 @@
                             </div>
 
                             
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="businessName">Business Name:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="businessName" id="businessName" placeholder="Enter Business Name"
-                                        value="{{$user->business_name}}"></label>
-                                @error('businessName')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
+                           
                             <div class="mt-2">
                                 <label class="my-2 block text-md font-robot font-medium" for="email">Email Address:
                                     <input
@@ -86,64 +69,28 @@
                                 @enderror
                             </div>
 
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="contact">Contact Number:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="contact" id="contact" placeholder="Enter Contact Number"
-                                        value="{{$user->contact}}"></label>
-                                @error('contact')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
+                           
 
                            
                         </div>
 
                         <div class="w-full">
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="ownerName">Owner Name:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="ownerName" id="ownerName" placeholder="Enter Owner Name"
-                                        value="{{$user->owner_name}}"></label>
-                                @error('ownerName')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
+                            
 
                             <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="wcp_permit">Wildlife Collector Permit No:
+                                <label class="my-2 block text-md font-robot font-medium" for="password">Password
                                     <input
                                         class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="wcp_permit" id="wcp_permit" placeholder="Enter Wildlife Collector Permit Number"
-                                        value="{{$user->wcp_permit}}"></label>
+                                        type="password" name="password" id="password" placeholder="Change Password"
+                                      ></label>
                                 @error('wcp_permit')
                                 <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                 @enderror
                             </div>
 
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="wfp_permit">Wildlife Farm Permit No:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="wfp_permit" id="wfp_permit" placeholder="Enter Wildlife Farm Permit Number"
-                                        value="{{$user->wfp_permit}}"></label>
-                                @error('wfp_permit')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
+                           
 
-                            <div class="mt-2">
-                                <label class="my-2 block text-md font-robot font-medium" for="address">Address:
-                                    <input
-                                        class="w-full block mt-2 text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md"
-                                        type="text" name="address" id="address" placeholder="Enter Address"
-                                        value="{{$user->address}}"></label>
-                                @error('address')
-                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
-                                @enderror
-                            </div>
+                         
 
                           
                             <div class="mt-2">
@@ -168,7 +115,7 @@
                 <div class=" px-10 py-2 flex  gap-2">
                     <button type="submit"
                         class="w-full mx-auto font-poppins text-xl text-white bg-custom-blue hover:bg-[#390A86] mt-4  py-2 border-none rounded-md">Update
-                        Account</button>
+                        Admin Account</button>
 
                 </div>
 

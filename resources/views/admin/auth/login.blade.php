@@ -22,22 +22,7 @@
                 </span>
             </div>
 
-            <div class="flex list-none py-4">
-                @if (Route::has('login'))
-                @auth             
-                    
-                    @else
-                    <li class="ml-4 my-6 md:my-0 ">
-                        <a href="/admin/login" class="text-md text-white hover:text-custom-dark-600">Log in</a>
-                    </li>
-                    @if (Route::has('register'))
-                    <li class="mx-4 my-6 md:my-0">
-                        <a href="/admin/register" class="text-md text-white hover:text-custom-dark-600" >Register</a>
-                    </li>                   
-                @endauth                
-                @endif
-            @endif
-            </div>            
+                   
         </nav>
 
         <div class="bg-custom-bg-light-dark w-7/12  mx-auto  ">

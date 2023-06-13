@@ -20,7 +20,7 @@ class PermitController extends Controller
             'ownerName' =>'required',
             'address' => 'required',
             'issueDate' => 'required|date',
-            'expirationDate' => 'required|date',
+            'expirationDate' => 'required|date|after:issueDate',
         ]);
     
         $permit = Permit::create([
@@ -30,6 +30,7 @@ class PermitController extends Controller
             'owner_name' => $request->ownerName,
             'address' => $request->address,
             'issue_date' => $request->issueDate,
+            'status' => "valid",
             'expiration_date' => $request->expirationDate,
         ]);
 
@@ -38,12 +39,17 @@ class PermitController extends Controller
 
 
 
-    public function ApplyApplication(){
-
-    }
 
     public function ShowApplyPermit(){
-        return view('user.apply-permit');
+        
+        $user = auth()->user();
+        if($user->role === 1){
+            return view('home');
+        }
+        else{
+            return view('user.apply-permit', compact('user'));
+        }
+        
     }
 
     public function RegisterApplication(Request $request){
@@ -69,7 +75,7 @@ class PermitController extends Controller
         $applicationForm->mode_of_transport = $request->modeOfTransport;
         $applicationForm->is_draft = false;
         $applicationForm->save();
-
+        
         $butterflies = [];
         $names = $request->input('butterfly_name');
         $quantities = $request->input('butterfly_quantity');
@@ -164,6 +170,12 @@ class PermitController extends Controller
             $application->ltp_name = $filename;
             $application->ltp_path = $filePath;
             $application->status = "Released";
+            $application->release_by = Auth::guard('admin')->user()->name;
+            $currentDate =  date('Y-m-d H:i:s');
+            $application->released_date =  $currentDate;
+           
+            $application->expiration_date = date('Y-m-d H:i:s', strtotime('+1 month', strtotime($currentDate)));
+          
             $application->save();
         
             return redirect('/admin/dashboard/applications');

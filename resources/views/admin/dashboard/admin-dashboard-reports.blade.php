@@ -193,19 +193,13 @@
           </div>  
         <div class="px-4 pt-2">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month</p>
+                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Month And Year</p>
                 <div id="permitIssuedByMonthChart"></div>
                 
             </div>           
         </div>
 
-        <div class="px-4 pt-2">
-            <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
-                <p class="my-2 font-poppins font-medium text-2xl mx-5">Permits Issued by Year</p>
-                <div id="permitIssuedByYearChart"></div>
-                
-            </div>           
-        </div>
+      
 
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 p-2 rounded-20 shadow">
@@ -215,6 +209,9 @@
             </div>           
         </div>
 
+        
+        
+    
 
        
 
@@ -248,25 +245,7 @@
     var chart = new ApexCharts(document.querySelector("#permitIssuedByMonthChart"), options);
     chart.render();
 
-    var options2 = {
-            series: [{
-                name: 'Permits',
-                data: @json($values1)
-            }],
-            chart: {
-                type: 'area',
-                height: 350
-            },
-            xaxis: {
-                categories: @json($labels1),
-            },
-            colors: ['#FFD572'],
-        };
-
     
-
-    var chart3 = new ApexCharts(document.querySelector("#permitIssuedByYearChart"), options2);
-    chart3.render();
     
     
 
@@ -306,6 +285,8 @@
         </script>
 
   
+
+
 
 </body>
 

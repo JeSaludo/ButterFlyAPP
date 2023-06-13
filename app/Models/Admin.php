@@ -16,6 +16,7 @@ class Admin extends Authenticatable
         'email',
         'password',
         'role',
+        'name'
     ];
    
     public function isAdmin(){

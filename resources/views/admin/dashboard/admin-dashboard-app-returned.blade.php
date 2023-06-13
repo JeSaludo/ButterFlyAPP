@@ -103,7 +103,8 @@
                                    
                                 </td>
                                 <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                
+                                    <a href="{{ route('application-forms.show', $form->id)}}"
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
                                     <a href="{{ route('edit-application', $form->id)}}"
                                         class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
                                     <form action="{{ Route('delete-application', $form->id)}}" method="POST"

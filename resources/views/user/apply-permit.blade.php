@@ -32,7 +32,7 @@
                             <div>
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="name">Full Name:</label>
                                 <input class="w-full block mt-2 text-custom-white-p placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="name" id="name" placeholder="Enter Full Name">
+                                type="text" name="name" id="name" placeholder="Enter Full Name" value="{{$user->owner_name}}">
                                 @error('name')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror
@@ -41,7 +41,7 @@
                             <div class="">
                                 <label class="text-left mt-2 block text-sm text-custom-white-p" for="address">Address:</label>
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="address" id="address" placeholder="Enter Address">
+                                type="text" name="address" id="address" placeholder="Enter Address"  value="{{$user->address}}">
                                 @error('address')
                                 <div class="text-left mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror

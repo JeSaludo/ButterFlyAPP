@@ -26,7 +26,14 @@
                             <i class='bx bxs-user-detail px-5' ></i>
                             <span class="text transition-all duration-200 ease-in">User Accounts</span>
                         </a>
-                    </li>                   
+                    </li>         
+                    
+                    <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md  hover:bg-custom-blue transition-all duration-200 ease-in">
+                        <a href="{{route('admin.dashboard.show-admin')}}" class="flex items-center font-poppins text-base">
+                            <i class='bx bxs-user-detail px-5' ></i>
+                            <span class="text transition-all duration-200 ease-in">Admin Accounts</span>
+                        </a>
+                    </li>  
 
                     <li class="text-white w-full h-full py-2 whitespace-nowrap mt-2   rounded-md text-default hover:bg-custom-blue transition-all duration-200 ease-in">
                         <a href="{{route('admin.dashboard.show-app')}}" class="flex items-center  font-poppins text-base">

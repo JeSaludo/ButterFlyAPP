@@ -22,8 +22,9 @@ class ApplicationForm extends Model
     }
 
     protected $fillable = [
-        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status','file_name','file_path'
-      ];
+        'name', 'address','transport_address', 'purpose','transport_date' ,'mode_of_transport','status','file_name','file_path','ltp_name','ltp_path',
+        'qr_code', 'qr_code_name', 'remarks', 'release_by', 'expiration_date','released_date','accepted_by'
+    ];
 
   
       

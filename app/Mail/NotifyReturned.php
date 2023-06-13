@@ -13,12 +13,13 @@ class NotifyReturned extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $get_remarks;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($remarks)
     {
-        //
+        $this->get_remarks = $remarks;
     }
 
     /**

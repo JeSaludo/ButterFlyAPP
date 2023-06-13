@@ -11,7 +11,6 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Poppins:wght@400;500;700&family=Raleway:ital,wght@0,100;0,400;0,500;0,600;0,700;1,300&family=Roboto:wght@100;300;400;500;700;900&display=swap"
         rel="stylesheet"> 
-    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     
@@ -30,14 +29,15 @@
    
     <section class="main home transition-all duration-300 ease-in">     
         
-        @include('admin.layout.dashboard-header-v2', ["title" => "Expired Applications"])    
-
-   
+        @include('admin.layout.dashboard-header-v2', ["title" => "Admin Management"])    
+       
+          
+        
         <div class="px-4 pt-5">
             <div class="bg-white w-full mx-auto my-4 rounded-md shadow-md">
                 <div class="flex justify-between flex-col md:flex-row">
                     <div class="px-5 py-3">
-                        <form action="{{ route('admin.dashboard.expired-used') }}" method="GET">
+                        <form action="{{ route('admin.dashboard.show-admin') }}" method="GET">
                             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -48,9 +48,9 @@
                             </div>
                         </form>
                     </div>
-                    <div class="flex items-center px-4">
-                        <form action="{{ route('admin.dashboard.expired-used') }}" method="GET" class="flex items-center">
-                            <label for="sort" class="mr-2 text-sm font-medium text-gray-900">Sort By:</label>
+                    <div class="flex  items-center px-4 ">
+                        <form action="{{ route('admin.dashboard.show-admin') }}" method="GET" class="flex items-center">
+                            <label for="sort" class="mr-2 text-sm font-medium text-gray-900 ">Sort By:</label>
                             <div class="relative">
                                 <select id="sort" name="sort" onchange="this.form.submit()"
                                     class="block w-36 py-2 pl-3 pr-8 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -62,6 +62,9 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="px-2 ">
+                            <a href="/admin/register" class="inline-block px-4 py-2 font-medium bg-custom-blue hover:bg-[#390A86] text-white text-xs whitespace-nowrap md:text-sm rounded-md">Create Account</a>
+                          </div>
                     </div>
                 </div>
                 
@@ -71,74 +74,65 @@
                             <tr>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Application ID</th>
+                                    Username</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Applicant Name</th>
-                                <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Date of Submission</th>
-                                <th
-                                    class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Name</th>
+                                
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
                                 <th
-                                    class="px-6 py-3  text-xs text-center font-medium text-gray-500 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        
-                            @foreach($forms as $index => $form)
+                            @foreach($admin as $index =>$user)
                             <tr class="{{ $index % 2 == 0 ? 'bg-gray-100' : 'bg-white' }} border-b-2 border-gray-100">
-                                <td class="px-6 py-4">
-                                    PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
-                                <td class="px-6 py-4">{{ $form->name }}</td>
-
-                                <td class="px-6 py-4">{{ $form->created_at }}</td>
-
-                                <td
-                                    class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">
-                                    @if ($form->status === "Used")
-                                    <a class=" bg-yellow-100 text-yellow-700 px-5 py-2 rounded-20">Used</a>
-                                   @elseif($form->status=== "Expired")
-                                   <a class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Expired</a>
-                                    @endif
-                                    
+                                <td class="px-6 py-4 whitespace-nowrap text-sm ">
+                                    {{ $user->username}}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm  ">
+                                   {{$user->name}}
                                 </td>
-                                <td class="px-6  text-center py-4 whitespace-nowrap text-sm font-medium">
-                                    <a href="{{ route('application-forms.show', $form->id)}}"
-                                        class="mx-2 text-indigo-600 hover:text-indigo-900">View</a>
-                                  
-                                    <form action="{{ Route('delete-application', $form->id)}}" method="POST"
+                                
+                               
+                                <td
+                                    class="px-6 py-4 whitespace-nowrap text-left  p-2 text-sm font-medium text-gray-400">
+
+                                    @if($user->role === 0)
+                                    <a href="" class="bg-green-100 text-green-700 px-5  py-2 rounded-20">Active</a>
+                                    @else
+                                    <a href="" class=" bg-red-100 text-red-700 px-3 py-2 rounded-20">Deactive</a>
+                                    @endif
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="{{ route('admin.admins.edit', $user->id) }}"
+                                        class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <form action="{{ route('admin.admins.destroy', $user->id) }}" method="POST"
                                         style="display: inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="mx-2 text-red-600 hover:text-indigo-900"
                                             onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                                     </form>
-                                   
-
 
                                 </td>
-
-
                             </tr>
                             @endforeach
-                         
                         </tbody>
                     </table>
                 </div>
-                <div class="mx-auto my-2 px-6 pb-3">
+                <div class="mx-auto my-2 p-4">
                     <nav class="flex items-center justify-between">
                         <div class="flex-1 flex justify-between">
                             <!-- Previous Page Link -->
-                            @if ($forms->onFirstPage())
+                            @if ($admin->onFirstPage())
                             <span
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-default rounded-md">
                                 Previous
                             </span>
                             @else
-                            <a href="{{ $forms->previousPageUrl() }}"
+                            <a href="{{ $admin->previousPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Previous
                             </a>
@@ -146,16 +140,16 @@
 
                             <div class="text-sm text-gray-500 py-2">
                                 <span>{!! __('Showing') !!}</span>
-                                <span class="font-medium">{{ $forms->firstItem() }}</span>
+                                <span class="font-medium">{{ $admin->firstItem() }}</span>
                                 <span>{!! __('to') !!}</span>
-                                <span class="font-medium">{{ $forms->lastItem() }}</span>
+                                <span class="font-medium">{{ $admin->lastItem() }}</span>
                                 <span>{!! __('of') !!}</span>
-                                <span class="font-medium">{{ $forms->total() }}</span>
+                                <span class="font-medium">{{ $admin->total() }}</span>
                                 <span>{!! __('results') !!}</span>
                             </div>
 
-                            @if ($forms->hasMorePages())
-                            <a href="{{ $forms->nextPageUrl() }}"
+                            @if ($admin->hasMorePages())
+                            <a href="{{ $admin->nextPageUrl() }}"
                                 class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:ring-opacity-50">
                                 Next
                             </a>
@@ -170,13 +164,9 @@
 
                     </nav>
                 </div>
-                
             </div>
-
-           
         </div>
-       
-
+           
       
     </section>
     

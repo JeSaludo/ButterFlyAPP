@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\NotifyApprove;
 use App\Mail\NotifyReturned;
 use App\Mail\WelcomeMail;
+use App\Models\Admin;
 use App\Models\Permit;
 use App\Models\User;
 use App\Models\Butterfly;
@@ -23,6 +24,7 @@ use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+
 class AdminCRUDController extends Controller
 {
   
@@ -57,19 +59,18 @@ class AdminCRUDController extends Controller
         }
         
         $users = $user->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
-   
+        
+        
         return view('admin.dashboard.admin-dashboard-user', compact('greeting', 'users','sort', 'searchTerm'));
     }
     
-    public function ShopApplicationReview()
-    {
-        return view('admin.dashboard.admin-dashboard-app-review');
-    }
-    public function ShowApplication(){
+    public function ShowAdminAccount(Request $request){
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
         $greeting = '';
-    
+
+        $sort = $request->input('sort', 'oldest');
+        $searchTerm = $request->input('search');
         if ($hour >= 5 && $hour < 12) {
             $greeting = 'Good morning';
         } elseif ($hour >= 12 && $hour < 18) {
@@ -77,40 +78,31 @@ class AdminCRUDController extends Controller
         } else {
             $greeting = 'Good evening';
         }
-        $pendingApplicationForm = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'On Process')
-        ->paginate(10);
 
-        $acceptedApplicationForm = ApplicationForm::with(['butterflies', 'orderOfPayment'])
-        ->where('is_draft', false)
-        ->where('status', 'Accepted')
-        ->paginate(10);
+        $admins = Admin::query();
+        if ($searchTerm) {
+            $admins->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('username', 'LIKE', '%' . $searchTerm . '%');
+                    
+            });
+        }
+        if ($sort === 'oldest') {
+            $admins->orderBy('created_at', 'asc');
+        } else {
+            $admins->orderBy('created_at', 'desc');
+        }
 
-        $returnedApplicationForm = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'Returned')
-        ->paginate(10);
-
-        $expiredApplicationForm = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'Expired')
-        ->paginate(10);
-
-        $releasedApplicationForm = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'Released')
-        ->paginate(10);
-
-        $usedApplicationForm = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'Used')
-        ->paginate(10);
+        $admin = $admins->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
         
-        return view('admin.dashboard.admin-dashboard-app', compact('greeting', 'pendingApplicationForm', 'acceptedApplicationForm', 'returnedApplicationForm','expiredApplicationForm','releasedApplicationForm', 'usedApplicationForm'));
-    
-    
+        return view('admin.dashboard.admin-dashboard-admin',compact('greeting', 'admin','sort', 'searchTerm'));
     }
+    public function ShopApplicationReview()
+    {
+        return view('admin.dashboard.admin-dashboard-app-review');
+    }
+    
     
     public function ShowApplicationPending(Request $request)
     {
@@ -191,27 +183,33 @@ class AdminCRUDController extends Controller
 
     public function ShopApplicationReleased(Request $request)
     {
-    $sort = $request->input('sort', 'latest');
-    $searchTerm = $request->input('search');
-    $forms = ApplicationForm::with('butterflies')
-        ->where('is_draft', false)
-        ->where('status', 'Released');
-    if ($searchTerm) {
-        $forms->where(function ($query) use ($searchTerm) {
-            $query->where('id', 'LIKE', '%' . $searchTerm . '%')
-                ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
-        });
-    }
-    if ($sort === 'oldest') {
-        $forms->orderBy('created_at', 'asc');
-    } else {
-        $forms->orderBy('created_at', 'desc');
-    }
+        ApplicationForm::where('status', 'Released')
+        ->where('expiration_date', '<', now())
+        ->update(['status' => 'Expired']);
+        
+        $sort = $request->input('sort', 'latest');
+        $searchTerm = $request->input('search');
+        $forms = ApplicationForm::with('butterflies')
+            ->where('is_draft', false)
+            ->where('status', 'Released');
 
-    $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
+
+        if ($searchTerm) {
+            $forms->where(function ($query) use ($searchTerm) {
+                $query->where('id', 'LIKE', '%' . $searchTerm . '%')
+                    ->orWhere('name', 'LIKE', '%' . $searchTerm . '%');
+            });
+        }
+        if ($sort === 'oldest') {
+            $forms->orderBy('created_at', 'asc');
+        } else {
+            $forms->orderBy('created_at', 'desc');
+        }
+
+        $forms = $forms->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
       
 
-    return view('admin.dashboard.admin-dashboard-app-released', compact('forms', 'sort','searchTerm'));
+        return view('admin.dashboard.admin-dashboard-app-released', compact('forms', 'sort','searchTerm'));
     }
 
 
@@ -259,8 +257,33 @@ class AdminCRUDController extends Controller
         } else {
             $greeting = 'Good evening';
         }
+
+        ApplicationForm::where('status', 'Released')
+        ->where('expiration_date', '<', now())
+        ->update(['status' => 'Expired']);
+
+      
+        Permit::where('expiration_date', '<', now())
+        ->update(['status' => "invalid"]);
+
+    
+        $expiredPermits = Permit::where('expiration_date', '<', now())->get();
+
+        foreach ($expiredPermits as $permit) {
+        User::where(function ($query) use ($permit) {
+            $query->where('wfp_permit', $permit->permit_no)
+                ->orWhere('wcp_permit', $permit->permit_no);
+        })
+        ->update(['role' => 1]);
+        }
+
+        
+
+
         $users = User::all();
         $userCount = $users->count();
+
+
        
         $verifiedUserCount = User::whereNotNull('email_verified_at')->count();
         $nonverifiedUserCount = User::whereNull('email_verified_at')->count();
@@ -318,14 +341,15 @@ class AdminCRUDController extends Controller
         $butterflies = $butterfly->paginate(10)->appends(['sort' => $sort, 'search' => $searchTerm]);
       
     
-        $permits = ApplicationForm::where('status', 'released')->get();
+        $permits = ApplicationForm::where('status', 'released')
+        ->orWhere('status', 'used')->get();
         $totalPermits = $permits->count();
         $pendingPermits = ApplicationForm::where('status', 'On Process')->get();
         $pendingPermit = $pendingPermits->count();
         $returnPermits = ApplicationForm::where('status', 'returned')->get();
         $returnPermit = $returnPermits->count();
         $data = $permits->groupBy(function ($permit) {
-            return Carbon::parse($permit->created_at)->format('M Y');
+            return Carbon::parse($permit->released_date)->format('M Y');
         })->map(function ($group) {
             return $group->count();
         });
@@ -374,11 +398,9 @@ class AdminCRUDController extends Controller
             ];
         }
         }   
-        
-     
-
-        return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'revenueData', 'totalPermits','returnPermit','pendingPermit','labels','values', 'labels1', 'values1','sort','searchTerm'));
-    }
+      
+    return view('admin.dashboard.admin-dashboard-reports', compact('butterflies', 'revenueData', 'totalPermits', 'returnPermit', 'pendingPermit', 'labels', 'values', 'labels1', 'values1', 'sort', 'searchTerm'));
+     }
     
 
     public function create(){
@@ -467,7 +489,10 @@ class AdminCRUDController extends Controller
         $user = User::find($id);
         return view('admin.users.edit', compact('user'));
     }
-
+    public function editAdmin($id){
+        $user = Admin::find($id);
+        return view('admin.users.edit-admin', compact('user'));
+    }
     public function update(Request $request, $id){
     
         
@@ -503,6 +528,35 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/users')->with('success', 'User updated successfully');
     }
 
+    public function updateAdmin(Request $request, $id){
+    
+        
+        $user = Admin::findOrFail($id);
+      
+        $data = $request->validate([            
+            'username' => 'required',   
+             'email' => 'required|email|unique:users,email,' . $user->id,
+            'status' => 'required|in:0,1',
+           
+            
+        ]);
+
+        
+      
+        $user->username = $data['username'];       
+        $user->email = $data['email'];
+        $user->role = $request->status;
+        $user->save();
+
+        if ($request->has('password')) {
+            $user->password = bcrypt($request->password);
+            $user->save();
+        }   
+
+        return redirect('/admin/dashboard/admins')->with('success', 'User updated successfully');
+    }
+
+
     public function destroy($id) {
    
         $user = User::find($id);
@@ -512,6 +566,18 @@ class AdminCRUDController extends Controller
             return redirect('/admin/dashboard/users')->with('success', 'User deleted successfully.');
         } else {
             return redirect('/admin/dashboard/users')->with('error', 'User not found.');
+        }
+    }
+
+    public function destroyAdmin($id) {
+   
+        $user = Admin::find($id);
+    
+        if ($user) {
+            $user->delete();
+            return redirect('/admin/dashboard/admins')->with('success', 'User deleted successfully.');
+        } else {
+            return redirect('/admin/dashboard/admins')->with('error', 'User not found.');
         }
     }
     public function deleteOrderOfPayment($id) {
@@ -532,12 +598,11 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/applications')->with('success', 'Application deleted successfully.');
     }
     
-    public function showApproveApplication(ApplicationForm $form){
-
-    }
+    
     public function approveApplication(ApplicationForm $form, Request $request)
     {
         $form->status = 'Accepted';
+        $form->accepted_by = Auth::guard('admin')->user()->name;
         $form->save();
         
         $order_no = $randomNumber = str_pad(mt_rand(0, 999999), 8, '0', STR_PAD_LEFT);
@@ -555,14 +620,18 @@ class AdminCRUDController extends Controller
         return redirect('/admin/dashboard/order-of-payment')->with('success', 'Application approved successfully.');
     }
     
-    public function denyApplication(ApplicationForm $form)
+    public function denyApplication(Request $request,ApplicationForm $form)
     {
+        $request->validate([
+            'remarks' => 'required|string',
+        ]);
         $form->status = 'Returned';
+        $form->remarks = $request->input('remarks');
         
         $user = User::findOrFail($form->user_id);     
-        Mail::to($user->email)->send(new NotifyReturned());
+        
         $form->save();
-    
+        Mail::to($user->email)->send(new NotifyReturned( $form->remarks ));
         return redirect('/admin/dashboard/applications')->with('success', 'Application denied successfully.');
     }
 
@@ -577,7 +646,7 @@ class AdminCRUDController extends Controller
     public function reviewApplication($id){
 
         $form = ApplicationForm::with('butterflies')->findOrFail($id);
-      
+       
         return view('admin.CRUD.review-application', compact('form'));
     
     }
@@ -816,6 +885,7 @@ class AdminCRUDController extends Controller
 
     public function releasePermitShow($id){
          $applicationForm = ApplicationForm::findOrFail($id);
+        
          return view('admin.CRUD.release-permit', compact('applicationForm'));
     }
 

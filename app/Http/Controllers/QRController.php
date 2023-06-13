@@ -31,11 +31,19 @@ class QRController extends Controller
     {
         $applicationId = $request->input('application_id');
 
+
         // Find the application by ID and update the status
         $application = ApplicationForm::findOrFail($applicationId);
-        $application->status = 'Used';
-        $application->save();
 
+        if($application->status === "Used"){
+            return new JsonResponse(['status' => 'success', 'isAlreadyUsed' => true]);
+        }
+        else{
+            $application->status = 'Used';
+            $application->save();
+    
+        }
+        
         return new JsonResponse(['status' => 'success']);
     }
 }

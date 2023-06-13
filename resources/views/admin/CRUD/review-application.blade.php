@@ -135,26 +135,40 @@
                                 <h1 class=" px-6 py-2 font-lora font-bold text-2xl text-custom-dark-blue">Approval And Return Section</h1>
                            
                              
-                                    <div class="w-full py-5  px-5  flex justify-between gap-3 "> 
+                                    <div class="w-full py-5  px-5  grid grid-rows-2 md:grid-cols-2  gap-3 "> 
                                 
-                                        <form action="{{ route('approve-application', $form->id) }}" method="POST" class="w-full">
-                                            @csrf
+                                      
+                                            <form action="{{ route('approve-application', $form->id) }}" method="POST" class="w-full">
+                                                @csrf
+                                            
+                                                <div class="grid grid-flow-row gap-3">
+                                                    <input type="number" name="payment_amount" placeholder="Enter Payment Amount" class="w-full flex text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md" required>
+                                            
+                                                    <button type="submit" class="w-full mr-2 py-2 bg-custom-blue hover:bg-[#390A86] text-white flex item-center font-bold px-2 rounded" onclick="return confirm('Are you sure you want to approve this application?')">
+                                                        <i class='bx bx-sm bx-check'></i> Accept Application
+                                                    </button>
+                                                </div>
+                                            </form>
+                                       
                                         
-                                            <div class="grid grid-flow-col gap-3">
-                                                <input type="number" name="payment_amount" placeholder="Enter Payment Amount" class="w-full flex text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md" required>
+                                       
+                                            <form action="{{ route('deny-application', $form->id) }}" method="POST" class="w-full text-left">
+                                                @csrf
+                                                <div class="grid grid-flow-row gap-3">
+                                                  
+                                                        <input type="text" name="remarks" placeholder="Enter remarks" class="w-full flex text-custom-dark-900 placeholder:text-custom-dark-800 bg-transparent border-custom-dark-900 border-2 p-1.5 rounded-md" required>
+                                                        <button type="submit" class="w-full mr-2 py-2 bg-red-400 hover:bg-red-700 text-white flex items-center font-bold  px-2 rounded" onclick="return confirm('Are you sure you want to reject this application?')">
+                                                            <i class='bx bx-sm bx-x'></i> Return Application
+                                                        </button>
+                                                </div>
+                                                    
+                                                   
+                                           
+                                            </form>
+                                        </div>
                                         
-                                                <button type="submit" class="w-full mr-2 py-2 bg-custom-blue hover:bg-[#390A86] text-white flex item-center font-bold px-2 rounded" onclick="return confirm('Are you sure you want to approve this application?')">
-                                                    <i class='bx bx-sm bx-check'></i> Accept Application
-                                                </button>
-                                            </div>
-                                        </form>
+                                       
                                         
-                                        <form action="{{ route('deny-application', $form->id) }}" method="POST" class="w-6/12 text-left">
-                                            @csrf
-                                            <button type="submit" class="w-full bg-red-400 hover:bg-red-700  text-white flex item-center font-bold py-2 px-2 rounded" onclick="return confirm('Are you sure you want to reject this application?')">
-                                                <i class='bx bx-sm bx-x'></i> Return Application
-                                            </button>
-                                        </form>
                                         
                                        
                                      </div>

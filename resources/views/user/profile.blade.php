@@ -40,6 +40,14 @@
                     <div class="grid grid-flow-row md:grid-flow-col md:gap-5">
                         <div>
                             <div>
+                                <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="firstName">Wildlife Collector Permit:
+                                <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="wcp_permit" id="wcp_permit" placeholder="Enter Wildlife Collector Permit " value="{{$user->wcp_permit}}"></label>
+                                @error('wcp_permit')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
+                            <div>
                                 <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="firstName">First Name:
                                 <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
                                 type="text" name="firstName" id="firstName" placeholder="Enter First Name" value="{{$user->first_name}}"></label>
@@ -94,7 +102,14 @@
                          </div>
 
                          <div>
-
+                            <div>
+                                <label class="my-2 block text-xs md:text-sm text-custom-white-p" for="wfp_permit">Wildlife Farm Permit:
+                                <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                type="text" name="wfp_permit" id="wfp_permit" placeholder="Enter Wildlife Farm Permit " value="{{$user->wfp_permit}}"></label>
+                                @error('wfp_permit')
+                                <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                @enderror
+                            </div>
                            
 
                             <div>

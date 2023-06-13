@@ -82,6 +82,15 @@
                                     <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
                                     @enderror
                                 </div>
+
+                                <div>
+                                    <label class="my-2 block text-sm text-custom-white-p" for="access_code">Access Code:
+                                    <input class="w-full block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
+                                    type="password" name="access_code" id="access_code" placeholder="Access Code"></label>
+                                    @error('access_code')
+                                    <a class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</a>
+                                    @enderror
+                                </div>
                              </div>
 
                              

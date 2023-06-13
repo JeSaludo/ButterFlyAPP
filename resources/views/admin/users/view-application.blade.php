@@ -51,6 +51,41 @@
                                         <p class="text-lg font-roboto font-semibold  ">Purpose:</p>
                                         <p class="text-custom-dark-400 font-poppins">{{$form->purpose}}</p>
                                     </div>
+
+                                    @if ($form->remarks !== null)
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold  ">Remarks:</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$form->remarks}}</p>
+                                    </div>                            
+                                    @endif
+            
+                                    @if ($form->status === "Accepted")
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold  ">Accepted By:</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$form->accepted_by}}</p>
+                                    </div>  
+                                    @endif
+            
+                                    @if ($form->status === "Released")
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold  ">Released By:</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$form->release_by}}</p>
+                                    </div>  
+                                    @endif
+
+                                    @if ($form->status === "Used")
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold  ">Released By:</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{$form->release_by}}</p>
+                                    </div>  
+                                    @endif
+            
+                                    @if ($form->status === "Released")
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold  ">Valid At:</p>
+                                        <p class="text-custom-dark-400 font-poppins font-medium">{{$form->released_date}} <span class=font-light>to</span> {{$form->expiration_date}}</p>
+                                    </div>  
+                                    @endif
                                 </div>
                                 <div>
                                     <div class="mt-2">
@@ -66,6 +101,11 @@
                                     <div class="mt-2">
                                         <p class="text-lg font-roboto font-semibold ">Tranport Address:</p>
                                         <p class="text-custom-dark-400 font-poppins">{{$form->transport_address}}</p>
+                                    </div>
+                                    <div class="mt-2">
+                                        <p class="text-lg font-roboto font-semibold ">Submitted at:</p>
+                                        <p class="text-custom-dark-400 font-poppins">{{ $form->updated_at->format('Y-m-d') }}</p>
+            
                                     </div>
 
                                     <div class="mt-2">
@@ -92,6 +132,11 @@
                                         <p
                                             class="text-custom-dark-400 w-28 px-2 text-center rounded-md bg-orange-300 text-orange-700  font-poppins">
                                             On Process</p>
+                                        @elseif($form->status=="Expired")
+                                        <p
+                                            class="text-custom-dark-400 w-28 px-2 text-center rounded-md bg-red-300 text-red-700  font-poppins">
+                                            Expired</p>
+                                           
                                         @endif
 
 
@@ -120,6 +165,8 @@
                                         </div>
 
                                     </div>
+
+                                    
                                     <div>
 
                                         <div class="mt-2">

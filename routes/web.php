@@ -74,6 +74,7 @@ use Illuminate\Http\Request;
         Route::get('admin/dashboard', [AdminCRUDController::class, 'ShowDashboard'])->name('admin.dashboard')->middleware('admin.auth');
         
         Route::get('admin/dashboard/users', [AdminCRUDController::class, 'ShowUserAccount'])->name('admin.dashboard.show-user');
+        Route::get('admin/dashboard/admins', [AdminCRUDController::class, 'ShowAdminAccount'])->name('admin.dashboard.show-admin');
        
         Route::get('admin/dashboard/applications', [AdminCRUDController::class, 'ShopApplicationReview'])->name('admin.dashboard.show-app');
         Route::get('admin/dashboard/applications/pending', [AdminCRUDController::class, 'ShowApplicationPending'])->name('admin.dashboard.pending');
@@ -108,6 +109,10 @@ use Illuminate\Http\Request;
         Route::put('/admin/dashboard/users/{user}', [AdminCRUDController::class, 'update'])->name('admin.users.update');
         Route::delete('/admin/application/{form}', [AdminCRUDController::class,'deleteApplication'])->name('delete-application');
        
+        Route::get('/admin/dashboard/admins/{admin}/edit', [AdminCRUDController::class, 'editAdmin'])->name('admin.admins.edit');
+        Route::put('/admin/dashboard/admins/{admin}', [AdminCRUDController::class, 'updateAdmin'])->name('admin.admins.update');
+        Route::delete('/admin/admins/{admin}', [AdminCRUDController::class,'destroyAdmin'])->name('admin.admins.destroy');
+    
         Route::get('/admin/application-forms/view{id}', [AdminCRUDController::class,'viewApplication'])->name('application-forms.show');
         Route::get('/admin/application-forms/review/{id}', [AdminCRUDController::class,'reviewApplication'])->name('application-forms.review');
         Route::get('/admin/application-form/review/{id}/accept', [AdminCRUDController::class, 'showApproveApplication'])->name('application-from-approve.show');
@@ -138,15 +143,14 @@ use Illuminate\Http\Request;
         Route::put('/admin/order-of-payment/store/{form}', [AdminCRUDController::class, 'updateOrderOfPayment'])->name('admin.update-orderofpayment');
         Route::delete('/admin/order-of-payment/{form}/delete', [AdminCRUDController::class, 'deleteOrderOfPayment'])->name('admin.delete-orp');
             
-        
+              
+        Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    
+        Route::post('/admin/register/process', [AdminController::class, 'CreateAccount']);
+    
+     
     
     }); 
-        
-    Route::get('/admin/register', [AdminController::class, 'ShowRegister']);    
-    Route::post('/admin/register/process', [AdminController::class, 'CreateAccount']);
-    
   
-
 
     Route::get('password/reset', [ForgotPasswordController::class,'showResetForm'])->name('password.request');
     Route::post('password/email', [ForgotPasswordController::class,'sendResetLinkEmail'])->name('password.email');
@@ -154,6 +158,6 @@ use Illuminate\Http\Request;
     Route::post('password/reset/reset', [ResetPasswordController::class,'reset'])->name('password.update');
 
 
-    Route::get('test/admin/dashboard', );
-    
-    
+     Route::get('/admin/register/dev', [AdminController::class, 'ShowRegisterDev']); 
+  
+     Route::post('/admin/register/process', [AdminController::class, 'CreateAccountDev']);

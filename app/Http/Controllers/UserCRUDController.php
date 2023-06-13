@@ -38,7 +38,52 @@ class UserCRUDController extends Controller
             'address' => 'required',
             'contact' => 'required|min:11',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'wfp_permit' => 'nullable',
+            'wcp_permit' => 'nullable',
         ]);
+
+        $wfpPermit = $request->input('wfp_permit');
+        $wcpPermit = $request->input('wcp_permit');
+    
+        if (empty($wfpPermit) && empty($wcpPermit)) {
+            return back()->withErrors([
+                'permits' => 'At least one permit is required.',
+            ])->withInput();
+        }
+    
+        if (!empty($wfpPermit)) {
+            $permit = Permit::where('permit_type', 'wfp')
+                ->where('permit_no', $wfpPermit)
+                ->where('expiration_date', '>=', now())
+                ->first();
+    
+            if (!$permit) {
+                return back()->withErrors([
+                    'wfp_permit' => 'Invalid or expired WFP permit.',
+                ])->withInput();
+            }
+            if ($user->role === 1 && $user->wfp_permit !== $permit) {
+                $user->role = 0;
+                $user->save();
+            }
+        }
+    
+        if (!empty($wcpPermit)) {
+            $permit = Permit::where('permit_type', 'wcp')
+            ->where('permit_no', $wcpPermit)
+            ->where('expiration_date', '>=', now())
+            ->first();
+
+            if (!$permit) {
+                return back()->withErrors([
+                    'wcp_permit' => 'Invalid or expired WCP permit.',
+                ])->withInput();
+            }
+            if ($user->role === 1 && $user->wcp_permit !== $permit) {
+                $user->role = 0;
+                $user->save();
+            }
+        }
         $user->first_name = $data['firstName'];
         $user->last_name = $data['lastName'];
         $user->username = $data['username'];
@@ -47,7 +92,8 @@ class UserCRUDController extends Controller
         $user->address = $data['address'];
         $user->contact = $data['contact'];
         $user->email = $data['email'];
-       
+        $user->wcp_permit = $wcpPermit;
+        $user->wfp_permit = $wfpPermit;
         $user->save();
         
         if ($request->has('password')) {

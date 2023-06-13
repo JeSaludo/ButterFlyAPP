@@ -77,8 +77,12 @@
                                     Applicant Name</th>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Date of Submission</th>
-                                <th
+                                    Date of Released</th>
+                                    <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Date of Expiration</th>
+                               
+                                    <th
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Status</th>
                                 <th
@@ -94,7 +98,8 @@
                                     PMDQ-LTP-{{$form->created_at->year}}-{{sprintf('%04d', $form->id)}}</td>
                                 <td class="px-6 py-4">{{ $form->name }}</td>
 
-                                <td class="px-6 py-4">{{ $form->created_at }}</td>
+                                <td class="px-6 py-4">{{ $form->released_date }}</td>
+                                <td class="px-6 py-4">{{ $form->expiration_date }}</td>
 
                                 <td
                                     class="px-6 py-4 whitespace-nowrap text-center  p-2 text-sm font-medium text-gray-400">

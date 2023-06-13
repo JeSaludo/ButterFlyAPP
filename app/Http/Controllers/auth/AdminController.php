@@ -49,20 +49,29 @@ class AdminController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
-
-       
-        if (auth()->guard('admin')->attempt($credentials)) {
+    
+        $user = Admin::where('email', $credentials['email'])->first();
+    
+        if ($user && $user->role === 0 && auth()->guard('admin')->attempt($credentials)) {
             return redirect()->intended('/admin/dashboard');
-        }      
+        }
+        if ($user && $user->role !== 0) {
+            return back()->withErrors([
+                'email' => 'You do not have permission to access the admin dashboard.',
+            ])->onlyInput('email');
+        }
+    
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
+    
 
     public function CreateAccount(Request $request){
         $data = $request->validate([
             'username' => 'required|unique:admins,username',             
             'email' => 'required|email|unique:admins,email',  
+            'name' => 'required',
             'password' => 'required|min:8|confirmed',
             'password_confirmation' => 'required|min:8'
 
@@ -74,16 +83,50 @@ class AdminController extends Controller
             'email' => $request->email,
             'role' => 1,
             'password' => Hash::make($request->password),
+            'name' => $request->name
         ]);
 
         
-        Auth::guard('admin')->login($admin);
-        return redirect('/admin/dashboard');
+        
+        return redirect('admin/dashboard/admins');
      
         
         
     }
 
+    public function CreateAccountDev(Request $request){
+        $data = $request->validate([
+            'username' => 'required|unique:admins,username',             
+            'email' => 'required|email|unique:admins,email',  
+            'name' => 'required',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required|min:8',
+            'access_code' => 'required',
+        ]);
+       
+        if($request->input('access_code') === "butterflyadmin"){
+            $admin = Admin::Create([
+                'name' => $request->name,
+                'username' => $request->username,
+                'email' => $request->email,
+                'role' => 0,
+                'password' => Hash::make($request->password),
+                'name' => $request->name
+            ]);
+    
+        }
+     
+        
+        
+        return redirect('admin/login');
+     
+        
+        
+    }
+
+    public function ShowRegisterDev(){
+        return view('admin.auth.register-dev');
+    }
     public function logout(Request $request){
 
         Auth::guard('admin')->logout();
