@@ -216,5 +216,24 @@ class UserCRUDController extends Controller
         
     }
 
+    public function editReturnedApplication($id)
+    {
+        $form = ApplicationForm::with('butterflies')->findOrFail($id);
+        $butterflies = Butterfly::all();
+
+        $form->file_name = null;
+        $form->file_path = null;
+        $form->ltp_name = null;
+        $form->ltp_path = null;
+        $form->qr_code = null;
+        $form->qr_code_name = null;
+        $form->remarks = null;
+        $form->released_date = null;
+        $form->release_by = null;
+        $form->expiration_date = null;
+        $form->accepted_by = null;
+        $form->save();
     
+        return view('user.edit-application-returned', compact('form', 'butterflies'));
+    }
 }

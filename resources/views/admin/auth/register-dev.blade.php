@@ -31,7 +31,7 @@
                 <p class="text-center text-custom-dark-500 text-sm md:text-default lg:text-sm xl:text-default" >Register an account to access the platform</p>
                 
             </div>
-            <form action="/admin/register/process" method="POST" >
+            <form action="/admin/register/process/dev" method="POST" >
                 @csrf
                 
                 <div class="w-9/12 md:w-5/12 mx-auto">

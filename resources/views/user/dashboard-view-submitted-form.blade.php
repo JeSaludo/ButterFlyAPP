@@ -102,11 +102,16 @@
                                             <a  class="mx-2 text-yellow-600 ">Processing</a>
                                          @endif
                                     @elseif ($form->status === "Released")
-
                                         <form action="{{ route('user.print-permit', $form->id)}} " class="inline" method="POST" target="_blank">
                                             @csrf
                                             <button type="submit" class="mx-2 text-indigo-600">Print</button>
-                                        </form>
+                                        </form>                                    
+                                    @endif
+
+                                    @if ($form->status === "Returned")                                        
+                                    
+                                        <a href="{{ route('user.edit-application-returned', $form->id)}}"
+                                            class="mx-2 text-indigo-600 hover:text-indigo-900">Edit</a>
                                     
                                     @endif
                                                                

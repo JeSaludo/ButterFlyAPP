@@ -54,6 +54,8 @@ use Illuminate\Http\Request;
         Route::put('/myapplication/{id}', [UserCRUDController::class, 'updateApplication'])->name('user.update-application');   
         Route::get('/myapplication-forms/{id}', [UserCRUDController::class,'viewApplication'])->name('user.application-forms.show');
 
+       
+        Route::get('/myapplication-returned/{id}/edit', [UserCRUDController::class,'editReturnedApplication'])->name('user.edit-application-returned');
 
         Route::get('/profile/users/{user}/edit', [UserCRUDController::class, 'edit'])->name('users.edit');
         Route::put('/profile/users/{user}', [UserCRUDController::class, 'update'])->name('users.update');
@@ -160,4 +162,4 @@ use Illuminate\Http\Request;
 
      Route::get('/admin/register/dev', [AdminController::class, 'ShowRegisterDev']); 
   
-     Route::post('/admin/register/process', [AdminController::class, 'CreateAccountDev']);
+     Route::post('/admin/register/process/dev', [AdminController::class, 'CreateAccountDev']);

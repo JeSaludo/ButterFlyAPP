@@ -69,14 +69,14 @@
 
                             <label class="my-2 block text-sm text-custom-white-p" for="password">Password:
                                 <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="password" id="password" placeholder="Enter Password"></label>
+                                type="password" name="password" id="password" placeholder="Enter Password"></label>
                                 @error('password')
                                 <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror 
 
                             <label class="my-2 block text-sm text-custom-white-p" for="password_confirmation">Confirm Password:
                                 <input class=" w-11/12 block mt-2 text-custom-dark-500 placeholder:text-custom-dark-500 bg-transparent border-custom-dark-500 border-2 p-1.5 rounded-md"
-                                type="text" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password"></label>
+                                type="password" name="password_confirmation" id="password_confirmation" placeholder="Enter Confirm Password"></label>
                                 @error('password_confirmation')
                                 <div class="mt-2 text-red-700 font-roboto font-bold text-xs">{{ $message }}</div>
                                 @enderror 

@@ -29,6 +29,8 @@ class AdminCRUDController extends Controller
 {
   
     public function ShowUserAccount(Request $request){
+        Permit::where('expiration_date', '<', now())
+        ->update(['status' => "invalid"]);
         date_default_timezone_set('Asia/Manila'); 
         $hour = date('H');
         $greeting = '';
@@ -513,7 +515,8 @@ class AdminCRUDController extends Controller
             
         ]);
 
-        
+        $user->wfp_permit = $request->wfp_permit;
+        $user->wcp_permit = $request->wcp_permit;
         $user->first_name = $data['firstName'];
         $user->last_name = $data['lastName'];
         $user->username = $data['username'];
@@ -645,6 +648,11 @@ class AdminCRUDController extends Controller
 
     public function reviewApplication($id){
 
+        ApplicationForm::where('status', 'Released')
+        ->where('expiration_date', '<', now())
+        ->update(['status' => 'Expired']);
+
+      
         $form = ApplicationForm::with('butterflies')->findOrFail($id);
        
         return view('admin.CRUD.review-application', compact('form'));
@@ -757,6 +765,9 @@ class AdminCRUDController extends Controller
 
     public function showWilfLifePermit(Request $request){
 
+        
+        Permit::where('expiration_date', '<', now())
+        ->update(['status' => "invalid"]);
         $sort = $request->input('sort', 'latest');
         $searchTerm = $request->input('search');
         $form = Permit::query();
